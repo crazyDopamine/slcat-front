@@ -1,0 +1,14 @@
+a{
+  cursor:pointer;
+}
+
+.btn{
+  display:inline-block;
+  font-size:14px;
+}
+
+.btn-orange-border{
+  color:$orange;
+  border:1px solid $orange;
+  font-size:11px;
+}
