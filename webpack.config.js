@@ -15,7 +15,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     entry: {
         // common:'./app/js/common/vueInit.js',
-        index:'./app/js/page/index.js',
+        mobile:'./app/js/page/mobile.js',
         admin:'./app/js/page/admin.js'
     },
     output: {
@@ -70,16 +70,8 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {
-                from: __dirname + '/app/js/lib',
-                to: 'lib'
-            },
-            {
                 from: __dirname + '/app/js/common/g_config.js',
                 to: 'g_config.js'
-            },
-            {
-                from: __dirname + '/app/img',
-                to: 'img'
             },
             {
                 from: __dirname + '/node_modules/iview/dist/',
@@ -88,6 +80,10 @@ module.exports = {
             {
                 from: __dirname + '/app/static',
                 to: 'static'
+            },
+            {
+                from: __dirname + '/node_modules/mint-ui/lib/style.min.css',
+                to: 'static/css/mintUi.css'
             }
         ]),
         // new webpack.optimize.UglifyJsPlugin({

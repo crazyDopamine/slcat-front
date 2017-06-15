@@ -7,15 +7,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <meta content="webkit" name="renderer">
     <title>有色在线</title>
-    <link rel="stylesheet" href="/dist/lib/iview/styles/iview.css">
-    <link rel="stylesheet" href="/dist/index.css">
+    <link rel="stylesheet" href="/dist/static/css/mintUi.css">
+    <link rel="stylesheet" href="/dist/mobile.css">
     <link rel="stylesheet" href="/dist/static/font/iconfont.css">
 </head>
 <body>
     <div class="" id="app" v-show="true" style="display:none;">
-        <i class="icon-arrow-up"></i>
+        <mt-header fixed>
+            <mt-button slot="left" @click.native="showMenu()">
+                <i class="iconfont icon-add" slot="icon"></i>
+            </mt-button>
+
+        </mt-header>
     </div>
 </body>
 <script type="text/javascript" src="/dist/g_config.js"></script>
-<script type="text/javascript" src="/dist/index.js"></script>
+<script type="text/javascript" src="/dist/mobile.js"></script>
 </html>

@@ -4,11 +4,16 @@
 var vueInit = require('../common/vueInit');
 var css = require('../../sass/mobile/style.scss');
 var Vue = require('vue');
-var iview = require('iview');
-iview.install(Vue);
+var mint = require('mint-ui');
+Vue.use(mint);
 var vm;
 var config = {
     data:{
+    },
+    methods:{
+        showMenu:function(){
+            console.log(11);
+        }
     },
     created:function(){
     },
