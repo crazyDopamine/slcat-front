@@ -15,10 +15,13 @@
     <div class="" id="app" v-show="true" style="display:none;">
         <mt-header fixed>
             <mt-button slot="left" @click.native="showMenu()">
-                <i class="iconfont icon-add" slot="icon"></i>
+                <i class="icon-nav" slot="icon"></i>
             </mt-button>
-
+            <div slot="right" style="text-align:left;">
+                <img src="/dist/static/img/solomioLOGO.png" style="height:40px;position: relative;left: -25%;">
+            </div>
         </mt-header>
+        <nav-left ref="navLeft" :path="path"></nav-left>
     </div>
 </body>
 <script type="text/javascript" src="/dist/g_config.js"></script>
