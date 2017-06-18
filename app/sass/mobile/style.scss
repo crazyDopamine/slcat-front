@@ -10,6 +10,9 @@
 ////widget
 @import "./common/widget/navLeft";
 
+////page
+@import "./page/service";
+
 body{
   background:$bg;
 }

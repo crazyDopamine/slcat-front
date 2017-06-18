@@ -20,6 +20,7 @@
     height:100%;
     background-color:#282828;
     padding:20px;
+    color:$white;
     &.show{
       left:0px;
       animation: nav-left-in 0.5s;
@@ -28,8 +29,18 @@
       left:-200px;
       animation: nav-left-out 0.5s;
     }
+    .user-avatar{
+      width: 80px;
+      border-radius: 40px;
+    }
     .menu{
       li{
+        &.active{
+          color:$themeColor;
+          a{
+            color:$themeColor;
+          }
+        }
         a{
           color:$white;
         }

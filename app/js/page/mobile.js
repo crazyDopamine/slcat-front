@@ -28,5 +28,6 @@ var config = {
 config.router = router;
 router.afterEach(function(to,from){
     config.data.path = to.path;
+    if(vm)vm.showMenu();
 });
 vm = vueInit.init(config);

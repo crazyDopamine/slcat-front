@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="" id="app" v-show="true" style="display:none;">
-        <mt-header fixed>
+        <mt-header class="slc-header" fixed>
             <mt-button slot="left" @click.native="showMenu()">
                 <i class="icon-nav" slot="icon"></i>
             </mt-button>
@@ -22,6 +22,9 @@
             </div>
         </mt-header>
         <nav-left ref="navLeft" :path="path"></nav-left>
+        <div class="main-container">
+            <router-view></router-view>
+        </div>
     </div>
 </body>
 <script type="text/javascript" src="/dist/g_config.js"></script>

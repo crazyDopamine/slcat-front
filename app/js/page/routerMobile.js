@@ -22,7 +22,7 @@ const routes = [
     { path: '/main', component: main },
     { path: '/services', component: services },
     { path: '/set', component: setView },
-    { path: '/myTask', component: myTask },
+    { path: '/myTask/:type', component: myTask },
     { path: '/taskAdd', component: taskAdd },
     { path: '/taskDetail', component: taskDetail },
     { path: '/taskList', component: taskList },
