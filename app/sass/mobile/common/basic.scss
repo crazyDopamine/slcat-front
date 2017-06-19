@@ -263,7 +263,7 @@ input{
     font-size:$fontSize-s;
 }
 
-$fontColor:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green:$green);
+$fontColor:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green:$green,fc-theme:$themeColor);
 @each $fontColor, $color in $fontColor {
     .#{$fontColor} {
         color: $color !important;

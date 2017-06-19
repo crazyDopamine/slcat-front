@@ -1,6 +1,6 @@
 <template>
     <div>
-        <mt-navbar v-model="type" fixed class="top-nav-bar">
+        <mt-navbar v-model="type" fixed class="top-nav-bar" value="1">
             <mt-tab-item id="1">全部</mt-tab-item>
             <mt-tab-item id="2">策划</mt-tab-item>
             <mt-tab-item id="3">设计</mt-tab-item>
@@ -22,7 +22,7 @@
     var config = {
         data:function(){
             return {
-                type:1
+                type:"1"
             }
         },
         methods:{

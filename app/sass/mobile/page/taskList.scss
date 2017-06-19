@@ -1,0 +1,11 @@
+
+
+.task-list{
+  margin-top:46px;
+  background-color: $grayBg;
+  .data-item{
+    line-height: 30px;
+    padding:20px;
+    border-bottom:1px solid $borderColor;
+  }
+}

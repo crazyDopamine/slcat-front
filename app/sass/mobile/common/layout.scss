@@ -21,6 +21,7 @@ $headerHeight:40px;
 .top-nav-bar.mint-navbar.is-fixed{
   top:$headerHeight + 1;
   background-color: $grayBg;
+  border-bottom:1px solid $borderColor;
   .mint-tab-item{
     color:$themeColor;
     &.is-selected{
