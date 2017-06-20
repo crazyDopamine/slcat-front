@@ -5,10 +5,48 @@ a{
 .btn{
   display:inline-block;
   font-size:14px;
+  text-align: center;
 }
 
 .btn-orange-border{
   color:$orange;
   border:1px solid $orange;
-  font-size:11px;
+}
+
+.btn-theme-border-round{
+  padding:0 5px;
+  color:$themeColor;
+  border:1px solid $themeColor;
+  border-radius: 10px;
+  line-height: 20px;
+  font-size: $fontSize-s;
+}
+
+.btn-theme-round{
+  padding:0 5px;
+  color:$white;
+  background-color: $themeColor;
+  border:1px solid $themeColor;
+  border-radius: 20px;
+  line-height: 40px;
+}
+
+.gray-icons{
+  overflow: hidden;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  li{
+    display: inline-flex;
+    background-color: $grayDBg;
+    line-height: 20px;
+    padding:0 5px;
+    border-radius: 10px;
+    margin:5px 0;
+  }
+}
+
+.btn-large{
+  width:100%;
+  font-size: $fontSize-xxl;
 }

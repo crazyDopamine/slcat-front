@@ -16,7 +16,7 @@ var config = {
         path:''
     },
     methods:{
-        showMenu:function(){
+        showMenu:function(show){
             this.$refs.navLeft.show = !this.$refs.navLeft.show;
         }
     },
@@ -28,6 +28,6 @@ var config = {
 config.router = router;
 router.afterEach(function(to,from){
     config.data.path = to.path;
-    if(vm)vm.showMenu();
+    if(vm)vm.$refs.navLeft.show = false;
 });
 vm = vueInit.init(config);

@@ -117,6 +117,12 @@ input{
 .margin-left-20{
     margin-left:20px;
 }
+.margin-left-5{
+    margin-left:5px !important;
+}
+.margin-right-5{
+    margin-right:5px !important;
+}
 .margin-right-10{
     margin-right:10px;
 }
@@ -162,6 +168,12 @@ input{
 .padding-left-0{
     padding-left:0 !important;
 }
+.padding-left-5{
+    padding-left:5px !important;
+}
+.padding-right-5{
+     padding-right:5px !important;
+ }
 .padding-right-10{
     padding-right:10px;
 }
@@ -263,7 +275,7 @@ input{
     font-size:$fontSize-s;
 }
 
-$fontColor:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green:$green,fc-theme:$themeColor);
+$fontColor:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green:$green,fc-theme:$themeColor,fc-white:$white);
 @each $fontColor, $color in $fontColor {
     .#{$fontColor} {
         color: $color !important;
