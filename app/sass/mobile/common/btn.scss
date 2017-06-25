@@ -26,10 +26,39 @@ a{
   padding:0 5px;
   color:$white;
   background-color: $themeColor;
-  border:1px solid $themeColor;
   border-radius: 20px;
   line-height: 40px;
 }
+
+.btn-theme{
+  background-color: $themeColor;
+  color:$white;
+  border-radius: 4px;
+}
+
+.btn-gray-round{
+  padding:0 5px;
+  color:$gray;
+  background-color: $grayLBg;
+  border-radius: 20px;
+  line-height: 30px;
+}
+
+.btn-gray-d-round{
+  padding:0 5px;
+  color:$white;
+  background-color: $grayDBg;
+  border-radius: 20px;
+  line-height: 40px;
+}
+.btn-round-border{
+  padding:0 5px;
+  border:1px solid $borderColor;
+  border-radius: 20px;
+  line-height: 30px;
+}
+
+
 
 .gray-icons{
   overflow: hidden;
@@ -46,7 +75,52 @@ a{
   }
 }
 
+.gray-border-icons{
+  overflow: hidden;
+  display: flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  li{
+    display: inline-flex;
+    line-height: 20px;
+    padding:0 5px;
+    border:1px solid $borderColor;
+    border-radius: 4px;
+    margin:5px 0;
+  }
+}
+
+.btn-text{
+  line-height: 30px;
+  font-size: $fontSize-m;
+}
+.btn-small{
+  line-height: 25px;
+  padding:0 10px;
+  font-size: $fontSize-m;
+}
+.btn-normal{
+  line-height: 30px;
+  padding:0 20px;
+  font-size: $fontSize-m;
+}
 .btn-large{
   width:100%;
-  font-size: $fontSize-xxl;
+  font-size: $fontSize-xl;
 }
+.btn-harf{
+  width:49%;
+  font-size: $fontSize-xl;
+}
+
+.btn-black-round{
+  display: inline-block;
+  min-width:20px;
+  line-height: 20px;
+  text-align: center;
+  background-color: $black;
+  color: $white;
+  border-radius: 20px;
+
+}
+

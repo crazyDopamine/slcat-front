@@ -32,23 +32,41 @@ var mix = function(){
  * 获取search参数
  * @returns {{}}
  */
-var getSearchObj = function(){
-    var  qs = location.search.length>0 ? location.search.substr(1):'',
-        args = {},
-        items = qs.length>0 ? qs.split('&'):[],
-        item = null,name = null,value = null,i = 0,len = items.length;
-    for(i = 0;i < len; i++){
-        item = items[i].split('=');
-        name = decodeURIComponent(item[0]);
-        value = decodeURIComponent(item[1]);
-        if(name.length){
-            args[name] = value;
-        }
+// var getSearchObj = function(){
+//     var  qs = location.search.length>0 ? location.search.substr(1):'',
+//         args = {},
+//         items = qs.length>0 ? qs.split('&'):[],
+//         item = null,name = null,value = null,i = 0,len = items.length;
+//     for(i = 0;i < len; i++){
+//         item = items[i].split('=');
+//         name = decodeURIComponent(item[0]);
+//         value = decodeURIComponent(item[1]);
+//         if(name.length){
+//             args[name] = value;
+//         }
+//     }
+//     return args;
+// }
+
+var each = function(array,callback){
+    for(var i=0;i<array.length;i++){
+        callback(array[i],i);
     }
-    return args;
+}
+
+var transformToLV = function(array,valueField,labelField){
+    if(!valueField)valueField='id';
+    if(!labelField)labelField='name';
+    var result = [];
+    each(array,function(data,index){
+        result.push({value:data[valueField],label:data[labelField]});
+    });
+    return result;
 }
 
 module.exports={
     mix:mix,
-    getSearchObj:getSearchObj
+    // getSearchObj:getSearchObj,
+    each:each,
+    transformToLV:transformToLV
 }

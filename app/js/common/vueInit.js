@@ -12,7 +12,6 @@ module.exports={
     init:function(config){
         var vm;
         var data = {
-            query:utils.getSearchObj(window.location.search)
         }
         utils.mix(config.data,data);
         vm = new Vue(config).$mount('#app');

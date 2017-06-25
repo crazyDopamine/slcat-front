@@ -1,7 +1,7 @@
 $headerHeight:40px;
 
 .slc-header.mint-header{
-  background-color: $grayLBg;
+  background-color: $bg;
   height:$headerHeight;
   border-bottom:1px solid $borderColor;
   .mint-button-icon{
@@ -12,15 +12,9 @@ $headerHeight:40px;
   flex:0;
 }
 
-.main-container{
-  width:100%;
-  height:100%;
-  padding-top:$headerHeight + 1;
-}
-
 .top-nav-bar.mint-navbar.is-fixed{
   top:$headerHeight + 1;
-  background-color: $grayBg;
+  background-color: $bg;
   border-bottom:1px solid $borderColor;
   .mint-tab-item{
     color:$themeColor;
@@ -53,5 +47,23 @@ $headerHeight:40px;
   display: flex;
   >*{
     flex-grow: 1;
+  }
+}
+
+.main-container{
+  width:100%;
+  height:100%;
+  padding-top:$headerHeight + 1;
+}
+.page-container{
+  background-color: $grayLBg;
+  padding:$paddingY 0;
+  .container{
+    margin:$paddingY $paddingX 0 $paddingX;
+    padding:$paddingY $paddingX;
+    background-color: $white;
+    &:first-child{
+      margin-top:0;
+    }
   }
 }

@@ -4,15 +4,20 @@
 @import "./common/table";
 @import "./common/btn";
 @import "./common/layout";
+@import "./common/form";
 @import "./common/img";
 @import "./common/mintUiReset";
 
 ////widget
 @import "./common/widget/navLeft";
+@import "./common/widget/select";
 
 ////page
 @import "./page/service";
 @import "./page/taskList";
+@import "./page/expertList";
+@import "./page/userInfo";
+@import "./page/taskAdd";
 
 body{
   background:$bg;

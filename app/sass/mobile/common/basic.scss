@@ -24,8 +24,10 @@ ul,li{
     list-style:none;
     padding:0;
 }
-input{
-    -webkit-box-shadow:0 0 0px 1000px #FFF inset;
+input,textarea{
+    -webkit-box-shadow:0 0 0 0;
+    border:1px solid $borderColor;
+    padding:0 10px 0 10px;
 }
 .font-weight{
     font-weight:bold!important;
@@ -282,7 +284,7 @@ $fontColor:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green
     }
 }
 
-@for $i from 1 to 24{
+@for $i from 1 to 25{
     .col-#{$i}{
         float:left;
         width:100% / 24 * $i;
