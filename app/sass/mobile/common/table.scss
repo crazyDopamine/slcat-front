@@ -7,3 +7,10 @@
     }
   }
 }
+
+.sl-cell{
+  line-height: 40px;
+  padding:0 $paddingX;
+  font-size: $fontSize-l;
+  border-bottom:1px solid $borderColor;
+}

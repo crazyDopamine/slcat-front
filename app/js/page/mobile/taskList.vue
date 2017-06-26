@@ -33,7 +33,8 @@
     </div>
 </template>
 <script>
-    module.exports = {
+    var service = require('../../common/services');
+    var config = {
         data:function(){
             return {
                 type:"1"
@@ -46,4 +47,5 @@
 
         }
     }
+    module.exports = config;
 </script>
