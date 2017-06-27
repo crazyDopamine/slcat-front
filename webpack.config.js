@@ -14,7 +14,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // });
 module.exports = {
     entry: {
-        // common:'./app/js/common/vueInit.js',
         mobile:'./app/js/page/mobile.js',
         admin:'./app/js/page/admin.js'
     },
@@ -25,7 +24,6 @@ module.exports = {
     },
     module: {
         loaders: [
-            // {test: /\.ts$/,loader: 'awesome-typescript-loader'},
             {test:/\.scss$/,loader:ExtractTextPlugin.extract({fallback:'style-loader',use:'css-loader!sass-loader'})},
             {test:/\.css$/,loader:ExtractTextPlugin.extract({fallback:'style-loader',use:'css-loader'})},
             {test:/\.vue$/,loader:'vue-loader'},
@@ -53,17 +51,19 @@ module.exports = {
         exprContextCritical: false,
     },
     plugins:[
-        /*new HtmlWebpackPlugin({
-            template:'page/index.html'
+        new HtmlWebpackPlugin({
+            template:'admin.html',
+            filename:'admin.html',
+            inject: true,
+            chunks:['admin']
         }),
         new HtmlWebpackPlugin({
-            template:'page/admin.html'
-        }),*/
-        // new ExtractTextPlugin("style.css"),
-        // new ExtractTextPlugin("styleAdmin.css"),
-        // new ExtractTextPlugin("/app/sass/mobile/style.scss"),
-        // new ExtractTextPlugin("/app/sass/mobile/style.scss"),
-        new ExtractTextPlugin("[name].css"),
+            filename:'mobile.html',
+            template:'mobile.html',
+            inject: true,
+            chunks:['mobile']
+        }),
+        new ExtractTextPlugin("[name]-[hash].css"),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery"

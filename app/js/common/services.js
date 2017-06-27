@@ -1,4 +1,6 @@
 // var baseUrl = 'http://172.16.88.150:29051/';
+var consts = require('./const');
+var utils = require('./utils');
 var _rspHandle = function(rsp, callback, arg) {
     if (rsp.code) {
         if (callback) {
@@ -24,6 +26,9 @@ var _302 = function() {
 };
 
 var _401 = function() {
+    if(vm)vm.$nextTick(function(){
+        vm.$emit(consts.loginEvent);
+    });
 };
 
 module.exports = {
@@ -45,7 +50,9 @@ module.exports = {
         if (url.indexOf("http://") == -1) {
             url = window.baseUrl + url;
         }
-
+        var ticket=utils.cookie.get(consts.ticketKey);
+        if(!ticket)ticket = '';
+        url+='?ticket='+ticket;
         if (url !== '') {
             $.ajax({
                 url: url,
@@ -54,7 +61,8 @@ module.exports = {
                 type: 'POST',
                 async: async === undefined ? true : async,
                 data: JSON.stringify(data),
-                headers: {},
+                headers: {
+                },
                 contentType: 'application/json',
                 success: function (rsp) {
                     _rspHandle(rsp, callback, arg);
@@ -104,6 +112,9 @@ module.exports = {
         if (url.indexOf("http://") == -1) {
             url = window.baseUrl + url;
         }
+        var ticket=utils.cookie.get(consts.ticketKey);
+        if(!ticket)ticket = '';
+        data.ticket = ticket;
         if (url !== '') {
             $.ajax({
                 url: url,
@@ -112,7 +123,8 @@ module.exports = {
                 type: 'GET',
                 async: async === undefined ? true : async,
                 data: data,
-                headers: {},
+                headers: {
+                },
                 success: function (rsp) {
                     _rspHandle(rsp, callback, arg);
                 },
