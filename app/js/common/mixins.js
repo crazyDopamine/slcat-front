@@ -16,9 +16,9 @@ module.exports={
             });
         },
         mounted:function(){
-            if(window.vm&&window.vm.userInfoLoaded==1){
+            if(window.vm&&window.vm.userInfoLoaded==consts.loadedStatus){
                 this.$emit(consts.loadedEvent);
-            }else if(window.vm&&window.vm.userInfoLoaded==2){
+            }else if(window.vm&&window.vm.userInfoLoaded==consts.loadedFailStatus){
                 this.$emit(consts.loadedFailEvent);
             }
         }

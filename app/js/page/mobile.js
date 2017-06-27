@@ -9,8 +9,6 @@ var widget = require('../common/widget/widgetMobile')
 widget.init(Vue);
 Vue.use(mint);
 var router = require('./routerMobile');
-var vueResource = require('vue-resource');
-Vue.use(vueResource);
 var vm;
 var config = {
     data:{
@@ -23,9 +21,10 @@ var config = {
         }
     },
     created:function(){
-        console.log(this)
+        console.log(this.$http)
     },
     mounted:function(){
+
     }
 }
 config.router = router;

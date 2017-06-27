@@ -2,6 +2,8 @@
  * Created by dongwei on 2017/5/15.
  */
 var Vue = require('vue');
+var vueResource = require('vue-resource');
+Vue.use(vueResource);
 var filters = require('./filters');
 var utils = require('./utils');
 for(var key in filters){

@@ -85,12 +85,7 @@ module.exports = {
                 from: __dirname + '/node_modules/mint-ui/lib/style.min.css',
                 to: 'static/css/mintUi.css'
             }
-        ]),
-        // new webpack.optimize.UglifyJsPlugin({
-        //     compress:{
-        //         warnings: false
-        //     }
-        // })
+        ])
     ],
     // require 文件时可省略后缀 .js 和 .ts
     resolve: {
@@ -98,7 +93,7 @@ module.exports = {
         alias: {
             'vue$': 'vue/dist/vue.common.js',
             'vue-router$': 'vue-router/dist/vue-router.common.js',
-            'services$':'app/js/common/services.js'
+            'vue-resource$': 'vue-resource/dist/vue-resource.common.js'
         }
     },
     // 配置 webpack-dev-server
