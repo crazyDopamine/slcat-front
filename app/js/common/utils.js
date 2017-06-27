@@ -38,34 +38,15 @@ var mix = function () {
     }
     return obj;
 }
-//
-// if(argu[i][key]&& argu[i][key] instanceof Array){
-//     if(!obj[key]||!obj[key] instanceof Array){
-//         obj[key]=[]
-//     }
-//     for(var k=0;j<argu[i][key].length;k++){
-//         if(argu[i][key][k])
-//             }
-// }else
 
-    /**
- * 获取search参数
- * @returns {{}}
- */
-var getSearchObj = function () {
-    var qs = location.hash.length > 0 && location.hash.indexOf("?")>0 ? location.hash.substr(location.hash.indexOf("?")+1, location.hash.length): '',
-        args = {},
-        items = qs.length > 0 ? qs.split('&') : [],
-        item = null, name = null, value = null, i = 0, len = items.length;
-    for (i = 0; i < len; i++) {
-        item = items[i].split('=');
-        name = decodeURIComponent(item[0]);
-        value = decodeURIComponent(item[1]);
-        if (name.length) {
-            args[name] = value;
-        }
-    }
-    return args;
+var transformToLV = function(array,valueField,labelField){
+    if(!valueField)valueField='id';
+    if(!labelField)labelField='name';
+    var result = [];
+    each(array,function(data,index){
+        result.push({value:data[valueField],label:data[labelField]});
+    });
+    return result;
 }
 
 var cookie = {
@@ -97,9 +78,9 @@ var each = function(array,callback){
 
 }
 
-module.exports = {
-    mix: mix,
-    getSearchObj: getSearchObj,
-    cookie:cookie,
-    each:each
+module.exports={
+    mix:mix,
+    each:each,
+    transformToLV:transformToLV,
+    cookie:cookie
 }

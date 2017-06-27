@@ -1,0 +1,28 @@
+.user-info-audit{
+  padding:5px $paddingX;
+  background-color: $themeColor;
+  color: $white;
+  overflow: hidden;
+}
+
+.user-info{
+  .user-info-top{
+    line-height: 30px;
+    position: relative;
+    border-bottom:1px solid $borderColor;
+    text-align: center;
+    padding-bottom:$paddingY;
+    .user-img{
+      width:80px;
+    }
+  }
+  .user-info-detail{
+    position: relative;
+    text-align: center;
+    margin:$paddingY 0;
+  }
+}
+
+.user-img{
+  width:80px;
+}

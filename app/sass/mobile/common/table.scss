@@ -1,8 +1,16 @@
 .data-list{
+  background-color: $bg;
   .data-item{
     overflow: hidden;
     .content{
       padding:0 20px;
     }
   }
+}
+
+.sl-cell{
+  line-height: 40px;
+  padding:0 $paddingX;
+  font-size: $fontSize-l;
+  border-bottom:1px solid $borderColor;
 }

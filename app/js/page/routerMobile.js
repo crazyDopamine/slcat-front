@@ -14,6 +14,9 @@ var taskDetail = require('./mobile/taskDetail.vue');
 var taskList = require('./mobile/taskList.vue');
 var userInfo = require('./mobile/userInfo.vue');
 var userInfoEdit = require('./mobile/userInfoEdit.vue');
+var aboutMeEdit = require('./mobile/aboutMeEdit.vue');
+var skillEdit = require('./mobile/skillEdit.vue');
+var productionAdd = require('./mobile/productionAdd.vue');
 Vue.use(VueRouter);
 const routes = [
     { path: '/', redirect: '/main' },
@@ -28,6 +31,8 @@ const routes = [
     { path: '/taskList', component: taskList },
     { path: '/userInfo', component: userInfo },
     { path: '/userInfoEdit', component: userInfoEdit },
+    { path: '/aboutMeEdit', component: aboutMeEdit },
+    { path: '/productionAdd', component: productionAdd },
 ]
 var router = new VueRouter({
     routes:routes

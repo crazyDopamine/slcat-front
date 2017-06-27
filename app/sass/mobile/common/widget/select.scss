@@ -1,0 +1,38 @@
+.sl-select{
+  position: relative;
+  .sl-select-input{
+    padding-right:25px;
+  }
+  .sl-select-picker{
+    position: fixed;
+    width:100%;
+    bottom:0;
+    left:0;
+    background-color: $white;
+    z-index: $zIndex-modal;
+    border-top:1px solid $borderColor;
+  }
+  .sl-select-mask{
+    position: fixed;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+  }
+  .select-icon{
+    position: absolute;
+    right:10px;
+    top:50%;
+    margin-top:-3px;
+    &:after{
+      content:' ';
+      width:10px;
+      height:6px;
+      border-top:6px solid $borderColor;
+      border-left:5px solid transparent;
+      border-right:5px solid transparent;
+    }
+  }
+
+}
+

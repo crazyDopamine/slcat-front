@@ -1,4 +1,3 @@
-// var baseUrl = 'http://172.16.88.150:29051/';
 var consts = require('./const');
 var utils = require('./utils');
 var _rspHandle = function(rsp, callback, arg) {

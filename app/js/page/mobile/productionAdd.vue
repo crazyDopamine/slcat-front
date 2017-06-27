@@ -1,58 +1,36 @@
 <template>
     <div class="page-container">
         <div class="container">
-            <div class="text-center">
-                <img class="user-img" src="/dist/static/img/user-img-default.png">
-            </div>
+            <div class="text-center fs-xxl">作品案例</div>
             <div class="form-area padding-left-0 padding-right-0">
                 <div class="form-row">
-                    <label>选择入驻类型<span class="fc-red">*</span></label><br/>
-                    <div class="form-field">
-                        <mt-radio :options="selections.type"></mt-radio>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <label>昵称<span class="fc-red">*</span></label><br/>
+                    <label>作品名称（20字以内）<span class="fc-red">*</span></label><br/>
                     <div class="form-field">
                         <input type="text"/>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label>职位头衔<span class="fc-red">*</span></label><br/>
+                    <label>职责（20字以内）<span class="fc-red">*</span></label><br/>
                     <div class="form-field">
                         <input type="text"/>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label>职位类型<span class="fc-red">*</span></label><br/>
-                    <div class="form-field">
-                        <input type="text"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <label>工作经验<span class="fc-red">*</span></label><br/>
+                    <label>行业<span class="fc-red">*</span></label><br/>
                     <div class="form-field">
                         <sl-select :options="selections.price" labelField="name"></sl-select>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label>日薪（8小时）<span class="fc-red">*</span></label><br/>
-                    <div class="form-field">
-                        <sl-select :options="selections.price" labelField="name"></sl-select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <label>所在城市<span class="fc-red">*</span></label><br/>
+                    <label>作品链接（实际作品链接或作品地址）</label><br/>
                     <div class="form-field">
                         <input type="text"/>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label>性别<span class="fc-red">*</span></label><br/>
+                    <label>作品描述（500字以内）<span class="fc-red">*</span></label><br/>
                     <div class="form-field">
-                        <div class="form-field">
-                            <mt-radio :options="selections.type"></mt-radio>
-                        </div>
+                        <textarea rows="10"></textarea>
                     </div>
                 </div>
                 <div class="btn-area">

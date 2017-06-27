@@ -6,11 +6,11 @@ $linkFontColor:$btnFontColor;
   box-sizing: border-box;
 }
 
-img{
+img,textarea{
   vertical-align: middle;
 }
 
-a,b,img,i,a:focus,a:active,div,p,input,ul,li,ol,dl,dd,dt,span,strong,em,textarea,body{
+a,b,img,i,div,p,input,ul,li,ol,dl,dd,dt,span,strong,em,textarea,body{
   font-style:normal;
   outline:none;
   resize:none;
