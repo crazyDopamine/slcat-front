@@ -1,6 +1,7 @@
 /**
  * Created by dongwei on 2017/5/15.
  */
+var utils = require('./utils');
 function toFixedFix(n, prec) {
     var k = Math.pow(10, prec)
     return '' + (Math.round(n * k) / k).toFixed(prec)
@@ -273,7 +274,15 @@ var locate = {
 }
 locate.SHORTMONTH = locate.MONTH
 dateFilter.locate = locate
+
+var dictionaryFilter = function(value,code){
+    utils.selections(code).then(function(){
+
+    });
+    return '';
+}
 module.exports={
     number:numberFilter,
-    date:dateFilter
+    date:dateFilter,
+    dictionary:dictionaryFilter
 };

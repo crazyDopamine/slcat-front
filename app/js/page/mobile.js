@@ -5,10 +5,11 @@ var vueInit = require('../common/vueInit');
 var css = require('../../sass/mobile/style.scss');
 var Vue = require('vue');
 var mint = require('mint-ui');
-var widget = require('../common/widget/widgetMobile')
+var widget = require('../common/widget/widgetMobile');
 widget.init(Vue);
 Vue.use(mint);
 var router = require('./routerMobile');
+var consts = require('../common/const');
 var vm;
 var config = {
     data:{
@@ -18,10 +19,17 @@ var config = {
     methods:{
         showMenu:function(show){
             this.$refs.navLeft.show = !this.$refs.navLeft.show;
+        },
+        login:function(){
+            var self = this;
+            setTimeout(function(){
+                self.userInfoLoaded=consts.loadedStatus;
+                self.$emit(consts.loadedEvent);
+            },100);
         }
     },
     created:function(){
-        console.log(this.$http)
+        this.login();
     },
     mounted:function(){
 

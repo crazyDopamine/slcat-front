@@ -66,7 +66,7 @@
     module.exports = {
         data:function(){
             return {
-                form:{
+                fieldset:{
                     price:''
                 },
                 selections:{

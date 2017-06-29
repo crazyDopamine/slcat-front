@@ -1,5 +1,5 @@
 module.exports={
-    CODE_SUCC: '000000', //成功
+    CODE_SUCC: '200', //成功
     CODE_FAIL: '200000', //失效
     CODE_ERROR: '-999999', //失败
     CODE_PARAM_ERR: '10002', //参数错误

@@ -1,7 +1,7 @@
 /**
  * Created by dongwei on 2017/5/15.
  */
-
+var Vue = require('vue');
 /**
  * 深度拷贝
  * @returns {*}
@@ -78,9 +78,48 @@ var each = function(array,callback){
 
 }
 
+var url = function(url){
+    if(url.indexOf('http://')<0){
+        return window.baseUrl + url;
+    }else{
+        return url;
+    }
+}
+
+window.dicMap = {};
+var selections = function(code){
+    if(!window.dicMap[code]){
+        window.vm.$http.get(window.vm.url('dataDictionary/getByCode/'+code)).then(window.vm.rspHandler(function(data){
+            window.dicMap[code] = data;
+        }));
+    }
+    return window.dicMap[code];
+}
+
+window.type = [];
+window.typeLoaded = 0;
+var getType = function(vm){
+    var promise = new Promise(function(success,fail){
+        if(!window.typeLoaded){
+            vm.$http.get(vm.url('/business/getBusinessInfo')).then(vm.rspHandler(function(data){
+                window.type = data;
+                window.typeLoaded = 1;
+                success(window.type);
+            }));
+        }else{
+            success(window.type);
+        }
+    });
+    return promise;
+}
+
+
 module.exports={
     mix:mix,
     each:each,
     transformToLV:transformToLV,
-    cookie:cookie
+    cookie:cookie,
+    url:url,
+    selections:selections,
+    getType:getType
 }

@@ -4,6 +4,9 @@
 var Vue = require('vue');
 var vueResource = require('vue-resource');
 Vue.use(vueResource);
+var mixins = require('./mixins');
+Vue.mixin(mixins.loaded);
+Vue.mixin(mixins.url);
 var filters = require('./filters');
 var utils = require('./utils');
 for(var key in filters){

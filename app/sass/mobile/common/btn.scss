@@ -64,14 +64,14 @@ a{
   overflow: hidden;
   display: flex;
   flex-wrap:wrap;
-  justify-content:space-between;
+  justify-content:flex-start;
   li{
     display: inline-flex;
     background-color: $grayDBg;
     line-height: 20px;
     padding:0 5px;
     border-radius: 10px;
-    margin:5px 0;
+    margin:5px 5px 0 0;
   }
 }
 
@@ -79,14 +79,14 @@ a{
   overflow: hidden;
   display: flex;
   flex-wrap:wrap;
-  justify-content:space-between;
+  justify-content:flex-start;
   li{
     display: inline-flex;
     line-height: 20px;
     padding:0 5px;
     border:1px solid $borderColor;
     border-radius: 4px;
-    margin:5px 0;
+    margin:5px 5px 0 0;
   }
 }
 
