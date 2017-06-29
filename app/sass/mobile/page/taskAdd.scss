@@ -3,3 +3,18 @@
     padding-left:25px;
   }
 }
+
+.task-add-type{
+  overflow: hidden;
+  .mint-cell{
+    float:left;
+    .mint-radio{
+      //display: none;
+    }
+    .mint-radiolist-label{
+      padding:0 10px;
+      border:1px solid $borderColor;
+
+    }
+  }
+}

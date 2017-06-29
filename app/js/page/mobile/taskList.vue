@@ -55,7 +55,6 @@
                 utils.getType(this).then(function(data){
                     self.selections.type=data;
                 });
-//                this.$forceUpdate();
             });
         }
     }

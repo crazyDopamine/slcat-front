@@ -14,8 +14,8 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 // });
 module.exports = {
     entry: {
-        mobile:'./app/js/page/mobile.js',
-        admin:'./app/js/page/admin.js'
+        mobile: './app/js/page/mobile.js',
+        admin: './app/js/page/admin.js'
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -24,9 +24,12 @@ module.exports = {
     },
     module: {
         loaders: [
-            {test:/\.scss$/,loader:ExtractTextPlugin.extract({fallback:'style-loader',use:'css-loader!sass-loader'})},
-            {test:/\.css$/,loader:ExtractTextPlugin.extract({fallback:'style-loader',use:'css-loader'})},
-            {test:/\.vue$/,loader:'vue-loader'},
+            {
+                test: /\.scss$/,
+                loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader!sass-loader'})
+            },
+            {test: /\.css$/, loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'})},
+            {test: /\.vue$/, loader: 'vue-loader'},
             {
                 test: /\.((woff2?|svg|eot|ttf)(\?t=[0-9]\.[0-9]\.[0-9]))|(woff2?|svg|jpe?g|png|gif|ico)$/,
                 loaders: [
@@ -44,24 +47,24 @@ module.exports = {
             // { test: /\.eot$/,  loader: "file-loader" },
             // { test: /\.svg$/,  loader: "url-loader?limit=10000&mimetype=image/svg+xml" }
             {
-                test:/\.(svg|woff|woff2|ttf|eot)\??.*$/,
-                loader:'url-loader?name=fonts/[name].[md5:hash:hex:7].[ext]'
+                test: /\.(svg|woff|woff2|ttf|eot)\??.*$/,
+                loader: 'url-loader?name=fonts/[name].[md5:hash:hex:7].[ext]'
             }
         ],
         exprContextCritical: false,
     },
-    plugins:[
+    plugins: [
         new HtmlWebpackPlugin({
-            template:'admin.html',
-            filename:'admin.html',
+            template: 'admin.html',
+            filename: 'admin.html',
             inject: true,
-            chunks:['admin']
+            chunks: ['admin']
         }),
         new HtmlWebpackPlugin({
-            filename:'mobile.html',
-            template:'mobile.html',
+            filename: 'mobile.html',
+            template: 'mobile.html',
             inject: true,
-            chunks:['mobile']
+            chunks: ['mobile']
         }),
         new ExtractTextPlugin("[name]-[hash].css"),
         new webpack.ProvidePlugin({
@@ -89,7 +92,7 @@ module.exports = {
     ],
     // require 文件时可省略后缀 .js 和 .ts
     resolve: {
-        extensions: ['.js','sass','scss'],
+        extensions: ['.js', 'sass', 'scss','.vue'],
         alias: {
             'vue$': 'vue/dist/vue.common.js',
             'vue-router$': 'vue-router/dist/vue-router.common.js',
@@ -97,7 +100,7 @@ module.exports = {
         }
     },
     // 配置 webpack-dev-server
-    devServer:{
+    devServer: {
         historyApiFallback: true,
         hot: true,
         inline: true,
