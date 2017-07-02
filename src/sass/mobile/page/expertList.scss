@@ -1,0 +1,118 @@
+.expert-list-search{
+  height:auto;
+  .mint-searchbar{
+    color:$grayD;
+    background-color:$bg;
+    .mint-searchbar-inner{
+      color:$grayD;
+      background-color: $grayBg;
+      border-radius: 6px;
+      .mintui-search{
+        font-size: $fontSize-m;
+        color:$grayD;
+      }
+      .mint-searchbar-core{
+        color:$grayD;
+        background-color: $grayBg;
+      }
+    }
+  }
+}
+
+.expert-list{
+  padding:$paddingY $paddingX;
+  .data-item{
+    padding:$paddingY $paddingX;
+    background-color: $white;
+    border:1px solid $borderColor;
+    .expert-top{
+      border-bottom:1px solid $borderColor;
+      overflow: hidden;
+      padding:$paddingY $paddingX;
+      .user-img{
+        width:20%;
+        max-width: 80px;
+        float:left;
+      }
+      .user-info{
+        float: left;
+        width:80%;
+        padding-left:10px;
+        color:$grayL;
+        h1{
+          color:$grayD;
+          font-size: $fontSize-xl;
+          font-weight: normal;
+          margin:0 0 5px 0;
+          line-height: 30px;
+        }
+      }
+    }
+    .expert-middle{
+      padding:$paddingY $paddingX;
+      color:$grayL;
+      border-bottom:1px solid $borderColor;
+      overflow: hidden;
+    }
+    .expert-bottom{
+      padding:$paddingY $paddingX;
+      color:$grayL;
+    }
+  }
+}
+
+.expert-list-tab.mint-navbar{
+  background-color: $bg;
+  .mint-tab-item{
+    padding:10px 0;
+    &.is-selected{
+      border-bottom:0;
+    }
+    .mint-tab-item-label{
+      font-size:$fontSize-m;
+      color:$grayD;
+    }
+    &:not(:last-child){
+      .mint-tab-item-label{
+        border-right:1px solid $borderColor;
+      }
+    }
+  }
+}
+.tab-selections-mask{
+  z-index: $zIndex-mask;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.tab-selections{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  padding: 124px 0 0 0;
+  top: 0;
+  left: 0;
+  .selections-list{
+    background-color: $bg;
+    width: 100%;
+    height: 100%;
+    padding:0 20px;
+    z-index: $zIndex-component;
+    li{
+      line-height: 40px;
+      &.active{
+        color:$themeColor;
+        .mint-cell-value{
+          color:$themeColor;
+        }
+      }
+      background-color: $bg;
+      &:not(:last-child){
+        border-bottom:1px solid $borderColor;
+      }
+    }
+  }
+
+}

@@ -1,0 +1,85 @@
+$headerHeight:40px;
+
+.slc-header{
+  background-color: $bg;
+  height:$headerHeight;
+  border-bottom:1px solid $borderColor;
+  padding:0;
+  .vux-header-left a{
+    color:$themeColor;
+  }
+  .vux-header-title{
+    margin:0;
+    img{
+      height:80%;
+    }
+  }
+}
+
+
+.top-nav-bar{
+  background-color: $bg;
+  border-bottom:1px solid $borderColor;
+  height:40px;
+  z-index: $zIndex-component;
+  a.vux-button-tab-item{
+    color:$fontColor;
+    background-color: $white;
+    line-height: 40px;
+    height: 100%;
+    z-index: $zIndex-component;
+    &:after{
+      border:0!important;
+    }
+    &.vux-button-group-current{
+      color:$themeColor;
+      background-color: $white;
+    }
+  }
+}
+
+.detail-area{
+  position: relative;
+  line-height: 30px;
+  padding:$paddingY $paddingX;
+  .content{
+    line-height: 20px;
+    color:$gray;
+  }
+  .task-description{
+    margin-top:30px;
+    .title{
+      display: inline-block;
+      font-size: $fontSize-xxl;
+      line-height:40px;
+      border-bottom:2px solid $grayL;
+    }
+  }
+}
+
+.flex{
+  display: flex;
+  >*{
+    flex-grow: 1;
+  }
+}
+
+.main-container{
+  width:100%;
+  height:100%;
+}
+.page-container{
+  background-color: $grayLBg;
+  padding:$paddingY 0;
+  .container{
+    margin:$paddingY $paddingX 0 $paddingX;
+    padding:$paddingY $paddingX;
+    background-color: $white;
+    &:first-child{
+      margin-top:0;
+    }
+  }
+}
+.content-page{
+  padding:$paddingY $paddingY;
+}
