@@ -19,23 +19,20 @@ $headerHeight:40px;
 
 .top-nav-bar{
   background-color: $bg;
-  border-bottom:1px solid $borderColor;
+  //border-bottom:1px solid $borderColor;
   height:40px;
   z-index: $zIndex-component;
-  a.vux-button-tab-item{
-    color:$fontColor;
-    background-color: $white;
-    line-height: 40px;
-    height: 100%;
-    z-index: $zIndex-component;
-    &:after{
-      border:0!important;
-    }
-    &.vux-button-group-current{
-      color:$themeColor;
-      background-color: $white;
-    }
+  .vux-tab-ink-bar{
+    background-color: $themeColor;
   }
+  .vux-tab-item.vux-tab-selected{
+    color:$themeColor;
+    border-bottom:3px solid $themeColor;
+  }
+}
+
+.top-nav-bar.no-bottom-border a.vux-button-tab-item.vux-button-group-current{
+  border-bottom:0;
 }
 
 .detail-area{

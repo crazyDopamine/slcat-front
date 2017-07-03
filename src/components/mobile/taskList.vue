@@ -1,9 +1,16 @@
 <template>
   <div>
-    <button-tab v-model="type" class="top-nav-bar">
-      <button-tab-item>全部</button-tab-item>
-      <button-tab-item v-for="item in selections.type" :key="item">{{item.businessName}}</button-tab-item>
-    </button-tab>
+    <tab class="top-nav-bar">
+      <tab-item selected @on-item-click="onTabClick">全部</tab-item>
+      <tab-item @on-item-click="onTabClick">全部1</tab-item>
+      <tab-item @on-item-click="onTabClick">全部2</tab-item>
+      <tab-item v-for="item in selections.type" @on-item-click="onTabClick" :key="item">{{item.businessName}}
+      </tab-item>
+    </tab>
+    <!--<button-tab v-model="type" class="top-nav-bar">-->
+    <!--<button-tab-item>全部</button-tab-item>-->
+    <!--<button-tab-item v-for="item in selections.type" :key="item">{{item.businessName}}</button-tab-item>-->
+    <!--</button-tab>-->
     <ul class="data-list task-list">
       <li class="data-item" v-for="(data,index) in list.dataList">
         <router-link :to="'/taskDetail/'+data.id">
@@ -33,21 +40,20 @@
 <script>
   import consts from '../../common/const'
   import {getType} from '../../common/utils'
-  import {ButtonTab, ButtonTabItem} from 'vux'
+  import {Tab, TabItem} from 'vux'
   import listMixns from '../../common/moduleList'
   var config = {
     mixins: [listMixns],
     components: {
-      ButtonTab,
-      ButtonTabItem
+      Tab,
+      TabItem
     },
     data: function () {
       return {
-        type: 0,
         list: {
           url: 'employer/queryEmpViewHeader',
           params: {
-            type: 0
+            type: ''
           }
         },
         selections: {
@@ -55,17 +61,25 @@
         }
       }
     },
-    methods: {},
+    methods: {
+      onTabClick: function (index) {
+        if (index === 0) {
+          this.list.params.type = ''
+        } else {
+//          this.params.type = this.selections.type[index - 1].id
+        }
+      }
+    },
     created: function () {
       var self = this
       this.initList(this.list)
-      this.$watch('type', function (typeIndex) {
-        if (typeIndex === 0) {
-          this.list.params.type = ''
-        } else {
-          this.list.params.type = this.selections.type[typeIndex].id
-        }
-      })
+//      this.$watch('type', function (typeIndex) {
+//        if (typeIndex === 0) {
+//          this.list.params.type = ''
+//        } else {
+//          this.list.params.type = this.selections.type[typeIndex].id
+//        }
+//      })
       this.$on(consts.loadedEvent, function () {
         console.log(this)
         this.refreshList(1)

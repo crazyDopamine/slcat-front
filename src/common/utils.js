@@ -54,12 +54,21 @@ var each = function (array, callback) {
   }
 }
 
-var transformToNV = function (array, valueField, labelField) {
+var toNV = function (array, valueField, labelField) {
   if (!valueField) valueField = 'id'
   if (!labelField) labelField = 'name'
   var result = []
   each(array, function (data, index) {
     result.push({value: data[valueField], name: data[labelField]})
+  })
+  return result
+}
+
+var toMap = function (array, valueField) {
+  if (!valueField) valueField = 'id'
+  var result = {}
+  each(array, function (data, index) {
+    result[data[valueField]] = data
   })
   return result
 }
@@ -99,7 +108,7 @@ window.typeLoaded = 0
 var getType = function (vm) {
   var promise = new Promise(function (resolve, reject) {
     if (!window.typeLoaded) {
-      vm.$http.get(url('/business/getBusinessInfo')).then(rspHandler(function (data) {
+      vm.$http.get(url('business/getBusinessInfo')).then(rspHandler(function (data) {
         window.type = data
         window.typeLoaded = 1
         resolve(window.type)
@@ -114,9 +123,10 @@ var getType = function (vm) {
 export {
   mix,
   each,
-  transformToNV,
+  toNV,
   url,
   selections,
   getType,
-  rspHandler
+  rspHandler,
+  toMap
 }

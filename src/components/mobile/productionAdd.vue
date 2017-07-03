@@ -16,7 +16,7 @@
           </div>
         </div>
         <div class="form-row">
-          <label>行业{{data.type}}<span class="fc-red">*</span></label><br/>
+          <label>行业<span class="fc-red">*</span></label><br/>
           <div class="form-field">
             <popup-radio class="field-select" :options="selections.who" v-model="data.type"></popup-radio>
           </div>
@@ -42,7 +42,7 @@
   </div>
 </template>
 <script>
-  import {transformToNV} from '../../common/utils'
+  import {toNV} from '../../common/utils'
   import {PopupRadio} from 'vux'
   export default {
     components: {
@@ -54,7 +54,7 @@
           type: ''
         },
         selections: {
-          type: transformToNV([{id: 0, name: 'test1'}, {id: 2, name: 'test2'}]),
+          type: toNV([{id: 0, name: 'test1'}, {id: 2, name: 'test2'}]),
           price: [{id: 0, name: 'test1'}, {id: 2, name: 'test2'}],
           who: [{key: 1, value: 'test1'}, {key: 2, value: 'test2'}]
         }
