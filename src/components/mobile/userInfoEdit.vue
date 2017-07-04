@@ -105,7 +105,11 @@
         }
       }
     },
-    methods: {},
+    methods: {
+      refreshSelections: function () {
+
+      }
+    },
     created: function () {
 
     }

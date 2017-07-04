@@ -1,4 +1,4 @@
-import {mix, each, url} from './utils'
+import {mix, each, url, rspHandler} from './utils'
 import consts from './const'
 var listConfig = {
   url: '',
@@ -7,7 +7,8 @@ var listConfig = {
   page: 1,
   pageSize: 10,
   params: {},
-  selected: {}
+  selected: {},
+  options: {}
 }
 export default {
   methods: {
@@ -15,15 +16,16 @@ export default {
       if (!listNode) {
         listNode = this.list
       }
+      listNode.options = options
       var list = mix({}, listConfig, listNode)
       var self = this
       each(list, function (data, key) {
         self.$set(listNode, key, data)
       })
     },
-    refreshList: function (page, listNode) {
+    refreshList: function (page, listNode, isPost) {
       var self = this
-      if (!listNode) listNode = this
+      if (!listNode) listNode = this.list
       if (page) {
         listNode.page = page
       }
@@ -33,19 +35,34 @@ export default {
       }
       params = mix(params, listNode.params)
       listNode.selected = {}
-      console.log(this)
-      this.$http.get(url(listNode.url), params, function (code, rsp, msg) {
-        if (code === consts.CODE_SUCC) {
-          if (rsp.data instanceof Array) {
-            listNode.dataList = rsp.data
-            listNode.total = rsp.data.length
-          } else {
-            listNode.dataList = rsp.data.dataList
-            listNode.total = rsp.data.total
-          }
-          self.$emit(consts.listLoadEvent, listNode)
+      if (!listNode.url) return
+      // var http = this.$http.get
+      // if (listNode.options.mothed) {
+      //   http = this.$http[listNode.options.mothed]
+      // }
+      var callback = rspHandler(function (data) {
+        if (data instanceof Array) {
+          listNode.dataList = data
+          listNode.total = data.length
+        } else {
+          listNode.dataList = data.rows
+          listNode.total = data.total
         }
+        self.$vux.loading.hide()
+        // self.$forceUpdate()
+        self.$emit(consts.listLoadEvent, listNode)
       })
+      listNode.dataList = []
+      this.$vux.loading.show({
+        text: '加载中'
+      })
+      if (listNode.options.mothed) {
+        this.$http.post(url(listNode.url), params, {
+          // contentType: 'application/json'
+        }).then(callback)
+      } else {
+        this.$http.get(url(listNode.url), {params: params}).then(callback)
+      }
     }
   }
 }

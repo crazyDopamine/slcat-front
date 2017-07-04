@@ -1,9 +1,7 @@
 <template>
   <div>
-    <tab class="top-nav-bar">
+    <tab class="top-nav-bar" v-show="typeLoaded">
       <tab-item selected @on-item-click="onTabClick">全部</tab-item>
-      <tab-item @on-item-click="onTabClick">全部1</tab-item>
-      <tab-item @on-item-click="onTabClick">全部2</tab-item>
       <tab-item v-for="item in selections.type" @on-item-click="onTabClick" :key="item">{{item.businessName}}
       </tab-item>
     </tab>
@@ -15,11 +13,13 @@
       <li class="data-item" v-for="(data,index) in list.dataList">
         <router-link :to="'/taskDetail/'+data.id">
           <label class="title col-16 fs-l">
-            {{data.issueName}}<span class="btn btn-theme-round margin-left-5"
-                                    style="line-height: 20px;">{{data.status}}</span>
+            {{data.projectName}}<span class="btn btn-theme-round margin-left-5"
+                                      style="line-height: 20px;">{{data.status}}</span>
           </label>
-          <span class="col-8 text-right"><span class="fc-red fs-l">{{data.projectBudget}}</span>元以上</span><br/>
-          <span class="margin-right-5" v-for="item in data.recruitBusinessList">{{item.businessName}}</span><br/>
+          <span class="col-8 text-right"><span class="fc-red fs-l">{{data.projectBudget}}</span></span><br/>
+          <span class="margin-right-10">{{data.recruitBusiness ? data.recruitBusiness.parentBusiness.businessName : ''}}/{{data.recruitBusiness ? data.recruitBusiness.businessName : ''}}</span>
+          <span
+            v-for="(item,i) in data.baseSkills">{{item.skillName}}{{i != data.baseSkills.length - 1 ? ',' : ''}}</span><br/>
           <ul class="flex col-16 fs-s" style="line-height: 14px;margin-top:8px;margin-bottom:8px;">
             <li class="border-right">
               <span>已推荐</span><span class="fc-theme padding-left-5 padding-right-5">{{data.recommendCount}}</span>
@@ -53,37 +53,33 @@
         list: {
           url: 'employer/queryEmpViewHeader',
           params: {
-            type: ''
+            status: '待审核',
+            businessParentId: ''
           }
         },
         selections: {
           type: []
-        }
+        },
+        typeLoaded: 0
       }
     },
     methods: {
       onTabClick: function (index) {
         if (index === 0) {
-          this.list.params.type = ''
+          this.list.params.businessParentId = ''
         } else {
-//          this.params.type = this.selections.type[index - 1].id
+          this.list.params.businessParentId = this.selections.type[index - 1].id
         }
+        this.refreshList(1)
       }
     },
     created: function () {
       var self = this
-      this.initList(this.list)
-//      this.$watch('type', function (typeIndex) {
-//        if (typeIndex === 0) {
-//          this.list.params.type = ''
-//        } else {
-//          this.list.params.type = this.selections.type[typeIndex].id
-//        }
-//      })
+      this.initList(this.list, {mothed: 'post'})
       this.$on(consts.loadedEvent, function () {
-        console.log(this)
         this.refreshList(1)
         getType(this).then(function (data) {
+          self.typeLoaded = 1
           self.selections.type = data
         })
       })

@@ -21,12 +21,18 @@ import taskList from './components/mobile/taskList.vue'
 import userInfo from './components/mobile/userInfo.vue'
 import userInfoEdit from './components/mobile/userInfoEdit.vue'
 import './sass/mobile/style.scss'
+import {dateFilter, numberFilter} from './common/filters'
 
-import {ToastPlugin} from 'vux'
+import {ToastPlugin, LoadingPlugin} from 'vux'
+Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
 Vue.use(VueRouter)
 Vue.use(VueResource)
 Vue.mixin(loadedMixins)
+Vue.filter('date', dateFilter)
+Vue.filter('number', numberFilter)
+
+// Vue.http.options.emulateJSON = true
 
 const routes = [
   {path: '/', redirect: '/main'},

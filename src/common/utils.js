@@ -64,6 +64,16 @@ var toNV = function (array, valueField, labelField) {
   return result
 }
 
+var toKV = function (array, valueField, labelField) {
+  if (!valueField) valueField = 'id'
+  if (!labelField) labelField = 'name'
+  var result = []
+  each(array, function (data, index) {
+    result.push({key: data[valueField], value: data[labelField]})
+  })
+  return result
+}
+
 var toMap = function (array, valueField) {
   if (!valueField) valueField = 'id'
   var result = {}
@@ -88,19 +98,33 @@ var rspHandler = function (callback) {
     if (data.code === consts.CODE_SUCC) {
       callback(data.data)
     } else {
-      window.vm.$vux.toast.text(rsp.msg, 'bottom')
+      window.vm.$vux.toast.text(rsp.message, 'bottom')
     }
   }
 }
 
 window.dicMap = {}
-var selections = function (code) {
-  if (!window.dicMap[code]) {
-    window.vm.$http.get(url('dataDictionary/getByCode/' + code)).then(rspHandler(function (data) {
-      window.dicMap[code] = data
-    }))
-  }
-  return window.dicMap[code]
+window.dicLoaded = {}
+var selections = function (code, vm) {
+  var promise = new Promise(function (resolve, reject) {
+    if (!window.dicLoaded[code]) {
+      window.dicLoaded[code] = 1
+      vm.$http.get(url('dataDictionary/getByCode/' + code)).then(rspHandler(function (data) {
+        window.dicMap[code] = data
+        window.dicLoaded[code] = 2
+        resolve(window.dicMap[code])
+      }))
+    } else {
+      resolve(window.dicMap[code])
+    }
+  })
+  return promise
+  // if (!window.dicMap[code]) {
+  //   window.vm.$http.get(url('dataDictionary/getByCode/' + code)).then(rspHandler(function (data) {
+  //     window.dicMap[code] = data
+  //   }))
+  // }
+  // return window.dicMap[code]
 }
 
 window.type = []
@@ -108,9 +132,10 @@ window.typeLoaded = 0
 var getType = function (vm) {
   var promise = new Promise(function (resolve, reject) {
     if (!window.typeLoaded) {
+      window.typeLoaded = 1
       vm.$http.get(url('business/getBusinessInfo')).then(rspHandler(function (data) {
         window.type = data
-        window.typeLoaded = 1
+        window.typeLoaded = 2
         resolve(window.type)
       }))
     } else {
@@ -120,13 +145,52 @@ var getType = function (vm) {
   return promise
 }
 
+window.skill = []
+window.skillLoaded = 0
+var getSkill = function (vm) {
+  var promise = new Promise(function (resolve, reject) {
+    if (!window.skillLoaded) {
+      window.skillLoaded = 1
+      vm.$http.get(url('skill/getSkillInfo')).then(rspHandler(function (data) {
+        window.skill = data
+        window.skillLoaded = 2
+        resolve(window.skill)
+      }))
+    } else {
+      resolve(window.skill)
+    }
+  })
+  return promise
+}
+
+window.address = []
+window.addressLoaded = 0
+var getAddress = function (vm) {
+  var promise = new Promise(function (resolve, reject) {
+    if (!window.addressLoaded) {
+      window.addressLoaded = 1
+      vm.$http.get(url('city/getAllCity')).then(rspHandler(function (data) {
+        window.address = data
+        window.addressLoaded = 2
+        resolve(window.address)
+      }))
+    } else {
+      resolve(window.address)
+    }
+  })
+  return promise
+}
+
 export {
   mix,
   each,
   toNV,
+  toKV,
   url,
   selections,
   getType,
   rspHandler,
-  toMap
+  toMap,
+  getAddress,
+  getSkill
 }

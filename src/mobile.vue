@@ -31,8 +31,9 @@
       login: function () {
         var self = this
         setTimeout(function () {
+          self.userInfo = {}
           self.userInfoLoaded = consts.loadedStatus
-          self.$emit(consts.loadedEvent)
+          self.$emit(consts.loadedEvent, {}, consts.loadedStatus)
         }, 100)
       }
     },

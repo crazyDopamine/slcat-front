@@ -8,25 +8,29 @@ var loadedMixins = {
   },
   created: function () {
     this.$on(consts.loadedEvent, function (userInfo, userInfoLoaded) {
-      this.userInfo = userInfo
-      this.userInfoLoaded = userInfoLoaded
+      if (userInfoLoaded) {
+        this.userInfo = userInfo
+        this.userInfoLoaded = userInfoLoaded
+      }
       var children = this.$children
       for (var i = 0; i < children.length; i++) {
-        children[i].$emit(consts.loadedEvent, userInfo, userInfoLoaded)
+        children[i].$emit(consts.loadedEvent, this.userInfo, this.userInfoLoaded)
       }
     })
-    this.$on(consts.loadedFailEvent, function () {
+    this.$on(consts.loadedFailEvent, function (userInfo, userInfoLoaded) {
       var children = this.$children
       for (var i = 0; i < children.length; i++) {
-        children[i].$emit(consts.loadedFailEvent)
+        children[i].$emit(consts.loadedFailEvent, this.userInfo, this.userInfoLoaded)
       }
     })
   },
   mounted: function () {
-    if (window.vm && window.vm.userInfoLoaded === 1) {
+    if (this.userInfoLoaded === consts.loadedStatus) {
+      this.$emit(consts.loadedEvent, this.userInfo, this.userInfoLoaded)
+    } else if (this.userInfoLoaded === consts.loadedFailEvent) {
+      this.$emit(consts.loadedFailEvent, this.userInfo, this.userInfoLoaded)
+    } else {
       this.$emit(consts.loadedEvent)
-    } else if (window.vm && window.vm.userInfoLoaded === 2) {
-      this.$emit(consts.loadedFailEvent)
     }
   }
 }
