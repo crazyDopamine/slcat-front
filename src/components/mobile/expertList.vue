@@ -5,35 +5,16 @@
         class="expert-list-search"
         :autoFixed="false"
         v-model="params.search"
-        ref="search"></search>
-      <!--<mt-search-->
-      <!--v-model="params.search"-->
-      <!--cancel-text="取消"-->
-      <!--placeholder="牛人一搜就到  搜索专长或其他关键字">-->
-      <!--</mt-search>-->
-      <button-tab v-model="tabSwitch" class="top-nav-bar">
-        <button-tab-item>{{tabSelect.type}}<i class="margin-left-5"
-                                              :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i>
-        </button-tab-item>
-        <button-tab-item>{{tabSelect.location}}<i class="margin-left-5"
-                                                  :class="tabSwitch==1?'icon-arrow-up':'icon-arrow-down'"></i>
-        </button-tab-item>
-        <button-tab-item>{{tabSelect.job}}<i class="margin-left-5"
-                                             :class="tabSwitch==2?'icon-arrow-up':'icon-arrow-down'"></i>
-        </button-tab-item>
-      </button-tab>
-      <!--<mt-navbar v-model="tabSwitch" class="expert-list-tab">-->
-      <!--<mt-tab-item id="type">-->
-      <!--{{tabSelect.type}}<i class="margin-left-5" :class="tabSwitch=='type'?'icon-arrow-up':'icon-arrow-down'"></i>-->
-      <!--</mt-tab-item>-->
-      <!--<mt-tab-item id="location">-->
-      <!--{{tabSelect.location}}<i class="margin-left-5"-->
-      <!--:class="tabSwitch=='location'?'icon-arrow-up':'icon-arrow-down'"></i>-->
-      <!--</mt-tab-item>-->
-      <!--<mt-tab-item id="job">-->
-      <!--{{tabSelect.job}}<i class="margin-left-5" :class="tabSwitch=='job'?'icon-arrow-up':'icon-arrow-down'"></i>-->
-      <!--</mt-tab-item>-->
-      <!--</mt-navbar>-->
+        ref="search"
+        placeholder="搜索专长或其他关键字"></search>
+      <tab class="top-nav-bar border-bottom-0">
+        <tab-item selected @on-item-click="onTabClick">{{tabSelect.type}}
+          <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+        <tab-item @on-item-click="onTabClick">{{tabSelect.location}}
+          <i class="margin-left-5" :class="tabSwitch==1?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+        <tab-item @on-item-click="onTabClick">{{tabSelect.job}}
+          <i class="margin-left-5" :class="tabSwitch==2?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+      </tab>
     </div>
     <div class="tab-selections-mask" v-show="tabSwitch!=-1" @click="tabSwitch=-1"></div>
     <div class="tab-selections" v-show="tabSwitch!=-1">
@@ -82,11 +63,11 @@
   </div>
 </template>
 <script>
-  import {ButtonTab, ButtonTabItem, Search} from 'vux'
+  import {Tab, TabItem, Search} from 'vux'
   export default {
     components: {
-      ButtonTab,
-      ButtonTabItem,
+      Tab,
+      TabItem,
       Search
     },
     data: function () {
@@ -104,7 +85,11 @@
         }
       }
     },
-    methods: {},
+    methods: {
+      onTabClick: function (index) {
+        this.tabSwitch = index
+      }
+    },
     created: function () {
       this.$watch('tabSwitch', function (tabSwitch) {
         console.log(tabSwitch)

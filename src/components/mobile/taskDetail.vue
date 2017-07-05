@@ -1,18 +1,18 @@
 <template>
   <div>
     <div style="position: relative">
-      <img src="/dist/static/img/taskDetail-bg.png" style="width: 100%;height: 100px;">
+      <img src="/static/img/taskDetail-bg.png" style="width: 100%;height: 100px;">
       <span style="position: absolute;bottom:5px;left:15px;">
                 <span class="fc-theme fs-xl">任务大厅</span>
                 <span class="fc-white">&gt;任务详情</span>
             </span>
     </div>
     <div class="detail-area">
-      <label class="fs-xxl">{{data.issueName}}</label><span
+      <label class="fs-xxl">{{data.companyName}}</label><span
       class="btn btn-theme-border-round margin-left-20">{{data.status}}</span>
       <span class="float-right"><span class="fc-red fs-xxl">{{data.projectBudget}}</span></span>
       <div class="content">
-        时间周期：{{data.objectCycle}}<br/>
+        时间周期：{{data.projectCycle}}<br/>
         <ul class="flex col-24" style="line-height: 14px;margin-top:8px;margin-bottom:8px;">
           <li class="border-right">
             <span>已推荐</span><span class="fc-theme padding-left-5 padding-right-5">5</span>
@@ -25,13 +25,13 @@
           </li>
         </ul>
         <p style="margin-top:30px">
-          项目类型：设计/平面设计<br/>
+          项目类型：{{data.recruitBusiness?data.recruitBusiness.parentBusiness.businessName:''}}/{{data.recruitBusiness?data.recruitBusiness.businessName:''}}<br/>
           公司名称：{{data.companyName}}<br/>
-          发布时间：{{data.createAt | date('yyyy-MM-dd HH:mm:ss')}}<br/>
+          发布时间：{{data.updatedAt | date('yyyy-MM-dd HH:mm:ss')}}<br/>
           倾向让谁完成：{{data.trendComplete}}<br/>
         </p>
         <ul class="gray-icons margin-top-20">
-          <li v-for="item in data.recruitBusinessList">{{item.businessName}}</li>
+          <li v-for="item in data.baseSkills">{{item.skillName}}</li>
         </ul>
       </div>
       <div class="task-description">
@@ -49,6 +49,7 @@
 </template>
 <script>
   import consts from '../../common/const'
+  import {url, rspHandler} from '../../common/utils'
   var config = {
     data: function () {
       return {
@@ -65,7 +66,7 @@
     created: function () {
       var self = this
       this.$on(consts.loadedEvent, function () {
-        this.$http.get(this.url('employer/queryDetail/' + this.$route.params.id)).then(this.rspHandler(function (data) {
+        this.$http.get(url('employer/queryDetail/' + this.$route.params.id)).then(rspHandler(function (data) {
           self.data = data
         }))
       })

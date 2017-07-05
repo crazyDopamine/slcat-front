@@ -17,19 +17,19 @@
         <div class="form-row">
           <label>昵称<span class="fc-red">*</span></label><br/>
           <div class="form-field">
-            <input type="text"/>
+            <input type="text" v-model="data.nickName"/>
           </div>
         </div>
         <div class="form-row">
           <label>职位头衔<span class="fc-red">*</span></label><br/>
           <div class="form-field">
-            <input type="text"/>
+            <input type="text" v-model="data.staff"/>
           </div>
         </div>
         <div class="form-row">
-          <label>职位类型<span class="fc-red">*</span></label><br/>
+          <label>所属行业<span class="fc-red">*</span></label><br/>
           <div class="form-field">
-            <input type="text"/>
+            <popup-radio class="field-select" :options="selections.who" v-model="data.type"></popup-radio>
           </div>
         </div>
         <div class="form-row">
@@ -41,22 +41,24 @@
         <div class="form-row">
           <label>日薪（8小时）<span class="fc-red">*</span></label><br/>
           <div class="form-field">
-            <popup-radio class="field-select" :options="selections.who" v-model="data.type"></popup-radio>
+            <input type="number" v-model="data.dailyWage"/>
           </div>
         </div>
         <div class="form-row">
           <label>所在城市<span class="fc-red">*</span></label><br/>
           <div class="form-field">
-            <popup-radio class="field-select" :options="selections.who" v-model="data.type"></popup-radio>
+            <x-address title="" class="field-address" value-text-align="left" v-model="data.address"
+                       :list="selections.address" hide-district></x-address>
+            <!--<popup-radio class="field-select" :options="selections.who" v-model="data.type"></popup-radio>-->
           </div>
         </div>
         <div class="form-row">
           <label>性别<span class="fc-red">*</span></label><br/>
           <div class="form-field">
             <div class="form-field">
-              <checker v-model="data.type" default-item-class="checker-item-radio-default"
+              <checker v-model="data.sex" default-item-class="checker-item-radio-default"
                        selected-item-class="checker-item-radio-selected" type="radio">
-                <checker-item :value="item.id" v-for="item in selections.type" :key="item">{{item.name}}</checker-item>
+                <checker-item :value="item.id" v-for="item in selections.sex" :key="item">{{item.name}}</checker-item>
               </checker>
             </div>
           </div>
@@ -70,28 +72,44 @@
   </div>
 </template>
 <script>
-  //  import {transformToLV} from '../../common/utils'
-  import {Checker, CheckerItem, PopupRadio} from 'vux'
+  import {Checker, CheckerItem, PopupRadio, ChinaAddressV3Data, XAddress} from 'vux'
   export default{
     components: {
       Checker,
       CheckerItem,
-      PopupRadio
+      PopupRadio,
+      XAddress
     },
     data: function () {
       return {
         data: {
-          price: '',
-          type: ''
+          type: '',
+          nickName: '',
+          cityId: '',
+          dailyWage: '',
+          sex: '',
+          staff: '',
+          status: '',
+          address: [],
+          personalInfo: '',
+          workExperience: '',
+          phone: '',
+          recruitBaseSkills: []
         },
         selections: {
-          type: [{id: 1, name: 'test1'}, {id: 2, name: 'test2'}],
+          address: ChinaAddressV3Data,
+          type: [{id: 'man', name: '男'}, {id: 'woman', name: '女'}],
+          sex: [{id: 'man', name: '男'}, {id: 'woman', name: '女'}],
           price: [{id: 1, name: 'test1', value: 1}, {id: 2, name: 'test2', value: 2}],
           who: [{key: 1, value: 'test1'}, {key: 2, value: 'test2'}]
         }
       }
     },
-    methods: {},
+    methods: {
+      refreshSelections: function () {
+
+      }
+    },
     created: function () {
 
     }
