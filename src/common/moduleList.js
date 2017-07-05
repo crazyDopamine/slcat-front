@@ -36,10 +36,6 @@ export default {
       params = mix(params, listNode.params)
       listNode.selected = {}
       if (!listNode.url) return
-      // var http = this.$http.get
-      // if (listNode.options.mothed) {
-      //   http = this.$http[listNode.options.mothed]
-      // }
       var callback = rspHandler(function (data) {
         if (data instanceof Array) {
           listNode.dataList = data

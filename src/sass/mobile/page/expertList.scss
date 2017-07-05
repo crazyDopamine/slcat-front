@@ -79,21 +79,17 @@
     }
   }
 }
-.tab-selections-mask{
-  z-index: $zIndex-mask;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
+
 .tab-selections{
   position: fixed;
   width: 100%;
   height: 100%;
-  padding: 124px 0 0 0;
   top: 0;
   left: 0;
+  .tab-selections-mask{
+    width: 100%;
+    height: 124px;
+  }
   .selections-list{
     background-color: $bg;
     width: 100%;

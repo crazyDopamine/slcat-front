@@ -7,7 +7,7 @@
         v-model="params.search"
         ref="search"
         placeholder="搜索专长或其他关键字"></search>
-      <tab class="top-nav-bar border-bottom-0">
+      <tab class="top-nav-bar border-bottom-0 no-selected">
         <tab-item selected @on-item-click="onTabClick">{{tabSelect.type}}
           <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
         <tab-item @on-item-click="onTabClick">{{tabSelect.location}}
@@ -16,20 +16,23 @@
           <i class="margin-left-5" :class="tabSwitch==2?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
       </tab>
     </div>
-    <div class="tab-selections-mask" v-show="tabSwitch!=-1" @click="tabSwitch=-1"></div>
     <div class="tab-selections" v-show="tabSwitch!=-1">
+      <div class="tab-selections-mask" v-show="tabSwitch!=-1" @click="tabSwitch=-1"></div>
       <ul class="selections-list">
-        <li class="active" @click="tabSwitch=-1">
-          test
-          <i class="icon-right float-right"></i>
+        <li :class="item.id==params.type?'active':''" @click="onSelectClick(item.id,item.businessName,'type')"
+            v-for="item in selections.type" :key="item" v-if="tabSwitch==0">
+          {{item.businessName}}
+          <i class="icon-right float-right" v-if="item.id==params.type"></i>
         </li>
-        <li @click="tabSwitch=-1">
-          test
-          <i class="icon-right float-right"></i>
+        <li :class="item.id==params.location?'active':''" @click="onSelectClick(item.id,item.cityName,'location')"
+            v-for="item in selections.location" v-if="tabSwitch==1">
+          {{item.cityName}}
+          <i class="icon-right float-right" v-if="item.id==params.location"></i>
         </li>
-        <li @click="tabSwitch=-1">
+        <li :class="item.id==params.job?'active':''" @click="onSelectClick(item.id,item.name,'job')"
+            v-for="item in selections.job" v-if="tabSwitch==2">
           test
-          <i class="icon-right float-right"></i>
+          <i class="icon-right float-right" v-if="item.id==params.job"></i>
         </li>
       </ul>
     </div>
@@ -64,6 +67,8 @@
 </template>
 <script>
   import {Tab, TabItem, Search} from 'vux'
+  import {getAddress, getType} from '../../common/utils'
+  import consts from '../../common/const'
   export default {
     components: {
       Tab,
@@ -74,7 +79,9 @@
       return {
         selections: {},
         params: {
-          search: ''
+          type: '',
+          location: '',
+          job: ''
         },
         showTabSelections: false,
         tabSwitch: -1,
@@ -82,17 +89,35 @@
           type: '全部',
           location: '全国',
           job: '所有行业'
+        },
+        selections: {
+          type: [],
+          location: [],
+          job: []
         }
       }
     },
     methods: {
       onTabClick: function (index) {
         this.tabSwitch = index
+      },
+      onSelectClick: function (id, name, field) {
+        this.params[field] = id
+        this.tabSelect[field] = name
+        this.tabSwitch = -1
+      },
+      refreshSelctions: function () {
+        getType(this).then((data) => {
+          this.selections.type = data
+        })
+        getAddress(this).then((data) => {
+          this.selections.location = data
+        })
       }
     },
     created: function () {
-      this.$watch('tabSwitch', function (tabSwitch) {
-        console.log(tabSwitch)
+      this.$on(consts.loadedEvent, function () {
+        this.refreshSelctions();
       })
     }
   }

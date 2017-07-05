@@ -1,31 +1,14 @@
 <template>
   <div>
     <tab class="top-nav-bar">
-      <tab-item selected @on-item-click="onTabClick">全部</tab-item>
-      <tab-item @on-item-click="onTabClick">策划</tab-item>
-      <tab-item @on-item-click="onTabClick">设计</tab-item>
-      <tab-item @on-item-click="onTabClick">活动</tab-item>
-      <tab-item @on-item-click="onTabClick">影视</tab-item>
+      <tab-item selected @on-item-click="onTabClick(0)">全部</tab-item>
+      <tab-item @on-item-click="onTabClick(item)" v-for="item in selections.type" :key="item">{{item.businessName}}</tab-item>
     </tab>
-    <!--<button-tab v-model="type" class="top-nav-bar">-->
-      <!--<button-tab-item>全部</button-tab-item>-->
-      <!--<button-tab-item>策划</button-tab-item>-->
-      <!--<button-tab-item>设计</button-tab-item>-->
-      <!--<button-tab-item>活动</button-tab-item>-->
-      <!--<button-tab-item>影视</button-tab-item>-->
-    <!--</button-tab>-->
-    <!--<mt-navbar v-model="type" fixed class="top-nav-bar">-->
-    <!--<mt-tab-item id="1">全部</mt-tab-item>-->
-    <!--<mt-tab-item id="2">策划</mt-tab-item>-->
-    <!--<mt-tab-item id="3">设计</mt-tab-item>-->
-    <!--<mt-tab-item id="4">活动</mt-tab-item>-->
-    <!--<mt-tab-item id="5">影视</mt-tab-item>-->
-    <!--</mt-navbar>-->
     <div class="data-list service-list">
-      <div class="data-item">
+      <div class="data-item" v-for="(data,index) in dataList">
         <img class="item-img" src="/static/img/01.jpg">
         <div class="content">
-          <label>品牌微电影定制</label><br/>
+          <label>{{data.businessName}}{{data.businessCode}}</label><br/>
           <a class="fc-red">了解详情</a>
         </div>
       </div>
@@ -34,6 +17,7 @@
 </template>
 <script>
   import {Tab, TabItem} from 'vux'
+  import {getAddress, getType, each} from '../../common/utils'
   var config = {
     components: {
       Tab,
@@ -41,16 +25,34 @@
     },
     data: function () {
       return {
-        type: 0
+        type: 0,
+        dataList:[],
+        selections: {
+          type: []
+        }
       }
     },
     methods: {
-      onTabClick: function (index) {
-
+      onTabClick: function (item) {
+        if(item===0){
+        	this.dataList = [];
+          each(this.selections.type,(data,index)=>{
+          	this.dataList = this.dataList.concat(data.children)
+          })
+        }else{
+        	this.dataList = item.children
+        }
+        console.log(this.dataList)
+      },
+      refreshSelections:function(){
+        getType(this).then((data) => {
+          this.selections.type = data
+          this.onTabClick(0)
+        })
       }
     },
     created: function () {
-
+      this.refreshSelections()
     }
   }
   export default config

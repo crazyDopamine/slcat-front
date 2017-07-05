@@ -30,8 +30,7 @@
           {name: '服务', path: '/services'},
           {name: '任务大厅', path: '/taskList'},
           {name: '牛人短租', path: '/expertList'},
-          {name: '我的任务', path: '/myTask/1'},
-          {name: '我的工作', path: '/myTask/2'},
+          {name: '我的任务', path: '/myTask'},
           {name: '个人主页', path: '/userInfo'},
           {name: '免费发布任务', path: '/taskAdd'},
           {name: '设置', path: '/set'}

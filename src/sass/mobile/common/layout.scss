@@ -1,82 +1,89 @@
-$headerHeight:40px;
+$headerHeight: 40px;
 
-.slc-header{
+.slc-header {
   background-color: $bg;
-  height:$headerHeight;
-  border-bottom:1px solid $borderColor;
-  padding:0;
-  .vux-header-left a{
-    color:$themeColor;
+  height: $headerHeight;
+  border-bottom: 1px solid $borderColor;
+  padding: 0;
+  .vux-header-left a {
+    color: $themeColor;
   }
-  .vux-header-title{
-    margin:0;
-    img{
-      height:80%;
+  .vux-header-title {
+    margin: 0;
+    img {
+      height: 80%;
     }
   }
 }
 
-
-.top-nav-bar{
+.top-nav-bar {
   background-color: $bg;
   //border-bottom:1px solid $borderColor;
-  height:40px;
+  height: 40px;
   z-index: $zIndex-component;
-  .vux-tab-ink-bar{
+  .vux-tab-ink-bar {
     background-color: $themeColor;
   }
-  .vux-tab-item.vux-tab-selected{
-    color:$themeColor;
-    border-bottom:3px solid $themeColor;
+  .vux-tab-item.vux-tab-selected {
+    color: $themeColor;
+    border-bottom: 3px solid $themeColor;
   }
 }
 
-.top-nav-bar.no-bottom-border a.vux-button-tab-item.vux-button-group-current{
-  border-bottom:0;
+.top-nav-bar.no-selected {
+  .vux-tab-item.vux-tab-selected{
+    color:$fontColor;
+    border-bottom: 0;
+  }
+  .vux-tab-ink-bar {
+    display: none!important;
+  }
 }
 
-.detail-area{
+.detail-area {
   position: relative;
   line-height: 30px;
-  padding:$paddingY $paddingX;
-  .content{
+  padding: $paddingY $paddingX;
+  .content {
     line-height: 20px;
-    color:$gray;
+    color: $gray;
   }
-  .task-description{
-    margin-top:30px;
-    .title{
+  .task-description {
+    margin-top: 30px;
+    .title {
       display: inline-block;
       font-size: $fontSize-xxl;
-      line-height:40px;
-      border-bottom:2px solid $grayL;
+      line-height: 40px;
+      border-bottom: 2px solid $grayL;
     }
   }
 }
 
-.flex{
+.flex {
   display: flex;
-  >*{
+  > * {
     flex-grow: 1;
   }
 }
 
-.main-container{
-  width:100%;
-  height:100%;
+.main-container {
+  width: 100%;
+  height: 100%;
 }
-.page-container{
+
+.page-container {
   background-color: $grayLBg;
-  padding:$paddingY 0;
-  .container{
-    margin:$paddingY $paddingX 0 $paddingX;
-    padding:$paddingY $paddingX;
+  padding: $paddingY 0;
+  .container {
+    margin: $paddingY $paddingX 0 $paddingX;
+    padding: $paddingY $paddingX;
     background-color: $white;
-    &:first-child{
-      margin-top:0;
+    &:first-child {
+      margin-top: 0;
     }
   }
 }
-.content-page{
-  padding:$paddingY $paddingY;
+
+.content-page {
+  padding: $paddingY $paddingY;
 }
