@@ -9,7 +9,7 @@
         <img class="item-img" src="/static/img/01.jpg">
         <div class="content">
           <label>{{data.businessName}}{{data.businessCode}}</label><br/>
-          <a class="fc-red">了解详情</a>
+          <router-link to="/serviceDetail/1" class="fc-red">了解详情</router-link>
         </div>
       </div>
     </div>

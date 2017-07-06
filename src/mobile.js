@@ -20,6 +20,7 @@ import taskDetail from './components/mobile/taskDetail.vue'
 import taskList from './components/mobile/taskList.vue'
 import userInfo from './components/mobile/userInfo.vue'
 import userInfoEdit from './components/mobile/userInfoEdit.vue'
+import serviceDetail from './components/mobile/serviceDetail.vue'
 import './sass/mobile/style.scss'
 import {dateFilter, numberFilter} from './common/filters'
 
@@ -49,7 +50,8 @@ const routes = [
   {path: '/userInfoEdit', component: userInfoEdit},
   {path: '/aboutMeEdit', component: aboutMeEdit},
   {path: '/productionAdd', component: productionAdd},
-  {path: '/skillEdit', component: skillEdit}
+  {path: '/skillEdit', component: skillEdit},
+  {path: '/serviceDetail/:code', component: serviceDetail}
 ]
 
 const router = new VueRouter({
