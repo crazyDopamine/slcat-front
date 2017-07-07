@@ -181,6 +181,14 @@ var getAddress = function (vm) {
   return promise
 }
 
+Array.prototype.contains = function (item) {
+  var result = false
+  each(this, (data, index)=> {
+    if (data == item)result = true
+  })
+  return result
+}
+
 export {
   mix,
   each,
