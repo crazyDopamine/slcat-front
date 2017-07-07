@@ -11,28 +11,61 @@ import consts from './const';
 //   validateResult: {},
 //   fieldClass: {}
 // };
-
+//身份证号码验证
+var isIdCardNo = function (num) {
+  var len = num.length,
+    re;
+  if (len == 15) {
+    re = new RegExp(/^(\d{6})()?(\d{2})(\d{2})(\d{2})(\d{2})(\w)$/);
+  } else if (len == 18) {
+    re = new RegExp(/^(\d{6})()?(\d{4})(\d{2})(\d{2})(\d{3})(\w)$/);
+  } else {
+    //alert("输入的数字位数不对。");
+    return false;
+  }
+  var a = num.match(re);
+  if (a != null) {
+    if (len == 15) {
+      var D = new Date("19" + a[3] + "/" + a[4] + "/" + a[5]);
+      var B = D.getYear() == a[3] && (D.getMonth() + 1) == a[4] && D.getDate() == a[5];
+    }
+    else {
+      var D = new Date(a[3] + "/" + a[4] + "/" + a[5]);
+      var B = D.getFullYear() == a[3] && (D.getMonth() + 1) == a[4] && D.getDate() == a[5];
+    }
+    if (!B) {
+      //alert("输入的身份证号 "+ a[0] +" 里出生日期不对。");
+      return false;
+    }
+  }
+  if (!re.test(num)) {
+    //alert("身份证最后一位只能是数字和字母。");
+    return false;
+  }
+  return true;
+}
 /**
  * 表单验证初始化
  * @param formNode
  */
-var validateInit = function (formNode) {
-  var fieldClass = {};
-  var validateResult = {};
-  if (!formNode)formNode = this;
-  each(formNode.rule, function (rule, name) {
-    if (rule.array) {
-      fieldClass[name] = [];
-      fieldClass[name + '_children'] = [];
-      validateResult[name] = {children: []};
-    } else {
-      fieldClass[name] = [];
-      validateResult[name] = {};
-    }
-  });
-  formNode.fieldClass = fieldClass;
-  formNode.validateResult = validateResult;
-}
+var
+  validateInit = function (formNode) {
+    var fieldClass = {};
+    var validateResult = {};
+    if (!formNode)formNode = this;
+    each(formNode.rule, function (rule, name) {
+      if (rule.array) {
+        fieldClass[name] = [];
+        fieldClass[name + '_children'] = [];
+        validateResult[name] = {children: []};
+      } else {
+        fieldClass[name] = [];
+        validateResult[name] = {};
+      }
+    });
+    formNode.fieldClass = fieldClass;
+    formNode.validateResult = validateResult;
+  }
 /**
  * 数组class初始化
  * @param rule
@@ -202,10 +235,10 @@ var validateField = function (name, options, formNode) {
   if (!fieldClass[name]) {
     fieldClass[name] = [];
   }
-  if (fieldClass[name].clear){
+  if (fieldClass[name].clear) {
     fieldClass[name].clear();
-  }else{
-    fieldClass[name]=[]
+  } else {
+    fieldClass[name] = []
   }
   validateResult[name] = {
     dirty: true,
@@ -478,7 +511,7 @@ var validateField = function (name, options, formNode) {
     var equalField = fieldSet[rule.equalTo.name];
     var equalValue;
     if (equalField != null && equalField.id) {
-      equalValue = utils.vmodels[equalField.id].value
+      equalValue = avalon.vmodels[equalField.id].value
     } else if (equalField != null && equalField.$model !== undefined) {
       equalValue = equalField.$model;
     } else if (equalField != null) {
@@ -506,7 +539,7 @@ var validateField = function (name, options, formNode) {
     }
   }
   if (rule.phoneNumber) {
-    if (!value.match(utils.reMobile)) {
+    if (!value.match(/^(1[34578]\d{9})$/)) {
       if (!rule.msg) {
         if (msg != rule.label) msg += ',';
         msg += '手机号码格式错误';
@@ -525,7 +558,7 @@ var validateField = function (name, options, formNode) {
     }
   }
   if (rule.idCardNo) {
-    if (!utils.isIdCardNo(value)) {
+    if (!isIdCardNo(value)) {
       if (!rule.msg) {
         if (msg != rule.label) msg += ',';
         msg += '身份证格式错误';
@@ -544,7 +577,7 @@ var validateField = function (name, options, formNode) {
     }
   }
   if (rule.email) {
-    var reg = utils.reMobileEmail;
+    var reg = /^[a-zA-Z0-9_\.\-]+@(([a-zA-Z0-9])+\.)+([a-zA-Z0-9]{2,4})$/;
     if (!reg.test(value)) {
       if (!rule.msg) {
         if (msg != rule.label) msg += ',';
@@ -609,9 +642,9 @@ var validateField = function (name, options, formNode) {
   console.log(fieldClass[name])
   if (fieldClass[name].length > 0) {
     validateResult[name].valid = false;
-    if(!fieldClass[name].contains(self.errorClass))fieldClass[name].push(self.errorClass);
+    if (!fieldClass[name].contains(self.errorClass))fieldClass[name].push(self.errorClass);
     if (validateResult[name].array !== false && options && options.showMsg) {
-      window.vm.$vux.toast.text(msg+'!', 'bottom')
+      window.vm.$vux.toast.text(msg + '!', 'bottom')
     }
     return false;
   }
