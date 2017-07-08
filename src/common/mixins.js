@@ -1,5 +1,5 @@
 import consts from './const'
-import {rspHandler, url} from './utils'
+import {rspHandler, url, toKV, toMap} from './utils'
 var loadedMixins = {
   data: function () {
     return {
@@ -57,7 +57,9 @@ var common = {
   },
   methods: {
     rspHandler: rspHandler,
-    url: url
+    url: url,
+    toKV:toKV,
+    toMap:toMap
   }
 }
 

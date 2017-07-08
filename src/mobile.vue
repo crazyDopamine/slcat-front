@@ -1,14 +1,5 @@
 <template>
-  <div id="app">
-    <x-header class="slc-header">
-      <img src="/static/img/solomioLOGO.png">
-      <a slot="overwrite-left" class="icon-nav" @click="showMenu()"></a>
-    </x-header>
-    <nav-left ref="navLeft" :path="path"></nav-left>
-    <div class="main-container">
-      <router-view></router-view>
-    </div>
-  </div>
+
 </template>
 
 <script>
@@ -50,9 +41,6 @@
 </script>
 
 <style lang="less">
-  @import '~vux/src/styles/reset.less';
 
-  body {
-    background-color: #fbf9fe;
-  }
+
 </style>

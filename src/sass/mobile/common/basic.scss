@@ -281,6 +281,10 @@ input,textarea{
     font-size:$fontSize-s;
 }
 
+.bg-white{
+  background-color: $white !important;
+}
+
 $fontColors:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green:$green,fc-theme:$themeColor,fc-white:$white);
 @each $fc, $color in $fontColors {
     .#{$fc} {

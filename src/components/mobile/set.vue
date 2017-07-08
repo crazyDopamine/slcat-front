@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container bg-white">
     <ul v-if="tabSwitch==0">
       <li class="sl-cell" @click="tabSwitch=1">常见问题<i class="icon-arrow-right float-right"></i></li>
       <li class="sl-cell" @click="tabSwitch=2">关于我们<i class="icon-arrow-right float-right"></i></li>

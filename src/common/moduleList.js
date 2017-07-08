@@ -1,4 +1,4 @@
-import {mix, each, url, rspHandler} from './utils'
+import {mix, each, url, rspHandler, filteNullParams} from './utils'
 import consts from './const'
 var listConfig = {
   url: '',
@@ -16,7 +16,7 @@ export default {
       if (!listNode) {
         listNode = this.list
       }
-      listNode.options = options
+      listNode.options = mix({},listNode.options,options)
       var list = mix({}, listConfig, listNode)
       var self = this
       each(list, function (data, key) {
@@ -31,7 +31,7 @@ export default {
       }
       var params = {}
       if (listNode.page) {
-        params = {page: listNode.page, pageSize: listNode.pageSize}
+        params = {pageNumber: listNode.page, pageSize: listNode.pageSize}
       }
       params = mix(params, listNode.params)
       listNode.selected = {}
@@ -52,6 +52,7 @@ export default {
       this.$vux.loading.show({
         text: '加载中'
       })
+      filteNullParams(params)
       if (listNode.options.mothed) {
         this.$http.post(url(listNode.url), params, {
           // contentType: 'application/json'

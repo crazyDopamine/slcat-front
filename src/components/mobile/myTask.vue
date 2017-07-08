@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container">
     <tab class="top-nav-bar">
       <tab-item selected @on-item-click="onTabClick">发出</tab-item>
       <tab-item @on-item-click="onTabClick">接受</tab-item>

@@ -1,5 +1,5 @@
 <template>
-  <div class="task-add">
+  <div class="task-add page-container">
     <div class="form-area">
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">1</span>选择你的项目类型<span class="fc-red">*</span></label><br/>

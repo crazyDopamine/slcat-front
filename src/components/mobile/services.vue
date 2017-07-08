@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container">
     <tab class="top-nav-bar">
       <tab-item selected @on-item-click="onTabClick(0)">全部</tab-item>
       <tab-item @on-item-click="onTabClick(item)" v-for="item in selections.type" :key="item">{{item.businessName}}</tab-item>
@@ -42,7 +42,6 @@
         }else{
         	this.dataList = item.children
         }
-        console.log(this.dataList)
       },
       refreshSelections:function(){
         getType(this).then((data) => {

@@ -4,8 +4,7 @@ import Vue from 'vue'
 import FastClick from 'fastclick'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
-import {loadedMixins} from './common/mixins'
-import App from './mobile.vue'
+import {loadedMixins, common} from './common/mixins'
 import aboutMeEdit from './components/mobile/aboutMeEdit.vue'
 import expertDetail from './components/mobile/expertDetail.vue'
 import expertList from './components/mobile/expertList.vue'
@@ -21,17 +20,25 @@ import taskList from './components/mobile/taskList.vue'
 import userInfo from './components/mobile/userInfo.vue'
 import userInfoEdit from './components/mobile/userInfoEdit.vue'
 import serviceDetail from './components/mobile/serviceDetail.vue'
-import './sass/mobile/style.scss'
+import vueg from 'vueg'
 import {dateFilter, numberFilter} from './common/filters'
+import {httpInterceptor} from './common/interceptors'
+import navLeft from './components/mobile/widget/navLeft.vue'
+import 'vux/src/styles/reset.less';
+import 'vueg/css/transition-min.css'
+import './sass/mobile/style.scss'
 
-import {ToastPlugin, LoadingPlugin} from 'vux'
+import {ToastPlugin, LoadingPlugin, XHeader, Icon} from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
 Vue.use(VueRouter)
-Vue.use(VueResource)
 Vue.mixin(loadedMixins)
+Vue.mixin(common)
 Vue.filter('date', dateFilter)
 Vue.filter('number', numberFilter)
+Vue.use(VueResource)
+Vue.http.interceptors.push(httpInterceptor)
+
 
 // Vue.http.options.emulateJSON = true
 
@@ -47,6 +54,7 @@ const routes = [
   {path: '/taskDetail/:id', component: taskDetail},
   {path: '/taskList', component: taskList},
   {path: '/userInfo', component: userInfo},
+  {path: '/userInfo/:id', component: userInfo},
   {path: '/userInfoEdit', component: userInfoEdit},
   {path: '/aboutMeEdit', component: aboutMeEdit},
   {path: '/productionAdd', component: productionAdd},
@@ -57,9 +65,46 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
+Vue.use(vueg, router, {
+  forwardAnim: 'fadeInRight',
+  backAnim: 'fadeInleft'
+})
 let config = {
   router,
-  render: h => h(App)
+  components: {Icon, XHeader, 'nav-left': navLeft},
+  name: 'app',
+  data: function () {
+    return {
+      path: '',
+      showNav: false
+    }
+  },
+  methods: {
+    showMenu: function (show) {
+      this.$refs.navLeft.show = !this.$refs.navLeft.show
+    },
+    login: function () {
+      setTimeout(() => {
+        this.userInfo = {}
+        this.userInfoLoaded = this.consts.loadedStatus
+        this.$emit(this.consts.loadedEvent, {}, this.consts.loadedStatus)
+      }, 100)
+    }
+  },
+  created: function () {
+    var self = this
+    this.login()
+    this.path = this.$route.path
+    this.$router.afterEach(function (to, from) {
+      self.path = to.path
+      self.$refs.navLeft.show = false
+    })
+    router.afterEach(route => {
+      var container = this.$el.querySelector('.main-container');
+      container.scrollTop = 0;
+    })
+  }
 }
 
 FastClick.attach(document.body)
@@ -67,4 +112,4 @@ FastClick.attach(document.body)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-window.vm = new Vue(config).$mount('#app-box')
+window.vm = new Vue(config).$mount('#app')

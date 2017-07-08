@@ -103,6 +103,16 @@ var rspHandler = function (callback) {
   }
 }
 
+var filteNullParams = function(obj){
+  if(typeof obj !== 'object')return
+  each(obj,function(value,key){
+    if(value===''||value===null){
+      delete obj[key]
+    }
+  })
+
+}
+
 window.dicMap = {}
 window.dicLoaded = {}
 var selections = function (code, vm) {
@@ -188,6 +198,12 @@ Array.prototype.contains = function (item) {
   })
   return result
 }
+Array.prototype.each = function (callback) {
+    for (let i = 0; i < this.length; i++) {
+      callback(this[i], i)
+    }
+}
+
 
 export {
   mix,
@@ -200,5 +216,6 @@ export {
   rspHandler,
   toMap,
   getAddress,
-  getSkill
+  getSkill,
+  filteNullParams
 }

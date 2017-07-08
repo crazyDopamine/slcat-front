@@ -639,7 +639,6 @@ var validateField = function (name, options, formNode) {
   if (rule.fn) {
     rule.fn(value, field);
   }
-  console.log(fieldClass[name])
   if (fieldClass[name].length > 0) {
     validateResult[name].valid = false;
     if (!fieldClass[name].contains(self.errorClass))fieldClass[name].push(self.errorClass);
@@ -669,5 +668,8 @@ export default {
     getValues: getValues,
     setValues: setValues,
     reset: reset
+  },
+  created:function(){
+    this.validateInit()
   }
 }

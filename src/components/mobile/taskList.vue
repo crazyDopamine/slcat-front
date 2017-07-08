@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container bg-white">
     <tab class="top-nav-bar" v-show="typeLoaded">
       <tab-item selected @on-item-click="onTabClick">全部</tab-item>
       <tab-item v-for="item in selections.type" @on-item-click="onTabClick" :key="item">{{item.businessName}}

@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="IE=edge,Chrome=1" http-equiv="X-UA-Compatible">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-    <meta content="webkit" name="renderer">
-    <title>有色在线</title>
-    <link rel="stylesheet" href="/static/font/iconfont.css">
-    <script type="text/javascript" src="/static/g_config.js"></script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="IE=edge,Chrome=1" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <meta content="webkit" name="renderer">
+  <title>有色在线</title>
+  <link rel="stylesheet" href="/static/font/iconfont.css">
+  <script type="text/javascript" src="/static/g_config.js"></script>
 </head>
 <body>
-    <div class="" id="app-box" v-show="true" style="display:none;">
-
-    </div>
+<div id="app" v-show="true" style="display:none;">
+  <x-header class="slc-header">
+    <img src="/static/img/solomioLOGO.png">
+    <a slot="overwrite-left" class="icon-nav" @click="showMenu()"></a>
+  </x-header>
+  <nav-left ref="navLeft" :path="path"></nav-left>
+  <div class="main-container">
+    <router-view></router-view>
+  </div>
+</div>
 </body>
 </html>

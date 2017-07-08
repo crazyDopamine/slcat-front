@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-container">
     <div style="position: relative">
       <img src="/static/img/taskDetail-bg.png" style="width: 100%;height: 100px;">
       <span style="position: absolute;bottom:5px;left:15px;">
