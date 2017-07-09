@@ -103,24 +103,28 @@ var rspHandler = function (callback) {
   }
 }
 
-var filteNullParams = function(obj){
-  if(typeof obj !== 'object')return
-  each(obj,function(value,key){
-    if(value===''||value===null){
+var filteNullParams = function (obj) {
+  if (typeof obj !== 'object')return
+  each(obj, function (value, key) {
+    if (value === '' || value === null) {
       delete obj[key]
     }
   })
-
 }
 
 window.dicMap = {}
+window.dicMapMap = {}
 window.dicLoaded = {}
-var selections = function (code, vm) {
+var selections = function (code) {
   var promise = new Promise(function (resolve, reject) {
     if (!window.dicLoaded[code]) {
       window.dicLoaded[code] = 1
-      vm.$http.get(url('dataDictionary/getByCode/' + code)).then(rspHandler(function (data) {
+      window.vm.$http.get(url('dataDictionary/getByCode/' + code)).then(rspHandler(function (data) {
         window.dicMap[code] = data
+        window.dicMapMap[code] = {}
+        data.each((item, index) => {
+          window.dicMapMap[code][item.value] = item
+        })
         window.dicLoaded[code] = 2
         resolve(window.dicMap[code])
       }))
@@ -193,15 +197,15 @@ var getAddress = function (vm) {
 
 Array.prototype.contains = function (item) {
   var result = false
-  each(this, (data, index)=> {
-    if (data == item)result = true
+  each(this, (data, index) => {
+    if (data == item) result = true
   })
   return result
 }
 Array.prototype.each = function (callback) {
-    for (let i = 0; i < this.length; i++) {
-      callback(this[i], i)
-    }
+  for (let i = 0; i < this.length; i++) {
+    callback(this[i], i)
+  }
 }
 
 

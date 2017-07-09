@@ -25,10 +25,10 @@
           </li>
         </ul>
         <p style="margin-top:30px">
-          项目类型：{{data.recruitBusiness?data.recruitBusiness.parentBusiness.businessName:''}}/{{data.recruitBusiness?data.recruitBusiness.businessName:''}}<br/>
+          项目类型：{{data.recruitBusiness ? data.recruitBusiness.parentBusiness.businessName : ''}}/{{data.recruitBusiness ? data.recruitBusiness.businessName : ''}}<br/>
           公司名称：{{data.companyName}}<br/>
-          发布时间：{{data.updatedAt | date('yyyy-MM-dd HH:mm:ss')}}<br/>
-          倾向让谁完成：{{data.trendComplete}}<br/>
+          发布时间：{{data.updatedAt | date('YYYY-MM-DD HH:mm:ss')}}<br/>
+          倾向让谁完成：{{data.trendComplete | selections(this.trendCompleteMap)}}<br/>
         </p>
         <ul class="gray-icons margin-top-20">
           <li v-for="item in data.baseSkills">{{item.skillName}}</li>
@@ -43,32 +43,43 @@
         <!--最好有类似风格案例，并愿意沟通需求。-->
         <!--</p>-->
       </div>
-      <a class="btn btn-large btn-theme-round margin-top-20">发送申请意向</a>
+      <a class="btn btn-large btn-theme-round margin-top-20" @click="apply()">发送申请意向</a>
     </div>
   </div>
 </template>
 <script>
   import consts from '../../common/const'
-  import {url, rspHandler} from '../../common/utils'
+  import {url, rspHandler, selections} from '../../common/utils'
   var config = {
     data: function () {
       return {
-        data: {}
+        data: {},
+        trendCompleteMap:{}
       }
     },
     methods: {
       apply: function () {
-//                this.$http.post(this.url('employer/queryDetail/'+this.$route.params.id)).then(this.rspHandler(function(data){
-//                    this.data = data;
-//                }));
+        this.$vux.loading.show({
+          text: '正在提交'
+        })
+        this.$http.get(this.url('techMaster/applyEmployer/' + this.$route.params.id)).then(this.rspHandler((data) => {
+          this.$vux.loading.hide()
+          this.$vux.toast.text('提交成功', 'bottom');
+        }))
+      },
+      refresh: function () {
+        this.$http.get(url('employer/queryDetail/' + this.$route.params.id)).then(rspHandler((data) => {
+          this.data = data
+        }))
+        selections('100').then((data,map) => {
+        	this.trendCompleteMap = window.dicMapMap['100']
+        })
+
       }
     },
     created: function () {
-      var self = this
       this.$on(consts.loadedEvent, function () {
-        this.$http.get(url('employer/queryDetail/' + this.$route.params.id)).then(rspHandler(function (data) {
-          self.data = data
-        }))
+        this.refresh()
       })
     }
   }

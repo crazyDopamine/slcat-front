@@ -28,9 +28,12 @@ $headerHeight: 40px;
   .vux-tab-ink-bar {
     background-color: $themeColor;
   }
-  .vux-tab-item.vux-tab-selected {
-    color: $themeColor;
-    border-bottom: 3px solid $themeColor;
+  .vux-tab-item{
+    overflow: hidden;
+    .vux-tab-selected {
+      color: $themeColor;
+      border-bottom: 3px solid $themeColor;
+    }
   }
 }
 

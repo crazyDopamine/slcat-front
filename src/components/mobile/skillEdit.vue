@@ -5,7 +5,8 @@
       <div class="skill-edit-container margin-bottom-20" v-for="(skills,key) in skillMap">
         <label class="fc-theme fs-xl">{{key}}</label><br/>
         <ul class="gray-border-icons margin-top-10 margin-bottom-10">
-          <li v-for="data in skills" class="fs-l" :class="selected[data.id]?'selected':''" @click="selectSkill(data.id)">
+          <li v-for="data in skills" class="fs-l" :class="selected[data.id]?'selected':''"
+              @click="selectSkill(data.id)">
             {{data.skillName}}
           </li>
         </ul>
@@ -33,10 +34,13 @@
           this.skillList = data;
           this.skillMap = {}
           data.each((item, index) => {
-          	if(!this.skillMap[item.skillType]){
-          		this.skillMap[item.skillType] = []
+            if (!this.skillMap[item.skillType]) {
+              this.skillMap[item.skillType] = []
             }
             this.skillMap[item.skillType].push(item)
+          })
+          this.userInfo.baseSkillList.each((item, index) => {
+          	this.$set(this.selected,item.id,true)
           })
         }))
       },
@@ -44,10 +48,10 @@
         this.$set(this.selected, id, !this.selected[id])
       },
       submit: function () {
-        var params = {skillList: []}
+        var params = {skills: []}
         each(this.selected, (value, key) => {
           if (value) {
-            params.skillList.push(key)
+            params.skills.push(key)
           }
         })
         this.$vux.loading.show({

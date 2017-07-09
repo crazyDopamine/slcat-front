@@ -46,27 +46,28 @@
     data: function () {
       return {
         list: {
-          url: 'employer/queryEmpViewHeader',
+          url: 'techMaster/getEmployer',
           params: {
-            status: '待审核',
+            status: 'send',
           }
         },
         selections: {
-          type: []
+          status: []
         },
       }
     },
     methods: {
       onTabClick: function (index) {
         if (index === 0) {
-          this.list.params.type = index
+          this.list.params.status = 'send'
+        }else if(index === 1){
+          this.list.params.status = 'receive'
         }
         this.refreshList(1)
       }
     },
     created: function () {
-    	console.log(this.$route.params)
-      this.initList(this.list, {mothed: 'post'})
+      this.initList(this.list)
       this.$on(consts.loadedEvent, function () {
         this.refreshList(1)
       })

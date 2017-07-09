@@ -21,7 +21,7 @@ import userInfo from './components/mobile/userInfo.vue'
 import userInfoEdit from './components/mobile/userInfoEdit.vue'
 import serviceDetail from './components/mobile/serviceDetail.vue'
 import vueg from 'vueg'
-import {dateFilter, numberFilter} from './common/filters'
+import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
 import navLeft from './components/mobile/widget/navLeft.vue'
 import 'vux/src/styles/reset.less';
@@ -34,8 +34,7 @@ Vue.use(ToastPlugin)
 Vue.use(VueRouter)
 Vue.mixin(loadedMixins)
 Vue.mixin(common)
-Vue.filter('date', dateFilter)
-Vue.filter('number', numberFilter)
+Vue.use(filters)
 Vue.use(VueResource)
 Vue.http.interceptors.push(httpInterceptor)
 
@@ -86,10 +85,15 @@ let config = {
     },
     login: function () {
       setTimeout(() => {
-        this.userInfo = {}
-        this.userInfoLoaded = this.consts.loadedStatus
-        this.$emit(this.consts.loadedEvent, {}, this.consts.loadedStatus)
+        this.getUserInfo()
       }, 100)
+    },
+    getUserInfo: function () {
+      this.$http.get(this.url('techMaster/queryMasterDetail')).then(this.rspHandler((data) => {
+        this.userInfo = data
+        this.userInfoLoaded = 1
+        this.$emit(this.consts.loadedEvent, data, this.consts.loadedStatus)
+      }))
     }
   },
   created: function () {

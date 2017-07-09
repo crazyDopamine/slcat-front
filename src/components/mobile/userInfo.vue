@@ -46,7 +46,7 @@
           class="icon-add"></i>添加
         </router-link>
         <label class="fs-xxl">作品案例</label><br/>
-        <p class="text-left margin-top-10" v-if="!data.worksCases">至少添加2个以上的作品案例才可以提交审核</p>
+        <p class="text-left margin-top-10" v-if="!data.worksCases||data.worksCases.length<2">至少添加2个以上的作品案例才可以提交审核</p>
         <div class="text-left margin-top-10" v-if="data.worksCases">
           <div v-for="item in data.worksCases">{{item.workName}}<a class="float-right">删除</a></div>
         </div>
@@ -68,9 +68,7 @@
             this.data = data
           }))
         }else{
-          this.$http.get(this.url('techMaster/queryMasterDetail')).then(this.rspHandler((data) => {
-            this.data = data
-          }))
+        	this.data = this.userInfo
         }
       }
     },

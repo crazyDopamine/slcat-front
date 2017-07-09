@@ -9,7 +9,7 @@
         @on-submit="refreshList(1)"
         placeholder="搜索专长或其他关键字"></search>
       <tab class="top-nav-bar border-bottom-0 no-selected">
-        <tab-item selected @on-item-click="onTabClick">{{tabSelect.type}}
+        <tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}
           <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
         <tab-item @on-item-click="onTabClick">{{tabSelect.cityId}}
           <i class="margin-left-5" :class="tabSwitch==1?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
@@ -19,10 +19,10 @@
     </div>
     <popup v-model="selectionsShow" class="tab-selections" position="bottom" @on-hide="tabSwitch=-1">
       <ul class="selections-list">
-        <li :class="item.id==list.params.type?'active':''" @click="onSelectClick(item.id,item.businessName,'type')"
-            v-for="item in selections.type" :key="item" v-if="tabSwitch==0">
+        <li :class="item.id==list.params.businessParentId?'active':''" @click="onSelectClick(item.id,item.businessName,'businessParentId')"
+            v-for="item in selections.businessParentId" :key="item" v-if="tabSwitch==0">
           {{item.businessName}}
-          <i class="icon-right float-right" v-if="item.id==list.params.type"></i>
+          <i class="icon-right float-right" v-if="item.id==list.params.businessParentId"></i>
         </li>
         <li :class="item.id==list.params.cityId?'active':''" @click="onSelectClick(item.id,item.cityName,'cityId')"
             v-for="item in selections.cityId" v-if="tabSwitch==1">
@@ -44,7 +44,7 @@
             <h1>{{data.nickName}}</h1>
             <i class="icon-location"></i><span>{{data.cityName}}</span>
             <i class="icon-time margin-left-5"></i><span>{{data.workExperience}}</span>
-            <i class="icon-time margin-left-5"></i><span>{{data.industryName}}</span>
+            <img src="static/img/icon-job.png" class="img-icon margin-left-5"></img><span>{{data.industryName}}</span>
           </div>
         </div>
         <div class="expert-middle">
@@ -86,7 +86,7 @@
           url: 'techMaster/queryMasterList',
           params: {
             queryParam: '',
-            type: '',
+            businessParentId: '',
             cityId: '',
             industryId: ''
           },
@@ -94,12 +94,12 @@
         showTabSelections: false,
         tabSwitch: -1,
         tabSelect: {
-          type: '全部',
+          businessParentId: '全部',
           cityId: '全国',
           industryId: '所有行业'
         },
         selections: {
-          type: [],
+          businessParentId: [],
           cityId: [],
           industryId: []
         }
@@ -119,11 +119,11 @@
       },
       refreshSelctions: function () {
         getType(this).then((data) => {
-          this.selections.type = []
-          this.selections.type.push({id: '', businessName: "全部"})
+          this.selections.businessParentId = []
+          this.selections.businessParentId.push({id: '', businessName: "全部"})
           each(data, (item, index) => {
-            this.selections.type.push(item)
-            this.selections.type = this.selections.type.concat(item.children)
+            this.selections.businessParentId.push(item)
+            this.selections.businessParentId = this.selections.businessParentId.concat(item.children)
           })
         })
         getAddress(this).then((data) => {
