@@ -25,7 +25,10 @@ ul,li{
     padding:0;
 }
 input{
-    -webkit-box-shadow:0 0 0px 1000px #FFF inset;
+    -webkit-box-shadow:0 0 0 0 #FFF inset;
+    box-shadow:0 0 0 0 #FFF inset;
+    border:1px solid $borderColor;
+    padding:0 10px;
 }
 .font-weight{
     font-weight:bold!important;
@@ -92,6 +95,10 @@ input{
 }
 .border-0{
     border:none!important;
+}
+.border-left-red-5{
+    border-left:5px solid $red;
+    padding-left:10px;
 }
 .margin-bottom-0{
     margin-bottom:0!important;
@@ -263,14 +270,14 @@ input{
     font-size:$fontSize-s;
 }
 
-$fontColor:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green:$green);
+$fontColor:(fc-gray-d:$grayD,fc-gray:$gray,fc-gray-l:$grayL,fc-red:$red,fc-green:$green,fc-white:$white);
 @each $fontColor, $color in $fontColor {
     .#{$fontColor} {
         color: $color !important;
     }
 }
 
-@for $i from 1 to 24{
+@for $i from 1 to 25{
     .col-#{$i}{
         float:left;
         width:100% / 24 * $i;

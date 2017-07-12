@@ -1,0 +1,58 @@
+.form-area{
+  background-color:$white;
+  padding:30px;
+  .form-row{
+    position:relative;
+    line-height:30px;
+    font-size:$fontSize-m;
+    &:not(:first-child){
+      margin-top:20px;
+    }
+  }
+}
+
+.ivu-modal{
+  .form-area{
+    background-color:$white;
+    padding:0;
+    .form-row{
+      &:not(:first-child){
+        margin-top:20px;
+      }
+    }
+  }
+}
+
+.d-select.ivu-select{
+  height:35px;
+  line-height: 33px;
+  .ivu-select-selection{
+    padding:1px;
+    height:35px;
+  }
+}
+
+.ivu-checkbox-checked{
+  &:hover{
+    .ivu-checkbox-inner{
+      border-color: $orange;
+    }
+  }
+  .ivu-checkbox-inner{
+    border-color: $orange;
+    background-color: $orange;
+  }
+}
+
+.ivu-radio-checked{
+  .ivu-radio-inner{
+    border-color:$orange;
+    &:after{
+      background-color:$orange;
+    }
+  }
+}
+
+.ivu-select-dropdown{
+  position:absolute!important;
+}

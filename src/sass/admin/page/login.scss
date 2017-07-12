@@ -1,0 +1,47 @@
+.login-modal{
+  z-index:$zIndex-modal;
+  color:$white;
+  .ivu-modal-mask{
+    background-image:url('/dist/img/bg.jpg');
+    background-size:100%;
+  }
+  .ivu-modal{
+    top:400px;
+    .ivu-modal-content{
+      background-color:$blackBg;
+    }
+    .ivu-modal-header{
+      img{
+        width:180px;
+      }
+      border-bottom:0;
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      margin-left: -110px;
+    }
+    .ivu-modal-footer{
+      border-top:0;
+      padding:0 40px 50px 40px;
+    }
+    .ivu-modal-body{
+      padding:20px 40px;
+      line-height:35px;
+      i{
+        color:$gray;
+        line-height:35px;
+      }
+      h1{
+        font-size:$fontSize-xl;
+        font-weight:normal;
+      }
+      input{
+        border-radius:4px;
+        padding-left:30px;
+      }
+    }
+  }
+  .form-area{
+    background-color:$blackBg;
+  }
+}

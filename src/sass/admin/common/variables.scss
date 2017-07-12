@@ -1,10 +1,16 @@
 $white:#fff;
+$black:#000;
 $grayD:#333;
 $gray:#666;
 $grayL:#999;
 $orange:#FF8700;
+$orangeBorder:#FFDDB5;
+$orangeBg:#FEF7EE;
 $red:#FC2B07;
 $green:#4CC25C;
+$blueD:#2A3542;
+$blue:#5AA3DF;
+$blackBg:#1D2939;
 
 $zIndex-page:1;
 $zIndex-mask:2;
@@ -12,7 +18,8 @@ $zIndex-component:10;
 $zIndex-modal:100;
 $zIndex-max:1000;
 
-$bg:#f0f5f8;
+$bg:#ffffff;
+$grayBg:#F1F2F7;
 $commonBg:#fff;
 $btnFC:$gray;
 $btnFontColor:$grayL;
@@ -20,6 +27,6 @@ $activeFC:$orange;
 $rowHeight:40px;
 $paddingX:16px;
 $paddingY:20px;
-$borderColor:#ddd;
+$borderColor:#eee;
 $grayBg:#F9F9F9;
 $remarkFC:#ccc;

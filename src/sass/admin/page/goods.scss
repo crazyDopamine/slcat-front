@@ -1,0 +1,28 @@
+.warehouse-info-area{
+  //border:1px solid $borderColor;
+  .info-content{
+    padding:0 30px;
+    overflow:hidden;
+    .info-item{
+      border:1px solid $orange;
+      border-radius:4px;
+      .title{
+        padding:0;
+        color:$white;
+        text-align:center;
+      }
+      .info-content{
+        padding:30px 20px;
+        .info-row{
+          line-height:40px;
+        }
+      }
+    }
+  }
+}
+.liner-orange{
+  background:linear-gradient(to right,#FFA11A,#F6590F);
+}
+.liner-blue{
+  background:linear-gradient(to right,#3EBAD5,#729BED);
+}

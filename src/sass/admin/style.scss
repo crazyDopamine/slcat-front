@@ -1,0 +1,22 @@
+@import "./common/variables";
+@import "./common/reset";
+@import "./common/basic";
+@import "./common/table";
+@import "./common/form";
+@import "./common/btn";
+@import "./common/layout";
+@import "./common/img";
+
+//page
+@import "./page/goods";
+@import "./page/driverDetail";
+@import "./page/login";
+
+//widget
+@import "./common/widget/header";
+@import "./common/widget/navLeft";
+@import "./common/widget/autoComplete";
+
+body{
+  background-color:$grayBg;
+}

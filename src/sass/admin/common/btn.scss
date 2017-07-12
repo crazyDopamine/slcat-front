@@ -1,14 +1,60 @@
 a{
   cursor:pointer;
 }
-
 .btn{
   display:inline-block;
-  font-size:14px;
+  font-size:$fontSize-m;
+  cursor:pointer;
+  text-align:center;
 }
-
 .btn-orange-border{
   color:$orange;
   border:1px solid $orange;
-  font-size:11px;
+  border-radius:4px;
+  background-color:$white!important;
+  &:hover{
+    color:$orange;
+    border:1px solid $orange;
+    border-radius:4px;
+    background-color:$white!important;
+  }
+}
+.btn-orange{
+  color:$white;
+  background-color:$orange;
+  border:1px solid $orange;
+  border-radius:4px;
+  &:hover{
+    background-color:$orange;
+    border:1px solid $orange;
+    color:$white;
+  }
+}
+.btn-blue{
+  color:$white;
+  background-color:$blue;
+  border:1px solid $blue;
+  &:hover{
+    color:$white;
+  }
+}
+.btn-border{
+  border:1px solid $borderColor;
+  border-radius:4px;
+  &:hover{
+    border:1px solid $orange;
+    color:$orange;
+  }
+}
+.btn-normal{
+  min-width:160px;
+  line-height:28px;
+  padding:0 20px;
+}
+.btn-small{
+  line-height:28px;
+  padding:0 20px;
+}
+.btn-round{
+  border-radius:100%;
 }
