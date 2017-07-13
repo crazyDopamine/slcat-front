@@ -208,6 +208,47 @@ Array.prototype.each = function (callback) {
   }
 }
 
+/**
+ * 获取search参数
+ * @returns {{}}
+ */
+var getHashObj = function () {
+  var qs = location.hash.length > 0 && location.hash.indexOf("?")>0 ? location.hash.substr(location.hash.indexOf("?")+1, location.hash.length): '',
+    args = {},
+    items = qs.length > 0 ? qs.split('&') : [],
+    item = null, name = null, value = null, i = 0, len = items.length;
+  for (i = 0; i < len; i++) {
+    item = items[i].split('=');
+    name = decodeURIComponent(item[0]);
+    value = decodeURIComponent(item[1]);
+    if (name.length) {
+      args[name] = value;
+    }
+  }
+  return args;
+}
+
+var getSearchObj = function () {
+  var  qs = location.search.length>0 ? location.search.substr(1):'',
+    args = {},
+    items = qs.length>0 ? qs.split('&'):[],
+    item = null,name = null,value = null,i = 0,len = items.length;
+  for(i = 0;i < len; i++){
+    item = items[i].split('=');
+    name = decodeURIComponent(item[0]);
+    value = decodeURIComponent(item[1]);
+
+    if(name.length){
+      args[name] = value;
+    }
+  }
+  return args;
+}
+
+var getQuery = function(obj){
+  return mix({},getHashObj(),getSearchObj(),obj)
+}
+
 
 export {
   mix,
@@ -221,5 +262,6 @@ export {
   toMap,
   getAddress,
   getSkill,
-  filteNullParams
+  filteNullParams,
+  getQuery
 }

@@ -7,12 +7,13 @@ import {loadedMixins, common} from './common/mixins'
 import vueg from 'vueg'
 import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
+import iView from 'iview';
 import 'vux/src/styles/reset.less';
 import 'vueg/css/transition-min.css'
 import './sass/admin/style.scss'
 
 Vue.use(VueRouter)
-Vue.use(VueRouter)
+Vue.use(iView)
 Vue.mixin(loadedMixins)
 Vue.mixin(common)
 Vue.use(filters)
@@ -35,12 +36,17 @@ Vue.use(vueg, router, {
 
 let config = {
   router,
-  components: {Icon, XHeader, 'nav-left': navLeft},
-  name: 'app',
+  components: {'nav-left': navLeft},
   data: function () {
     return {
       path: '',
-      showNav: false
+      showNav: false,
+      loginForm:{
+        fieldSet:{
+          loginName:'',
+          password
+        }
+      }
     }
   },
   methods: {
@@ -53,11 +59,11 @@ let config = {
       }, 100)
     },
     getUserInfo: function () {
-      this.$http.get(this.url('techMaster/queryMasterDetail')).then(this.rspHandler((data) => {
-        this.userInfo = data
-        this.userInfoLoaded = 1
-        this.$emit(this.consts.loadedEvent, data, this.consts.loadedStatus)
-      }))
+      // this.$http.get(this.url('techMaster/queryMasterDetail')).then(this.rspHandler((data) => {
+      //   this.userInfo = data
+      //   this.userInfoLoaded = 1
+      //   this.$emit(this.consts.loadedEvent, data, this.consts.loadedStatus)
+      // }))
     }
   },
   created: function () {
@@ -67,10 +73,6 @@ let config = {
     this.$router.afterEach(function (to, from) {
       self.path = to.path
       self.$refs.navLeft.show = false
-    })
-    router.afterEach(route => {
-      var container = this.$el.querySelector('.main-container');
-      container.scrollTop = 0;
     })
   }
 }
