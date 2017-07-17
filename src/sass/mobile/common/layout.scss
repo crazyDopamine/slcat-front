@@ -30,6 +30,7 @@ $headerHeight: 40px;
   }
   .vux-tab-item{
     overflow: hidden;
+    font-size: $fontSize-l;
     .vux-tab-selected {
       color: $themeColor;
       border-bottom: 3px solid $themeColor;

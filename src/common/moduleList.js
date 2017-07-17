@@ -36,7 +36,7 @@ export default {
       params = mix(params, listNode.params)
       listNode.selected = {}
       if (!listNode.url) return
-      var callback = rspHandler(function (data) {
+      var callback = rspHandler((data) => {
         if (data instanceof Array) {
           listNode.dataList = data
           listNode.total = data.length
@@ -44,14 +44,17 @@ export default {
           listNode.dataList = data.rows
           listNode.total = data.total
         }
-        self.$vux.loading.hide()
-        // self.$forceUpdate()
-        self.$emit(consts.listLoadEvent, listNode)
+        if(this.$vux){
+          this.$vux.loading.hide()
+        }
+        this.$emit(consts.listLoadEvent, listNode)
       })
       listNode.dataList = []
-      this.$vux.loading.show({
-        text: '加载中'
-      })
+      if(this.$vux){
+        this.$vux.loading.show({
+          text: '加载中'
+        })
+      }
       filteNullParams(params)
       if (listNode.options.mothed) {
         this.$http.post(url(listNode.url), params, {

@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
   <title>后台管理</title>
+  <script type="text/javascript" src="/static/g_config.js"></script>
 </head>
 <body>
 <div class="" id="app" v-show="true" style="display:none;">
@@ -15,9 +16,8 @@
     </div>
   </div>
   <Modal class="login-modal" v-model="loginPop" title="登录" width="360" :closable="false" :mask-closable="false">
-    <img class="" slot="header" src="/dist/img/logo-white.png">
     <div class="form-area">
-      <h1 class="text-center">搜罗猫后台管理系统</h1>
+      <h1 class="text-center">搜罗猫运营系统</h1>
       <div class="form-row clearfix">
         <i class="icon-user input-before" style="position:absolute;left:10px;"></i>
         <Input class="col-24" type="text" v-model="loginForm.fieldSet.loginName" placeholder="用户名"></Input>

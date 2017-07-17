@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-
+data
   </div>
 </template>
 <script>
@@ -12,11 +12,8 @@
       }
     },
     methods: {
-      submit: function () {
-      }
     },
     created: function () {
-      this.validateInit()
     }
   }
 </script>

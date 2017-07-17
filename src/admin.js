@@ -8,9 +8,16 @@ import vueg from 'vueg'
 import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
 import iView from 'iview';
-import 'vux/src/styles/reset.less';
+import 'iview/dist/styles/iview.css';
 import 'vueg/css/transition-min.css'
 import './sass/admin/style.scss'
+
+import dataManage from './components/admin/dataManage.vue'
+import taskManage from './components/admin/taskManage.vue'
+import userManage from './components/admin/userManage.vue'
+
+import navLeft from './components/admin/widget/navLeft.vue'
+import header from './components/admin/widget/header.vue'
 
 Vue.use(VueRouter)
 Vue.use(iView)
@@ -20,10 +27,11 @@ Vue.use(filters)
 Vue.use(VueResource)
 Vue.http.interceptors.push(httpInterceptor)
 
-const routes = [{
-  path: '/',
-  component: Home
-}]
+const routes = [
+  {path: '/', redirect: '/userManage'},
+  {path: '/dataManage', component: dataManage},
+  {path: '/taskManage', component: taskManage},
+  {path: '/userManage',component: userManage}]
 
 const router = new VueRouter({
   routes
@@ -36,15 +44,19 @@ Vue.use(vueg, router, {
 
 let config = {
   router,
-  components: {'nav-left': navLeft},
+  components: {
+    'nav-left': navLeft,
+    'admin-header': header
+  },
   data: function () {
     return {
       path: '',
-      showNav: false,
-      loginForm:{
-        fieldSet:{
-          loginName:'',
-          password
+      loginPop: false,
+      modal_loading: false,
+      loginForm: {
+        fieldSet: {
+          loginName: '',
+          password: ''
         }
       }
     }
@@ -59,6 +71,9 @@ let config = {
       }, 100)
     },
     getUserInfo: function () {
+      this.userInfo = {}
+      this.userInfoLoaded = 1
+      this.$emit(this.consts.loadedEvent, {}, this.consts.loadedStatus)
       // this.$http.get(this.url('techMaster/queryMasterDetail')).then(this.rspHandler((data) => {
       //   this.userInfo = data
       //   this.userInfoLoaded = 1
@@ -67,12 +82,10 @@ let config = {
     }
   },
   created: function () {
-    var self = this
     this.login()
     this.path = this.$route.path
-    this.$router.afterEach(function (to, from) {
-      self.path = to.path
-      self.$refs.navLeft.show = false
+    this.$router.afterEach((to, from) => {
+      this.path = to.path
     })
   }
 }
