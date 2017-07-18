@@ -8,8 +8,12 @@ export function httpInterceptor(request, next){
   // }
   next((rsp) => {
     if (rsp.data.code !== consts.CODE_SUCC){
-      window.vm.$vux.loading.hide()
-      window.vm.$vux.toast.text(rsp.data.message, 'bottom',2000)
+      if(window.vm.$vux){
+        window.vm.$vux.loading.hide()
+        window.vm.$vux.toast.text(rsp.data.message, 'bottom',2000)
+      }else if(window.vm.$Message){
+        window.vm.$Message.error(rsp.data.message);
+      }
     }
   });
 }

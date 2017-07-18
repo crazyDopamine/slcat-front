@@ -105,3 +105,12 @@ $tableBorderHeight:1px;
 .td-operation{
   white-space:nowrap;
 }
+
+.table-top-bar{
+  margin-bottom:$paddingY;
+}
+.table-bottom-bar{
+  margin-top:$paddingY;
+  text-align: center;
+}
+

@@ -1,10 +1,16 @@
 .main-body{
+  .menu{
+    z-index:2;
+    position:fixed;
+    left:0;
+    top:60px;
+  }
   .main-container{
     position:absolute;
-    min-width: 1410px;
+    min-width: 1460px;
     min-height:800px;
     width:100%;
-    padding:80px 20px 20px 230px;
+    padding:80px 20px 20px 260px;
     float:left;
   }
 }
