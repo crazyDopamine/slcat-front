@@ -71,7 +71,13 @@ var webpackConfig = merge(baseWebpackConfig, {
       filename: 'mobile.html',
       template: 'mobile.html',
       inject: true,
-      chunk:['mobile']
+      chunks:['mobile']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'admin.html',
+      template: 'admin.html',
+      inject: true,
+      chunks:['admin']
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
