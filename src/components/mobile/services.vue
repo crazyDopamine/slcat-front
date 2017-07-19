@@ -6,7 +6,9 @@
     </tab>
     <div class="data-list service-list">
       <div class="data-item" v-for="(data,index) in dataList">
-        <img class="item-img" :src="'/static/img/'+data.businessCode+'.jpg'">
+        <router-link :to="'/serviceDetail/'+data.businessCode">
+          <img class="item-img" :src="'/static/img/'+data.businessCode+'.jpg'">
+        </router-link>
         <div class="content">
           <label>{{data.businessName}}{{data.businessCode}}</label><br/>
           <router-link :to="'/serviceDetail/'+data.businessCode" class="fc-red">了解详情</router-link>

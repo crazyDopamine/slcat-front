@@ -43,6 +43,7 @@ var common = {
       consts: {
         ticketKey: 'ticket',
         loginEvent: 'loginEvent',
+        loginOutEvent: 'loginOutEvent',
         loadedEvent: 'loaded',
         loadedFailEvent: 'loadedFail',
         listLoadEvent: 'listLoadEvent',
@@ -58,8 +59,8 @@ var common = {
   methods: {
     rspHandler: rspHandler,
     url: url,
-    toKV:toKV,
-    toMap:toMap
+    toKV: toKV,
+    toMap: toMap
   }
 }
 

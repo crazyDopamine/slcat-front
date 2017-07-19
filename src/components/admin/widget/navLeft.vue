@@ -16,7 +16,7 @@
         data:function(){
             return {
                 menu:[
-                    {name:'用户管理',path:'/userMange',icon:'icon-goods'},
+                    {name:'用户管理',path:'/userManage',icon:'icon-goods'},
                     {name:'任务管理',path:'/taskManage',icon:'icon-Truck'},
                     {name:'数据管理',path:'/dataManage',icon:'icon-Driver'},
                 ]

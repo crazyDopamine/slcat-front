@@ -7,7 +7,6 @@ $tdPaddingY:5px;
 $tableBorderHeight:1px;
 
 .table-area{
-  margin:0 30px 20px 30px;
   padding:0 0 20px 0;
   //min-height:600px;
   .default{
@@ -106,3 +105,12 @@ $tableBorderHeight:1px;
 .td-operation{
   white-space:nowrap;
 }
+
+.table-top-bar{
+  margin-bottom:$paddingY;
+}
+.table-bottom-bar{
+  margin-top:$paddingY;
+  text-align: center;
+}
+

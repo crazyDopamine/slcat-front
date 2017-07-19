@@ -1,10 +1,6 @@
 .login-modal{
   z-index:$zIndex-modal;
   color:$white;
-  .ivu-modal-mask{
-    background-image:url('/dist/img/bg.jpg');
-    background-size:100%;
-  }
   .ivu-modal{
     top:400px;
     .ivu-modal-content{

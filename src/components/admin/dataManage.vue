@@ -1,31 +1,26 @@
 <template>
   <div class="page-container">
-    <div class="table-area">
-      <table class="default">
-        <thead>
-        <tr>
-          <th>参数名</th>
-          <th>参数code</th>
-          <th>参数值</th>
-          <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(data,index) in dataList">
-          <td>{{data.name}}</td>
-          <td>{{data.no}}</td>
-          <td>{{data.mobile}}</td>
-          <td>
-            <a>修改</a>
-            <a>删除</a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <div class="table-bar clearfix">
-        <Page class="float-right d-page" v-show="total>=pageSize" :total="total" :page-size="pageSize" @on-change="refresh($event)" show-elevator></Page>
+    <div class="table-area container">
+      <div class="table-top-bar">
+        <Radio-group v-model="status" type="button">
+          <Radio label="0">全部</Radio>
+          <Radio label="1">未审核</Radio>
+          <Radio label="2">已审核</Radio>
+        </Radio-group>
+        <Button type="primary" class="float-right">添加</Button>
+      </div>
+      <Table :columns="list.columns" :data="list.dataList" border></Table>
+      <div class="table-bottom-bar">
+        <Page :total="100" show-elevator></Page>
       </div>
     </div>
+    <Modal
+      v-model="pop"
+      :title="popTitle">
+      <p>对话框内容</p>
+      <p>对话框内容</p>
+      <p>对话框内容</p>
+    </Modal>
   </div>
 </template>
 <script>
@@ -35,10 +30,22 @@
     mixins:[formValidate,moduleList],
     data: function () {
       return {
+        status:'全部',
+        pop:false,
+        popTitle:'详情',
         list:{
-          dataList:[{},{},{},{},{}],
-          params:{
-
+          columns:[
+            {title:'昵称',key:'',render:function(h,obj){
+              return h('span','test')
+            }},
+            {title:'手机号',key:''},
+            {title:'状态',key:''},
+            {title:'操作',key:''}
+          ],
+          url:'employer/queryEmpViewHeader',
+          params: {
+            status: '待审核',
+            businessParentId: ''
           }
         }
       }
@@ -48,7 +55,10 @@
       }
     },
     created: function () {
-      this.validateInit()
+      this.initList(this.list, {mothed: 'post'})
+      this.$on(this.consts.loadedEvent, function () {
+        this.refreshList(1)
+      })
     }
   }
 </script>
