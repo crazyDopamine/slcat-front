@@ -9,7 +9,7 @@
             <Icon type="ios-people"></Icon>
             用户管理
           </template>
-          <router-link to="/userManage"><Menu-item name="/userManange">用户管理</Menu-item></router-link>
+          <router-link to="/userManage"><Menu-item name="/userManage">用户管理</Menu-item></router-link>
         </Submenu>
         <Submenu name="task">
           <template slot="title">
@@ -23,7 +23,8 @@
             <Icon type="stats-bars"></Icon>
             数据管理
           </template>
-            <Menu-item name="/cityManage">城市管理</Menu-item>
+          <router-link to="/cityManage"><Menu-item name="/cityManage">城市管理</Menu-item></router-link>
+          <router-link to="/industryManage"><Menu-item name="/industryManage">行业管理</Menu-item></router-link>
         </Submenu>
       </Menu>
       <div class="main-container">
@@ -53,9 +54,6 @@
 <script>
   import header from './widget/header.vue'
   import router from '../../adminRouter'
-  router.afterEach(function(to,from){
-  	console.log(arguments)
-  })
   let config = {
     router,
     components: {
@@ -84,9 +82,9 @@
         }, 100)
       },
       getUserInfo: function () {
-        this.userInfo = {}
-        this.userInfoLoaded = 1
-        this.$emit(this.consts.loadedEvent, {}, this.consts.loadedStatus)
+        window.vm.userInfo = {}
+        window.vm.userInfoLoaded = 1
+        window.vm.$emit(this.consts.loadedEvent, {}, this.consts.loadedStatus)
         // this.$http.get(this.url('techMaster/queryMasterDetail')).then(this.rspHandler((data) => {
         //   this.userInfo = data
         //   this.userInfoLoaded = 1
@@ -96,9 +94,15 @@
     },
     created: function () {
       this.login()
-      this.path = this.$route.path
+      this.$nextTick(function(){
+        this.path = this.$route.path
+      })
       this.$router.afterEach((to, from) => {
+        this.$nextTick(function(){
+          this.path = to.path
+        })
         this.path = to.path
+        console.log(this.path)
       })
     }
   }

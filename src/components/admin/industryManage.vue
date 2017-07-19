@@ -2,16 +2,11 @@
   <div class="page-container">
     <div class="table-area container">
       <div class="table-top-bar">
-        <Radio-group v-model="status" type="button">
-          <Radio label="0">全部</Radio>
-          <Radio label="1">未审核</Radio>
-          <Radio label="2">已审核</Radio>
-        </Radio-group>
         <Button type="primary" class="float-right">添加</Button>
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
-        <Page :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)" show-elevator></Page>
+        <Page v-show="list.showPage" :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)" show-elevator></Page>
       </div>
     </div>
     <Modal
@@ -26,6 +21,7 @@
 <script>
   import formValidate from '../../common/formValidate'
   import moduleList from '../../common/moduleList'
+  import {dateFormat} from 'vux'
   export default {
     mixins: [formValidate, moduleList],
     data: function () {
@@ -35,9 +31,12 @@
         popTitle: '详情',
         list: {
           columns: [
-            {title: '昵称', key: 'nickName'},
-            {title: '手机号', key: 'phone'},
-            {title: '状态', key: 'status'},
+            {title: '行业名称', key: 'industryName'},
+            {
+            	title: '更新时间', key: 'updatedAt' ,render: (h, params) => {
+                return h('span',{},dateFormat(params.row.updatedAt,'YYYY-MM-DD'));
+              }
+            },
             {
               title: '操作',
               key: 'action',
@@ -50,27 +49,23 @@
                     },
                     on: {
                       click: (e) => {
-                        this.showDetail(params.row, e)
+                        this.remove(params.row, e)
                       }
                     }
-                  }, '查看')
+                  }, '删除')
                 ]);
               }
             }
           ],
-          url: 'admin/queryMasterList',
-          params: {
-            status: ''
-          }
+          url: 'industry/getAllIndustry',
         }
       }
     },
     methods: {
       submit: function () {
       },
-      showDetail: function (data) {
+      remove: function (data) {
         console.log(data)
-        this.pop = true
       }
     },
     created: function () {

@@ -108,6 +108,7 @@ $tableBorderHeight:1px;
 
 .table-top-bar{
   margin-bottom:$paddingY;
+  overflow: hidden;
 }
 .table-bottom-bar{
   margin-top:$paddingY;
