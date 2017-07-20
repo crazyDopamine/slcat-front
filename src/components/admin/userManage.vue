@@ -17,13 +17,20 @@
     <Modal
       v-model="pop"
       :title="popTitle">
-      <p>对话框内容</p>
-      <p>对话框内容</p>
-      <p>对话框内容</p>
+      <div class="user-detail">
+        <img src="static/img/user-default.png" style="width:120px;"><br/>
+        <span>{{detail.nickName}}</span>
+      </div>
+      <div slot="footer">
+        <label class="float-left margin-right-10" style="line-height:30px;">理由:</label><Input type="text" class="col-12"
+                                                                                              v-model="fieldSet.msg"></Input>
+        <Button type="error" :loading="modal_loading" @click="check(detail,'不通过')">不通过</Button>
+        <Button type="primary" :loading="modal_loading" @click="check(detail,'通过')">通过</Button>
+      </div>
     </Modal>
   </div>
 </template>
-<script>
+<script type="es6">
   import formValidate from '../../common/formValidate'
   import moduleList from '../../common/moduleList'
   export default {
@@ -33,6 +40,11 @@
         status: 0,
         pop: false,
         popTitle: '详情',
+        detail: {},
+        modal_loading: false,
+        fieldSet: {
+          msg: ''
+        },
         list: {
           columns: [
             {title: '昵称', key: 'nickName'},
@@ -69,8 +81,25 @@
       submit: function () {
       },
       showDetail: function (data) {
-        console.log(data)
-        this.pop = true
+        this.$http.get(this.url('admin/queryMasterDetail'), {
+          params: {
+            id: data.id
+          }
+        }).then(this.rspHandler((data)=> {
+          this.detail = data
+          this.pop = true
+        }))
+      },
+      check: function (data, status) {
+        this.$http.get(this.url('admin/checkMaster'), {
+          params: {
+            id: data.id,
+            status: status
+          }
+        }).then(this.rspHandler((data)=> {
+          this.pop = false
+          this.refreshList(1)
+        }))
       }
     },
     created: function () {

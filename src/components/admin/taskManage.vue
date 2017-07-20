@@ -23,7 +23,7 @@
     </Modal>
   </div>
 </template>
-<script>
+<script type="es6">
   import formValidate from '../../common/formValidate'
   import moduleList from '../../common/moduleList'
   export default {
@@ -67,10 +67,20 @@
       }
     },
     methods: {
-      submit: function () {
-      },
       showDetail: function (data) {
-        console.log(data)
+        this.detail = data
+        this.pop = true
+      },
+      check: function (data, status) {
+        this.$http.get(this.url('admin/checkEmp'), {
+          params: {
+            id: data.id,
+            status: status
+          }
+        }).then(this.rspHandler((data)=> {
+          this.pop = false
+          this.refreshList(1)
+        }))
       }
     },
     created: function () {

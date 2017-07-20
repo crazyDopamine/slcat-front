@@ -2,15 +2,13 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import router from './adminRouter'
 import VueResource from 'vue-resource'
 import {loadedMixins, common} from './common/mixins'
-// import vueg from 'vueg'
 import app from './components/admin/main.vue'
 import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
-import iView from 'iview';
-import 'iview/dist/styles/iview.css';
+import iView from 'iview'
+import 'iview/dist/styles/iview.css'
 import 'vueg/css/transition-min.css'
 import './sass/admin/style.scss'
 
