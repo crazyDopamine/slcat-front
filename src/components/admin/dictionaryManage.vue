@@ -16,8 +16,14 @@
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
-          <label class="col-8">行业名称：</label>
-          <Input class="col-16" v-model="fieldSet.industryName"></Input>
+          <label class="col-8">描述：</label>
+          <Input class="col-16" v-model="fieldSet.desc"></Input>
+        </div>
+        <div class="form-row clearfix">
+          <label class="col-8">描述：</label>
+          <Select class="col-16" v-model="fieldSet.code">
+            <Option v-for="item in selections.code" :value="item.code" :key="item">{{ item.name }}</Option>
+          </Select>
         </div>
       </div>
       <div slot="footer">
@@ -39,11 +45,23 @@
         popTitle: '新增',
         modalLoading: false,
         fieldSet: {
-          industryName: ''
+          desc: '',
+          code: ''
+        },
+        selections: {
+          code: [{code: 100, name: '倾向于谁做'}, {code: 200, name: '性别'}, {code: 300, name: '项目周期'}]
+        },
+        codeMap:{
+        	100:'倾向于谁做',
+          200:'性别',
+          300:'项目周期'
         },
         list: {
           columns: [
-            {title: '行业名称', key: 'industryName'},
+            {title: '描述', key: 'desc'},
+            {title: '类型', key: 'code',render:(h,params)=>{
+            	return h('span',this.codeMap[params.row.code])
+            }},
             {
               title: '操作',
               key: 'action',
@@ -64,7 +82,7 @@
               }
             }
           ],
-          url: 'admin/queryAllIndustry',
+          url: 'admin/queryDataDictionary',
         }
       }
     },
@@ -77,7 +95,7 @@
         if (this.validate(true)) {
           var params = this.getValues()
           this.modalLoading = true
-          this.$http.post(this.url('admin/addIndustry'), params).then(this.rspHandler(() => {
+          this.$http.post(this.url('admin/addDataDictionary'), params).then(this.rspHandler(() => {
             this.modalLoading = false
             this.pop=false
             this.refreshList(1)
@@ -86,7 +104,8 @@
       },
       reset: function () {
         this.fieldSet = {
-          industryName: ''
+          desc: '',
+          code: ''
         }
       },
       remove: function (data) {

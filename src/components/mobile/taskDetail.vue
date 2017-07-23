@@ -74,7 +74,6 @@
         selections('100').then((data,map) => {
         	this.trendCompleteMap = window.dicMapMap['100']
         })
-
       }
     },
     created: function () {

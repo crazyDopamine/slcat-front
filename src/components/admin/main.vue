@@ -9,22 +9,36 @@
             <Icon type="ios-people"></Icon>
             用户管理
           </template>
-          <router-link to="/userManage"><Menu-item name="/userManage">用户管理</Menu-item></router-link>
+          <router-link to="/userManage">
+            <Menu-item name="/userManage">用户管理</Menu-item>
+          </router-link>
         </Submenu>
         <Submenu name="task">
           <template slot="title">
             <Icon type="ios-paper"></Icon>
             任务管理
           </template>
-          <router-link to="/taskManage"><Menu-item name="/taskManage">任务管理</Menu-item></router-link>
+          <router-link to="/taskManage">
+            <Menu-item name="/taskManage">任务管理</Menu-item>
+          </router-link>
         </Submenu>
         <Submenu name="data">
           <template slot="title">
             <Icon type="stats-bars"></Icon>
             数据管理
           </template>
-          <router-link to="/cityManage"><Menu-item name="/cityManage">城市管理</Menu-item></router-link>
-          <router-link to="/industryManage"><Menu-item name="/industryManage">行业管理</Menu-item></router-link>
+          <router-link to="/cityManage">
+            <Menu-item name="/cityManage">城市管理</Menu-item>
+          </router-link>
+          <router-link to="/industryManage">
+            <Menu-item name="/industryManage">行业管理</Menu-item>
+          </router-link>
+          <router-link to="/skillManage">
+            <Menu-item name="/skillManage">技能管理</Menu-item>
+          </router-link>
+          <router-link to="/dictionaryManage">
+            <Menu-item name="/dictionaryManage">数据字典</Menu-item>
+          </router-link>
         </Submenu>
       </Menu>
       <div class="main-container">
@@ -46,7 +60,7 @@
       </div>
       <div slot="footer" class="text-right">
         <a size="large" class="btn btn-small btn-orange" style="width:100%;" :loading="modal_loading"
-           @click="login()">确认</a>
+           @click="login()">登陆</a>
       </div>
     </Modal>
   </div>
@@ -62,7 +76,7 @@
     data: function () {
       return {
         path: '',
-        loginPop: false,
+        loginPop: true,
         modal_loading: false,
         loginForm: {
           fieldSet: {
@@ -78,6 +92,7 @@
       },
       login: function () {
         setTimeout(() => {
+          this.loginPop = false
           this.getUserInfo()
         }, 100)
       },
@@ -93,16 +108,10 @@
       }
     },
     created: function () {
-      this.login()
-      this.$nextTick(function(){
-        this.path = this.$route.path
-      })
+      this.getUserInfo()
+      this.path = this.$route.path
       this.$router.afterEach((to, from) => {
-        this.$nextTick(function(){
-          this.path = to.path
-        })
         this.path = to.path
-        console.log(this.path)
       })
     }
   }

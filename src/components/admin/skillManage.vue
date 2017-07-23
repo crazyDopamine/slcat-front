@@ -16,8 +16,18 @@
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
-          <label class="col-8">行业名称：</label>
-          <Input class="col-16" v-model="fieldSet.industryName"></Input>
+          <label class="col-8">技能名称：</label>
+          <Input class="col-16" v-model="fieldSet.skillName"></Input>
+        </div>
+        <div class="form-row clearfix">
+          <label class="col-8">技能名称：</label>
+          <Radio-group class="col-16" v-model="fieldSet.skillType" type="button">
+            <Radio label="策划">策划</Radio>
+            <Radio label="设计">设计</Radio>
+            <Radio label="活动">活动</Radio>
+            <Radio label="影视">影视</Radio>
+            <Radio label="其他">其他</Radio>
+          </Radio-group>
         </div>
       </div>
       <div slot="footer">
@@ -39,11 +49,13 @@
         popTitle: '新增',
         modalLoading: false,
         fieldSet: {
-          industryName: ''
+          skillName: '',
+          skillType:''
         },
         list: {
           columns: [
-            {title: '行业名称', key: 'industryName'},
+            {title: '技能名称', key: 'skillName'},
+            {title: '技能类型', key: 'skillType'},
             {
               title: '操作',
               key: 'action',
@@ -64,7 +76,7 @@
               }
             }
           ],
-          url: 'admin/queryAllIndustry',
+          url: 'admin/querySkillList',
         }
       }
     },
@@ -72,12 +84,13 @@
       add: function () {
         this.reset()
         this.pop = true
+        this.modalLoading = false
       },
       addSubmit: function () {
         if (this.validate(true)) {
           var params = this.getValues()
           this.modalLoading = true
-          this.$http.post(this.url('admin/addIndustry'), params).then(this.rspHandler(() => {
+          this.$http.post(this.url('admin/addSkill'), params).then(this.rspHandler(() => {
             this.modalLoading = false
             this.pop=false
             this.refreshList(1)
@@ -86,7 +99,8 @@
       },
       reset: function () {
         this.fieldSet = {
-          industryName: ''
+          skillName: '',
+          skillType:''
         }
       },
       remove: function (data) {
@@ -94,7 +108,9 @@
           title: '删除',
           content: '<p>确认是否删除！</p>',
           onOk: () => {
-            this.$Message.info('点击了确定');
+            this.$http.get(this.url('admin/deleteSkill'), {id:data.id}).then(this.rspHandler(() => {
+            	this.refreshList(1)
+            }))
           }
         });
       }
