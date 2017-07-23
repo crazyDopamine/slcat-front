@@ -1,10 +1,10 @@
 .main-body{
   .menu{
-    z-index:2;
+    z-index:1;
     position:fixed;
     left:0;
-    top:60px;
-    min-height: 80%;
+    height: 100%;
+    padding-top: 60px;
   }
   .main-container{
     position:absolute;

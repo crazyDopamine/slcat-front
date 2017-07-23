@@ -36,6 +36,9 @@
           <router-link to="/skillManage">
             <Menu-item name="/skillManage">技能管理</Menu-item>
           </router-link>
+          <router-link to="/businessTypeManage">
+            <Menu-item name="/businessTypeManage">业务类型管理</Menu-item>
+          </router-link>
           <router-link to="/dictionaryManage">
             <Menu-item name="/dictionaryManage">数据字典</Menu-item>
           </router-link>
@@ -113,6 +116,9 @@
       this.path = this.$route.path
       this.$router.afterEach((to, from) => {
         this.path = to.path
+      })
+      this.$on(this.consts.loginOutEvent,function(){
+        this.loginPop = true
       })
     }
   }

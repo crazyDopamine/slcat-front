@@ -16,12 +16,20 @@ var loadedMixins = {
         children[i].$emit(consts.loadedEvent, userInfo)
       }
     })
-    this.$on(consts.loadedFailEvent, function (userInfo, userInfoLoaded) {
+    this.$on(consts.loadedFailEvent, function () {
       this.userInfo = {}
       this.userInfoLoaded = 2;
       var children = this.$children
       for (var i = 0; i < children.length; i++) {
         children[i].$emit(consts.loadedFailEvent, this.userInfo, this.userInfoLoaded)
+      }
+    })
+    this.$on(consts.loginOutEvent, function () {
+      this.userInfo = {}
+      this.userInfoLoaded = 0;
+      var children = this.$children
+      for (var i = 0; i < children.length; i++) {
+        children[i].$emit(consts.loginOutEvent, this.userInfo, this.userInfoLoaded)
       }
     })
   },
