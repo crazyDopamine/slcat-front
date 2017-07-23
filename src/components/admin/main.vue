@@ -76,7 +76,7 @@
     data: function () {
       return {
         path: '',
-        loginPop: true,
+        loginPop: false,
         modal_loading: false,
         loginForm: {
           fieldSet: {
@@ -108,7 +108,8 @@
       }
     },
     created: function () {
-      this.getUserInfo()
+//      this.getUserInfo()
+      this.loginPop = true
       this.path = this.$route.path
       this.$router.afterEach((to, from) => {
         this.path = to.path
