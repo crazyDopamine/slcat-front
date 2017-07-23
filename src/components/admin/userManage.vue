@@ -34,12 +34,16 @@
         </template><br/>
         <label class="fs-xxl">作品案例</label><br/>
         <div class="text-left margin-top-10" v-if="detail.worksCases">
-          <div v-for="item in detail.worksCases">
-            作品名称：{{item.workName}}
-            <a :href="item.worksLink" class="float-right">{{item.worksLink}}</a>
-            <p>作品职责：{{item.responsibilities}}</p>
-            <p>作品描述：{{item.worksDesc}}</p>
-          </div>
+          <Collapse>
+            <Panel v-for="item in detail.worksCases" :key="item">
+              {{item.workName}}
+              <a :href="item.worksLink" class="float-right margin-right-20" target="_blank">{{item.worksLink}}</a>
+              <p slot="content">
+                作品职责：{{item.responsibilities}}<br/>
+                作品描述：{{item.worksDesc}}
+              </p>
+            </Panel>
+          </Collapse>
         </div>
       </div>
       <div slot="footer">

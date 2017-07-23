@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9d4f3af-86e0-4a01-8eb9-252e115e09e1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/components/admin/businessTypeManage.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/adminRouter.js" afterPath="$PROJECT_DIR$/src/adminRouter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/common/const.js" afterPath="$PROJECT_DIR$/src/common/const.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/common/mixins.js" afterPath="$PROJECT_DIR$/src/common/mixins.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/admin/dictionaryManage.vue" afterPath="$PROJECT_DIR$/src/components/admin/dictionaryManage.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/admin/main.vue" afterPath="$PROJECT_DIR$/src/components/admin/main.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/admin/widget/header.vue" afterPath="$PROJECT_DIR$/src/components/admin/widget/header.vue" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/sass/admin/common/layout.scss" afterPath="$PROJECT_DIR$/src/sass/admin/common/layout.scss" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/components/admin/userManage.vue" afterPath="$PROJECT_DIR$/src/components/admin/userManage.vue" />
     </list>
     <ignored path="slcat-front.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,6 +32,26 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="taskManage.vue" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/admin/taskManage.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="960">
+              <caret line="67" column="19" lean-forward="true" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userManage.vue" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/admin/userManage.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="177">
+              <caret line="39" column="90" lean-forward="false" selection-start-line="39" selection-start-column="90" selection-end-line="39" selection-end-column="90" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="businessTypeManage.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/admin/businessTypeManage.vue">
           <provider selected="true" editor-type-id="text-editor">
@@ -60,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="main.vue" pinned="false" current-in-tab="true">
+      <file leaf-file-name="main.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/admin/main.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1248">
-              <caret line="52" column="44" lean-forward="true" selection-start-line="52" selection-start-column="44" selection-end-line="52" selection-end-column="44" />
+            <state relative-caret-position="144">
+              <caret line="6" column="29" lean-forward="true" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -128,7 +140,6 @@
         <option value="$PROJECT_DIR$/src/components/mobile/userInfo.vue" />
         <option value="$PROJECT_DIR$/src/components/admin/cityManage.vue" />
         <option value="$PROJECT_DIR$/src/components/admin/taskManage.vue" />
-        <option value="$PROJECT_DIR$/src/components/admin/userManage.vue" />
         <option value="$PROJECT_DIR$/src/components/admin/industryManage.vue" />
         <option value="$PROJECT_DIR$/src/components/admin/skillManage.vue" />
         <option value="$PROJECT_DIR$/src/common/utils.js" />
@@ -141,6 +152,7 @@
         <option value="$PROJECT_DIR$/src/common/const.js" />
         <option value="$PROJECT_DIR$/src/common/mixins.js" />
         <option value="$PROJECT_DIR$/src/components/admin/main.vue" />
+        <option value="$PROJECT_DIR$/src/components/admin/userManage.vue" />
       </list>
     </option>
   </component>
@@ -412,12 +424,12 @@
       <workItem from="1500518981932" duration="3446000" />
       <workItem from="1500529813703" duration="40000" />
       <workItem from="1500529928151" duration="9882000" />
-      <workItem from="1500611789895" duration="22341000" />
+      <workItem from="1500611789895" duration="22991000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35709000" />
+    <option name="totallyTimeSpent" value="36359000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
@@ -479,7 +491,7 @@
           <folding>
             <element signature="n#style#0;n#img#0;n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="false" />
             <element signature="n#style#0;n#label#0;n#template#0;n#div#1;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#2670#2722#0" expanded="false" />
+            <element signature="e#2815#2867#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -766,29 +778,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/admin/taskManage.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="22" lean-forward="true" selection-start-line="8" selection-start-column="22" selection-end-line="8" selection-end-column="22" />
-          <folding>
-            <element signature="n#style#0;n#label#0;n#template#0;n#div#1;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#3012#3064#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/admin/userManage.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="27" column="54" lean-forward="true" selection-start-line="27" selection-start-column="54" selection-end-line="27" selection-end-column="54" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#label#0;n#template#0;n#div#1;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="false" />
-            <element signature="e#2670#2722#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/img/solomioLOGO.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -898,8 +887,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/admin/main.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1248">
-          <caret line="52" column="44" lean-forward="true" selection-start-line="52" selection-start-column="44" selection-end-line="52" selection-end-column="44" />
+        <state relative-caret-position="144">
+          <caret line="6" column="29" lean-forward="true" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/admin/taskManage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="67" column="19" lean-forward="true" selection-start-line="67" selection-start-column="19" selection-end-line="67" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/admin/userManage.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="39" column="90" lean-forward="false" selection-start-line="39" selection-start-column="90" selection-end-line="39" selection-end-column="90" />
           <folding />
         </state>
       </provider>
