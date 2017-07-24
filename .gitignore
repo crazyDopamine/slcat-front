@@ -1,7 +1,8 @@
 .DS_Store
 node_modules/
 dist/
-.idea/
+.idea
+.idea/workspace.xml
 npm-debug.log
 yarn-error.log
 npm-debug.log*
