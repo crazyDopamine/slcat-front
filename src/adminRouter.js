@@ -7,6 +7,7 @@ import cityManage from './components/admin/cityManage.vue'
 import skillManage from './components/admin/skillManage.vue'
 import dictionaryManage from './components/admin/dictionaryManage.vue'
 import businessTypeManage from './components/admin/businessTypeManage.vue'
+import adminManage from './components/admin/adminManage.vue'
 
 const routes = [
   {path: '/', redirect: '/userManage'},
@@ -16,8 +17,9 @@ const routes = [
   {path: '/cityManage',component: cityManage},
   {path: '/skillManage',component: skillManage},
   {path: '/dictionaryManage',component: dictionaryManage},
-  {path: '/businessTypeManage',component: businessTypeManage}
-  ]
+  {path: '/businessTypeManage',component: businessTypeManage},
+  {path: '/adminManage',component: adminManage}
+]
 
 export default new VueRouter({
   routes

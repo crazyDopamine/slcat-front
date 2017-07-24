@@ -1,5 +1,5 @@
 export default {
-  ticketKey: 'ticket',
+  ticketKey: 'COFFEE_TOKEN',
   loginEvent: 'loginEvent',
   loginOutEvent: 'loginOutEvent',
   loadedEvent: 'loaded',
