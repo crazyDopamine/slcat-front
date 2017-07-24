@@ -17,7 +17,7 @@
         methods:{
             loginOut:function(){
 //                utils.cookie.delete(consts.ticketKey);
-                this.$emit(this.consts.loginOutEvent);
+                window.vm.$emit(this.consts.loginOutEvent);
             }
         },
         created:function(){

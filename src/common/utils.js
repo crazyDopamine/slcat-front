@@ -98,7 +98,13 @@ var rspHandler = function (callback) {
     if (data.code === consts.CODE_SUCC) {
       callback(data.data)
     } else {
-      window.vm.$vux.toast.text(rsp.message, 'bottom')
+      if(window.vm.$vux){
+        window.vm.$vux.toast.text(data.message, 'bottom')
+      }else if(window.vm.$Message){
+        window.vm.$Message.error(data.message);
+      }
+
+
     }
   }
 }

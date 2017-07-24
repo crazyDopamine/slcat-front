@@ -16,9 +16,13 @@
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
-          <label class="col-8">行业名称：</label>
-          <Input class="col-16" v-model="fieldSet.industryName"></Input>
+          <label class="col-8">城市名称：</label>
+          <Input class="col-16" v-model="fieldSet.cityName"></Input>
         </div>
+        <!--<div class="form-row clearfix">-->
+          <!--<label class="col-8">城市名称：</label>-->
+          <!--<Input class="col-16" v-model="fieldSet.cityName"></Input>-->
+        <!--</div>-->
       </div>
       <div slot="footer">
         <Button type="primary" :loading="modalLoading" @click="addSubmit()">添加</Button>
@@ -37,13 +41,14 @@
         status: 0,
         pop: false,
         popTitle: '新增',
-        modalLoading: false,
+        modalLoading:false,
         fieldSet: {
-          industryName: ''
+          cityName: '',
+          hotTop: 10
         },
         list: {
           columns: [
-            {title: '行业名称', key: 'industryName'},
+            {title: '城市名称', key: 'cityName'},
             {
               title: '操作',
               key: 'action',
@@ -64,7 +69,7 @@
               }
             }
           ],
-          url: 'admin/queryAllIndustry',
+          url: 'admin/queryCityList',
         }
       }
     },
@@ -77,7 +82,7 @@
         if (this.validate(true)) {
           var params = this.getValues()
           this.modalLoading = true
-          this.$http.post(this.url('admin/addIndustry'), params).then(this.rspHandler(() => {
+          this.$http.post(this.url('admin/addCity'), params).then(this.rspHandler(() => {
             this.modalLoading = false
             this.pop=false
             this.refreshList(1)
@@ -86,7 +91,8 @@
       },
       reset: function () {
         this.fieldSet = {
-          industryName: ''
+          cityName: '',
+          hotTop: 10
         }
       },
       remove: function (data) {
@@ -94,7 +100,8 @@
           title: '删除',
           content: '<p>确认是否删除！</p>',
           onOk: () => {
-            this.$Message.info('点击了确定');
+//            this.$http.post(this.url('admin/deleteCity'), {id:data.id}).then(this.rspHandler(() => {
+//            }))
           }
         });
       }

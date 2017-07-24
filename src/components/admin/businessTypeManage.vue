@@ -16,10 +16,17 @@
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
-          <label class="col-8">行业名称：</label>
-          <Input class="col-16" v-model="fieldSet.industryName"></Input>
+          <label class="col-8">业务类型名称：</label>
+          <Input class="col-16" v-model="fieldSet.businessName"></Input>
+        </div>
+        <div class="form-row clearfix">
+          <label class="col-8">业务分类：</label>
+          <Select class="col-16" v-model="fieldSet.parentId">
+            <Option v-for="item in selections.parentId" :value="item.id" :key="item">{{ item.businessName }}</Option>
+          </Select>
         </div>
       </div>
+
       <div slot="footer">
         <Button type="primary" :loading="modalLoading" @click="addSubmit()">添加</Button>
       </div>
@@ -39,11 +46,12 @@
         popTitle: '新增',
         modalLoading: false,
         fieldSet: {
-          industryName: ''
+          businessName: '',
+          parentId:''
         },
         list: {
           columns: [
-            {title: '行业名称', key: 'industryName'},
+            {title: '业务类型名称', key: 'businessName'},
             {
               title: '操作',
               key: 'action',
@@ -64,7 +72,10 @@
               }
             }
           ],
-          url: 'admin/queryAllIndustry',
+          url: 'admin/queryBusinessType',
+        },
+        selections:{
+        	parentId:[]
         }
       }
     },
@@ -77,7 +88,7 @@
         if (this.validate(true)) {
           var params = this.getValues()
           this.modalLoading = true
-          this.$http.post(this.url('admin/addIndustry'), params).then(this.rspHandler(() => {
+          this.$http.post(this.url('admin/addBusiness'), params).then(this.rspHandler(() => {
             this.modalLoading = false
             this.pop=false
             this.refreshList(1)
@@ -86,7 +97,8 @@
       },
       reset: function () {
         this.fieldSet = {
-          industryName: ''
+          businessName: '',
+          parentId:''
         }
       },
       remove: function (data) {
@@ -97,12 +109,18 @@
             this.$Message.info('点击了确定');
           }
         });
+      },
+      refreshSelections:function(){
+      	this.$http.get(this.url('admin/queryBusinessList')).then(this.rspHandler((data)=>{
+      		this.selections.parentId = data
+        }))
       }
     },
     created: function () {
       this.initList(this.list)
       this.$on(this.consts.loadedEvent, function () {
         this.refreshList(1)
+        this.refreshSelections()
       })
     }
   }

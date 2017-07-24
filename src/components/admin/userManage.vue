@@ -2,12 +2,12 @@
   <div class="page-container">
     <div class="table-area container">
       <div class="table-top-bar">
-        <Radio-group v-model="status" type="button">
-          <Radio label="0">全部</Radio>
-          <Radio label="1">未审核</Radio>
-          <Radio label="2">已审核</Radio>
+        <Radio-group v-model="list.params.status" type="button" @on-change="refreshList(1)">
+          <Radio label="">全部</Radio>
+          <Radio label="待审核">待审核</Radio>
+          <!--<Radio label="已审核">已审核</Radio>-->
         </Radio-group>
-        <Button type="primary" class="float-right">添加</Button>
+        <!--<Button type="primary" class="float-right">添加</Button>-->
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
@@ -19,13 +19,43 @@
       :title="popTitle">
       <div class="user-detail">
         <img src="static/img/user-default.png" style="width:120px;"><br/>
-        <span>{{detail.nickName}}</span>
+        <span>{{detail.nickName}}</span><br/>
+        <span>{{detail.dailyWage?detail.dailyWage:'0'}}元/天</span><br/>
+        <template v-if="detail.jobTitle">
+          <span class="btn btn-gray-round btn-small margin-right-5" v-for="item in detail.jobTitle.split(',')">{{item}}</span>
+        </template><br/>
+        <label class="fs-xxl">关于我</label><br/>
+        <p class="text-left margin-top-10">{{detail.selfIntroduction}}</p><br/>
+        <label class="fs-xxl">擅长技能</label><br/>
+        <template v-if="detail.baseSkillList">
+          <div>
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in detail.baseSkillList">{{item.skillName}}</span>
+          </div>
+        </template><br/>
+        <label class="fs-xxl">作品案例</label><br/>
+        <div class="text-left margin-top-10" v-if="detail.worksCases">
+          <Collapse>
+            <Panel v-for="item in detail.worksCases" :key="item">
+              {{item.workName}}
+              <a :href="item.worksLink" class="float-right margin-right-20" target="_blank">{{item.worksLink}}</a>
+              <p slot="content">
+                作品职责：{{item.responsibilities}}<br/>
+                作品描述：{{item.worksDesc}}
+              </p>
+            </Panel>
+          </Collapse>
+        </div>
       </div>
       <div slot="footer">
-        <label class="float-left margin-right-10" style="line-height:30px;">理由:</label><Input type="text" class="col-12"
-                                                                                              v-model="fieldSet.msg"></Input>
-        <Button type="error" :loading="modal_loading" @click="check(detail,'不通过')">不通过</Button>
-        <Button type="primary" :loading="modal_loading" @click="check(detail,'通过')">通过</Button>
+        <template v-if="detail.status=='待审核'">
+          <label class="float-left margin-right-10" style="line-height:30px;">理由:</label>
+          <Input type="text" class="col-12" v-model="fieldSet.msg"></Input>
+          <Button type="error" :loading="modal_loading" @click="check(detail,'不通过')">不通过</Button>
+          <Button type="primary" :loading="modal_loading" @click="check(detail,'通过')">通过</Button>
+        </template>
+        <template v-if="detail.status!='待审核'">
+          <Button type="primary" @click="pop=false">关闭</Button>
+        </template>
       </div>
     </Modal>
   </div>
@@ -33,6 +63,7 @@
 <script type="es6">
   import formValidate from '../../common/formValidate'
   import moduleList from '../../common/moduleList'
+  import {dateFormat} from 'vux'
   export default {
     mixins: [formValidate, moduleList],
     data: function () {
@@ -50,6 +81,11 @@
             {title: '昵称', key: 'nickName'},
             {title: '手机号', key: 'phone'},
             {title: '状态', key: 'status'},
+            {
+              title: '更新时间', key: 'updatedAt', render: (h, params) => {
+              return h('span', {}, dateFormat(params.row.updatedAt, 'YYYY-MM-DD'));
+            }
+            },
             {
               title: '操作',
               key: 'action',
@@ -72,7 +108,7 @@
           ],
           url: 'admin/queryMasterList',
           params: {
-            status: ''
+            status: '待审核'
           }
         }
       }
@@ -85,18 +121,20 @@
           params: {
             id: data.id
           }
-        }).then(this.rspHandler((data)=> {
+        }).then(this.rspHandler((data) => {
           this.detail = data
           this.pop = true
         }))
       },
       check: function (data, status) {
+      	this.modal_loading = true
         this.$http.get(this.url('admin/checkMaster'), {
           params: {
             id: data.id,
             status: status
           }
-        }).then(this.rspHandler((data)=> {
+        }).then(this.rspHandler((data) => {
+          this.modal_loading = false
           this.pop = false
           this.refreshList(1)
         }))

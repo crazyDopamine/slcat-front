@@ -56,3 +56,14 @@
 .ivu-select-dropdown{
   position:absolute!important;
 }
+
+.detail-area{
+  background-color:$white;
+  padding:30px;
+  .detail-row{
+    overflow: hidden;
+    position:relative;
+    line-height:30px;
+    font-size:$fontSize-m;
+  }
+}

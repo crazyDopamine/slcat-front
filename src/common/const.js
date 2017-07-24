@@ -1,6 +1,7 @@
 export default {
   ticketKey: 'ticket',
   loginEvent: 'loginEvent',
+  loginOutEvent: 'loginOutEvent',
   loadedEvent: 'loaded',
   loadedFailEvent: 'loadedFail',
   listLoadEvent: 'listLoadEvent',

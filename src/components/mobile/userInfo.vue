@@ -18,8 +18,8 @@
         </template>
       </div>
       <div class="user-info-detail">
-        <router-link to="/aboutMeEdit" class="btn btn-text fc-theme" style="position: absolute;right:0;top:0;"><i
-          class="icon-edit"></i>编辑
+        <router-link to="/aboutMeEdit" class="btn btn-text fc-theme" style="position: absolute;right:0;top:0;">
+          <i class="icon-edit"></i>编辑
         </router-link>
         <label class="fs-xxl">关于我</label><br/>
         <p class="text-left margin-top-10" v-if="!data.selfIntroduction">完善全面的介绍可以让客户更完整立体的了解你</p>
