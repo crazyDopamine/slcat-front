@@ -2,7 +2,7 @@
   <div class="page-container">
     <img class="service-detail-img" :src="'/static/serviceDetail/'+code+'.jpg'">
     <div style="padding:20px 16px;">
-      <a class="btn btn-large btn-theme-round">联系我们</a>
+      <router-link class="btn btn-large btn-theme-round" to="/taskAdd">发布项目</router-link>
     </div>
   </div>
 </template>

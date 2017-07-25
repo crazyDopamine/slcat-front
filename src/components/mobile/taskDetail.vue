@@ -37,7 +37,7 @@
       <div class="task-description">
         <label class="title">项目描述</label><br/>
         <!--<label class="display-inline-block margin-top-20">项目需求：</label>-->
-        <p v-html="data.projectDesc"></p>
+        <p v-html="toContent(data.projectDesc)"></p>
         <!--<label class="display-inline-block margin-top-20">人员要求：</label>-->
         <!--<p>-->
         <!--最好有类似风格案例，并愿意沟通需求。-->

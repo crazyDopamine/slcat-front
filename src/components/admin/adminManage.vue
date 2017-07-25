@@ -6,7 +6,7 @@
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
-        <Page v-show="list.showPage" :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)"
+        <Page v-show="list.showPage" :current="list.page" :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)"
               show-elevator></Page>
       </div>
     </div>

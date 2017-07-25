@@ -4,13 +4,13 @@
       <tab-item selected @on-item-click="onTabClick(0)">全部</tab-item>
       <tab-item @on-item-click="onTabClick(item)" v-for="item in selections.type" :key="item">{{item.businessName}}</tab-item>
     </tab>
-    <div class="data-list service-list">
+    <div class="data-list service-list top-bar-fixed-bottom">
       <div class="data-item" v-for="(data,index) in dataList">
         <router-link :to="'/serviceDetail/'+data.businessCode">
           <img class="item-img" :src="'/static/img/'+data.businessCode+'.jpg'">
         </router-link>
         <div class="content">
-          <label>{{data.businessName}}{{data.businessCode}}</label><br/>
+          <label>{{data.businessName}}</label><br/>
           <router-link :to="'/serviceDetail/'+data.businessCode" class="fc-red">了解详情</router-link>
         </div>
       </div>

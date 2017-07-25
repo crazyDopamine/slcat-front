@@ -11,7 +11,7 @@
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
-        <Page :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)" show-elevator></Page>
+        <Page :total="list.total" :current="list.page" :page-size="list.pageSize" @on-change="refreshList($event)" show-elevator></Page>
       </div>
     </div>
     <Modal

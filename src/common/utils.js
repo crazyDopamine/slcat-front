@@ -254,6 +254,16 @@ var getQuery = function(obj){
   return mix({},getHashObj(),getSearchObj(),obj)
 }
 
+var toContent = function(content){
+  if(!content||!content.replace)return ''
+  console.log(content)
+  content = content.replace(/\n\r/g,'<br/>')
+  content = content.replace(/\r\n/g,'<br/>')
+  content = content.replace(/\n/g,'<br/>')
+  content = content.replace(/\r/g,'<br/>')
+  return content
+}
+
 
 export {
   mix,
@@ -268,5 +278,6 @@ export {
   getAddress,
   getSkill,
   filteNullParams,
-  getQuery
+  getQuery,
+  toContent
 }

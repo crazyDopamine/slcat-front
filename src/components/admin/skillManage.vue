@@ -6,7 +6,7 @@
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
-        <Page v-show="list.showPage" :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)"
+        <Page v-show="list.showPage" :current="list.page" :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)"
               show-elevator></Page>
       </div>
     </div>
@@ -108,9 +108,9 @@
           title: '删除',
           content: '<p>确认是否删除！</p>',
           onOk: () => {
-            this.$http.get(this.url('admin/deleteSkill'), {id:data.id}).then(this.rspHandler(() => {
-            	this.refreshList(1)
-            }))
+//            this.$http.get(this.url('admin/failCity'), {params:{id:data.id}}).then(this.rspHandler(() => {
+//              this.refreshList(1)
+//            }))
           }
         });
       }
