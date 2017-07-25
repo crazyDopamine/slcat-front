@@ -2,6 +2,7 @@
 node_modules/
 dist/
 .idea
+.idea/workspace.xml
 npm-debug.log
 yarn-error.log
 npm-debug.log*

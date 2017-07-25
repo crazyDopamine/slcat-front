@@ -643,7 +643,12 @@ var validateField = function (name, options, formNode) {
     validateResult[name].valid = false;
     if (!fieldClass[name].contains(self.errorClass))fieldClass[name].push(self.errorClass);
     if (validateResult[name].array !== false && options && options.showMsg) {
-      window.vm.$vux.toast.text(msg + '!', 'bottom')
+      if(window.vm.$vux){
+        window.vm.$vux.toast.text(msg + '!', 'bottom')
+      }else if(window.vm.$Message){
+        window.vm.$Message.error(msg + '!')
+      }
+
     }
     return false;
   }

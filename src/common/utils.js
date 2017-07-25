@@ -92,7 +92,7 @@ var url = function (url) {
   }
 }
 
-var rspHandler = function (callback) {
+var rspHandler = function (callback,errorCallback) {
   return function (rsp) {
     var data = rsp.data
     if (data.code === consts.CODE_SUCC) {
@@ -103,8 +103,7 @@ var rspHandler = function (callback) {
       }else if(window.vm.$Message){
         window.vm.$Message.error(data.message);
       }
-
-
+      if(errorCallback)errorCallback(data)
     }
   }
 }
