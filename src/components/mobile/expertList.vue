@@ -8,6 +8,11 @@
         ref="search"
         @on-submit="refreshList(1)"
         placeholder="搜索专长或其他关键字"></search>
+      <!--<div>-->
+        <!--<Button>{{tabSelect.businessParentId}}</Button>-->
+        <!--<Button>{{tabSelect.cityId}}</Button>-->
+        <!--<Button>{{tabSelect.industryId}}</Button>-->
+      <!--</div>-->
       <tab class="top-nav-bar border-bottom-0 no-selected">
         <tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}
           <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
@@ -51,9 +56,6 @@
           <p>{{data.selfIntroduction}} </p>
           <ul class="gray-border-icons margin-top-10 margin-bottom-10">
             <li v-for="item in data.jobTitle.split(',')" v-if="data.jobTitle">{{item}}</li>
-            <!--<li>Photoshop</li>-->
-            <!--<li>illusrator</li>-->
-            <!--<li>VI设计</li>-->
           </ul>
           <span class="fc-red float-right">日薪/{{data.dailyWage}}</span>
         </div>
@@ -65,7 +67,7 @@
     </ul>
   </div>
 </template>
-<script>
+<script type="es6">
   import {Tab, TabItem, Search, Popup} from 'vux'
   import {getAddress, getType, each} from '../../common/utils'
   import consts from '../../common/const'

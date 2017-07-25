@@ -22,9 +22,12 @@ $headerHeight: 40px;
 
 .top-nav-bar {
   background-color: $bg;
-  //border-bottom:1px solid $borderColor;
   height: 40px;
   z-index: $zIndex-component;
+  position: fixed;
+  margin-top:-40px;
+  left:0;
+  width:100%;
   .vux-tab-ink-bar {
     background-color: $themeColor;
   }
@@ -36,6 +39,9 @@ $headerHeight: 40px;
       border-bottom: 3px solid $themeColor;
     }
   }
+}
+.top-bar-fixed-bottom{
+  margin-top:40px;
 }
 
 .top-nav-bar.no-selected {

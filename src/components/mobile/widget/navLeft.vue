@@ -39,9 +39,9 @@
       }
     },
     methods: {
-      show: function (show) {
-        this.show = show
-      }
+//      show: function (show) {
+//        this.show = show
+//      }
     },
     created: function () {
 
