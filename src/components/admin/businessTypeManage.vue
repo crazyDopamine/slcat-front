@@ -33,7 +33,7 @@
     </Modal>
   </div>
 </template>
-<script>
+<script type="es6">
   import formValidate from '../../common/formValidate'
   import moduleList from '../../common/moduleList'
   import {dateFormat} from 'vux'
@@ -47,7 +47,7 @@
         modalLoading: false,
         fieldSet: {
           businessName: '',
-          parentId:''
+          parentId: ''
         },
         list: {
           columns: [
@@ -56,7 +56,7 @@
               title: '操作',
               key: 'action',
               render: (h, params) => {
-                return h('div', [
+                return h('div',{},[
                   h('Button', {
                     props: {
                       type: 'text',
@@ -67,15 +67,15 @@
                         this.remove(params.row, e)
                       }
                     }
-                  }, '删除')
+                  }, [h('Icon', {props: {type: 'trash-a'},class:{'margin-right-10':true}}), '删除'])
                 ]);
               }
             }
           ],
           url: 'admin/queryBusinessType',
         },
-        selections:{
-        	parentId:[]
+        selections: {
+          parentId: []
         }
       }
     },
@@ -90,7 +90,7 @@
           this.modalLoading = true
           this.$http.post(this.url('admin/addBusiness'), params).then(this.rspHandler(() => {
             this.modalLoading = false
-            this.pop=false
+            this.pop = false
             this.refreshList(1)
           }))
         }
@@ -98,7 +98,7 @@
       reset: function () {
         this.fieldSet = {
           businessName: '',
-          parentId:''
+          parentId: ''
         }
       },
       remove: function (data) {
@@ -110,9 +110,9 @@
           }
         });
       },
-      refreshSelections:function(){
-      	this.$http.get(this.url('admin/queryBusinessList')).then(this.rspHandler((data)=>{
-      		this.selections.parentId = data
+      refreshSelections: function () {
+        this.$http.get(this.url('admin/queryBusinessList')).then(this.rspHandler((data)=> {
+          this.selections.parentId = data
         }))
       }
     },

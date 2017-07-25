@@ -29,13 +29,13 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'mobile.html',
       template: 'mobile.html',
       inject: true,
-      chunks:['mobile']
+      chunks:['vendor','mobile']
     }),
     new HtmlWebpackPlugin({
       filename: 'admin.html',
       template: 'admin.html',
       inject: true,
-      chunks:['admin']
+      chunks:['vendor','admin']
     }),
     new FriendlyErrorsPlugin()
   ]

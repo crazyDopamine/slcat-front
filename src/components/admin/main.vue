@@ -68,7 +68,7 @@
     </Modal>
   </div>
 </template>
-<script>
+<script type="es6">
   import header from './widget/header.vue'
   import router from '../../adminRouter'
   let config = {
