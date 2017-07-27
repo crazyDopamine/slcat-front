@@ -6,13 +6,14 @@
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
-        <Page v-show="list.showPage" :current="list.page" :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)"
+        <Page v-show="list.showPage" :current="list.page" :total="list.total" :page-size="list.pageSize"
+              @on-change="refreshList($event)"
               show-elevator></Page>
       </div>
     </div>
     <Modal
       v-model="pop"
-      :title="popTitle"
+      :title="fieldSet.id?'修改':'新增'"
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
@@ -31,7 +32,7 @@
         </div>
       </div>
       <div slot="footer">
-        <Button type="primary" :loading="modalLoading" @click="addSubmit()">添加</Button>
+        <Button type="primary" :loading="modalLoading" @click="submit()">{{fieldSet.id ? '修改' : '新增'}}</Button>
       </div>
     </Modal>
   </div>
@@ -46,11 +47,10 @@
       return {
         status: 0,
         pop: false,
-        popTitle: '新增',
         modalLoading: false,
         fieldSet: {
           skillName: '',
-          skillType:''
+          skillType: ''
         },
         list: {
           columns: [
@@ -71,7 +71,18 @@
                         this.remove(params.row, e)
                       }
                     }
-                  }, '删除')
+                  }, [h('Icon', {props: {type: 'trash-a'}, class: {'margin-right-10': true}}), '删除']),
+                  h('Button', {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: (e) => {
+                        this.edit(params.row, e)
+                      }
+                    }
+                  }, [h('Icon', {props: {type: 'edit'}, class: {'margin-right-10': true}}), '修改'])
                 ]);
               }
             }
@@ -86,21 +97,28 @@
         this.pop = true
         this.modalLoading = false
       },
-      addSubmit: function () {
+      edit: function (data) {
+        this.reset()
+        this.setValues(data)
+        this.pop = true
+      },
+      submit: function () {
         if (this.validate(true)) {
           var params = this.getValues()
           this.modalLoading = true
           this.$http.post(this.url('admin/addSkill'), params).then(this.rspHandler(() => {
             this.modalLoading = false
-            this.pop=false
+            this.pop = false
             this.refreshList(1)
-          }))
+          }), () => {
+            this.modalLoading = false
+          })
         }
       },
       reset: function () {
         this.fieldSet = {
           skillName: '',
-          skillType:''
+          skillType: ''
         }
       },
       remove: function (data) {
@@ -108,9 +126,11 @@
           title: '删除',
           content: '<p>确认是否删除！</p>',
           onOk: () => {
-//            this.$http.get(this.url('admin/failCity'), {params:{id:data.id}}).then(this.rspHandler(() => {
-//              this.refreshList(1)
-//            }))
+            this.$http.get(this.url('/admin/deleteSkill'), {params: {id: data.id}}).then(this.rspHandler(() => {
+              this.refreshList(1)
+            }, () => {
+              this.modalLoading = false
+            }))
           }
         });
       }

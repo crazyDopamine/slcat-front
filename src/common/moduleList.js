@@ -58,6 +58,10 @@ export default {
         }
         if (options.isClear) {
           listNode.dataList = dataList
+          let listContainer = this.$el.querySelector('.list-container')
+          if(listContainer){
+            listContainer.scrollTop = 0;
+          }
         } else {
           listNode.dataList = listNode.dataList.concat(dataList)
         }

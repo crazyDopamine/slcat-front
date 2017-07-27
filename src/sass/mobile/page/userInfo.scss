@@ -34,3 +34,15 @@
     }
   }
 }
+
+.user-info-top-check{
+  .weui-cells{
+    margin-top:0;
+    .weui-label{
+      font-size: $fontSize-m;
+    }
+  }
+  .vux-label{
+    font-size: $fontSize-m;
+  }
+}

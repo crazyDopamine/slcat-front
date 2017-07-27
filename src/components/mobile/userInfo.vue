@@ -1,9 +1,15 @@
 <template>
-  <div class="page-container no-bar-container">
-    <!--<div class="user-info-audit">-->
-      <!--<span class="col-16">完善资料通过审核后，即可拥有承接项目的资质。</span>-->
-      <!--<a class="btn col-8 btn-gray-round btn-normal">提交审核</a>-->
-    <!--</div>-->
+  <div class="page-container">
+    <div class="user-info-audit">
+      <div class="clearfix">
+        <span class="col-14">完善资料通过审核后，即可拥有承接项目的资质。</span>
+        <a class="btn col-10 btn-gray-round btn-normal" :class="agreeProtocol?'bg-white fc-theme':''">提交审核</a><br/>
+      </div>
+    </div>
+    <group class="user-info-top-check">
+      <x-switch title="是否同意协议" v-model="agreeProtocol"><router-link to="/set">用户协议</router-link></x-switch>
+      <cell title="用户协议" link="/set"></cell>
+    </group>
     <div class="container user-info">
       <div class="user-info-top">
         <router-link to="/userInfoEdit" class="btn btn-text fc-theme" style="position: absolute;right:0;top:0;">
@@ -55,26 +61,34 @@
   </div>
 </template>
 <script>
+  import { XSwitch, Group, Cell } from 'vux'
   export default {
+    components: {
+      XSwitch,
+      Group,
+      Cell
+    },
     data: function () {
       return {
-        data:{}
+        data:{},
+        agreeProtocol:false
       }
     },
     methods: {
-      refresh: function () {
-        if (this.$route.params.id) {
-          this.$http.get(this.url('techMaster/queryMasterDetail'), {params: {id: this.$route.params.id}}).then(this.rspHandler((data) => {
-            this.data = data
-          }))
-        }else{
-        	this.data = this.userInfo
-        }
-      }
+//      refresh: function () {
+//        if (this.$route.params.id) {
+//          this.$http.get(this.url('techMaster/queryMasterDetail'), {params: {id: this.$route.params.id}}).then(this.rspHandler((data) => {
+//            this.data = data
+//          }))
+//        }else{
+//        	this.data = this.userInfo
+//        }
+//      }
     },
     created: function () {
       this.$on(this.consts.loadedEvent,function(){
-      	this.refresh()
+        this.data = this.userInfo
+//      	this.refresh()
       })
     }
   }

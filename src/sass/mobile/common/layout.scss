@@ -15,7 +15,9 @@ $headerHeight: 40px;
   .vux-header-title {
     margin: 0;
     img {
-      height: 80%;
+      height: 70%;
+      position: relative;
+      top: -3px;
     }
   }
 }
@@ -24,8 +26,8 @@ $headerHeight: 40px;
   background-color: $bg;
   height: 40px;
   z-index: $zIndex-component;
-  position: fixed;
-  margin-top:-40px;
+  position: absolute;
+  top:0;
   left:0;
   width:100%;
   .vux-tab-ink-bar {
@@ -39,6 +41,15 @@ $headerHeight: 40px;
       border-bottom: 3px solid $themeColor;
     }
   }
+}
+.scroll-view{
+  position: absolute;
+  top:40px;
+  left:0;
+  bottom:0;
+  height:auto;
+  width:100%;
+  overflow: auto;
 }
 .top-bar-fixed-bottom{
   margin-top:40px;

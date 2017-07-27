@@ -52,7 +52,7 @@ var
   validateInit = function (formNode) {
     var fieldClass = {};
     var validateResult = {};
-    if (!formNode)formNode = this;
+    if (!formNode) formNode = this;
     each(formNode.rule, function (rule, name) {
       if (rule.array) {
         fieldClass[name] = [];
@@ -96,13 +96,13 @@ var arrayItemValidateResultInit = function (rule) {
  * @param formNode
  */
 var setValues = function (values, formNode) {
-  var self = this;
-  if (!formNode)formNode = this;
+  if (!formNode) formNode = this;
   if (typeof values == 'object') {
-    each(values, function (val, key) {
+    each(values, (val, key) => {
       if (val == null) val = '';
-      if (formNode.fieldSet[key] != undefined) {
-        self.fieldSet[key] = val;
+      if (formNode.fieldSet[key] != undefined || key === 'id') {
+        // formNode.fieldSet[key] = val;
+        this.$set(formNode.fieldSet,key,val)
       }
     });
   }
@@ -113,7 +113,7 @@ var setValues = function (values, formNode) {
  * @returns {{}}
  */
 var getValues = function (formNode) {
-  if (!formNode)formNode = this;
+  if (!formNode) formNode = this;
   var values = {};
   each(formNode.fieldSet, function (field, key) {
     values[key] = fieldValue(field, formNode);
@@ -147,7 +147,7 @@ var fieldValue = function (field) {
  * @param formNode
  */
 var reset = function (formNode) {
-  if (!formNode)formNode = this;
+  if (!formNode) formNode = this;
   each(formNode.fieldSet, function (value, key) {
     if (formNode.fieldSet[key] instanceof Array) {
       formNode.fieldSet[key] = [];
@@ -169,7 +169,7 @@ var reset = function (formNode) {
  */
 var validate = function (showMsg, formNode, options) {
   var self = this;
-  if (!formNode)formNode = this;
+  if (!formNode) formNode = this;
   options = mix({}, options, {showMsg: showMsg});
   if (options && options.name) {
     return this.validateField(name, formNode, options);
@@ -215,7 +215,7 @@ var validateField = function (name, options, formNode) {
   }
   var validateResult, fieldClass, rule, value, fieldSet, field;
   var self = this;
-  if (!formNode)formNode = this;
+  if (!formNode) formNode = this;
   rule = options.rule || formNode.rule[name];
   value = options.value || '';
   validateResult = options.validateResult || formNode.validateResult;
@@ -593,7 +593,7 @@ var validateField = function (name, options, formNode) {
     }
   }
   if (rule.array && value instanceof Array) {
-    if (!fieldClass[name + '_children'])fieldClass[name + '_children'] = [];
+    if (!fieldClass[name + '_children']) fieldClass[name + '_children'] = [];
     var result = true;
     each(value, function (index, item) {
       if (!validateResult[name].children[index]) {
@@ -641,11 +641,11 @@ var validateField = function (name, options, formNode) {
   }
   if (fieldClass[name].length > 0) {
     validateResult[name].valid = false;
-    if (!fieldClass[name].contains(self.errorClass))fieldClass[name].push(self.errorClass);
+    if (!fieldClass[name].contains(self.errorClass)) fieldClass[name].push(self.errorClass);
     if (validateResult[name].array !== false && options && options.showMsg) {
-      if(window.vm.$vux){
+      if (window.vm.$vux) {
         window.vm.$vux.toast.text(msg + '!', 'bottom')
-      }else if(window.vm.$Message){
+      } else if (window.vm.$Message) {
         window.vm.$Message.error(msg + '!')
       }
 
@@ -674,7 +674,7 @@ export default {
     setValues: setValues,
     reset: reset
   },
-  created:function(){
+  created: function () {
     this.validateInit()
   }
 }
