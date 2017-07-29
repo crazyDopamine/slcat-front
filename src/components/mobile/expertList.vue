@@ -1,34 +1,33 @@
 <template>
   <div class="page-container bg-white">
-    <div>
-      <search
-        class="expert-list-search"
-        v-model="list.params.queryParam"
-        :autoFixed="false"
-        ref="search"
-        @on-submit="refreshList(1)"
-        placeholder="搜索专长或其他关键字"></search>
-      <!--<Button-group>-->
-        <!--<Button>取消</Button>-->
-        <!--<Button type="primary">确定</Button>-->
-      <!--</Button-group>-->
-      <!--<div>-->
-        <!--<Button>{{tabSelect.businessParentId}}</Button>-->
-        <!--<Button>{{tabSelect.cityId}}</Button>-->
-        <!--<Button>{{tabSelect.industryId}}</Button>-->
-      <!--</div>-->
-      <tab class="top-nav-bar border-bottom-0 no-selected" style="top:44px;">
-        <tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}
-          <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
-        <tab-item @on-item-click="onTabClick">{{tabSelect.cityId}}
-          <i class="margin-left-5" :class="tabSwitch==1?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
-        <tab-item @on-item-click="onTabClick">{{tabSelect.industryId}}
-          <i class="margin-left-5" :class="tabSwitch==2?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
-      </tab>
-    </div>
+    <search
+      class="expert-list-search"
+      v-model="list.params.queryParam"
+      :autoFixed="false"
+      ref="search"
+      @on-submit="refreshList(1)"
+      placeholder="搜索专长或其他关键字"></search>
+    <!--<Button-group>-->
+    <!--<Button>取消</Button>-->
+    <!--<Button type="primary">确定</Button>-->
+    <!--</Button-group>-->
+    <!--<div>-->
+    <!--<Button>{{tabSelect.businessParentId}}</Button>-->
+    <!--<Button>{{tabSelect.cityId}}</Button>-->
+    <!--<Button>{{tabSelect.industryId}}</Button>-->
+    <!--</div>-->
+    <tab class="top-nav-bar border-bottom-0 no-selected">
+      <tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}
+        <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+      <tab-item @on-item-click="onTabClick">{{tabSelect.cityId}}
+        <i class="margin-left-5" :class="tabSwitch==1?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+      <tab-item @on-item-click="onTabClick">{{tabSelect.industryId}}
+        <i class="margin-left-5" :class="tabSwitch==2?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+    </tab>
     <popup v-model="selectionsShow" class="tab-selections" position="bottom" @on-hide="tabSwitch=-1">
       <ul class="selections-list">
-        <li :class="item.id==list.params.businessParentId?'active':''" @click="onSelectClick(item.id,item.businessName,'businessParentId')"
+        <li :class="item.id==list.params.businessParentId?'active':''"
+            @click="onSelectClick(item.id,item.businessName,'businessParentId')"
             v-for="item in selections.businessParentId" :key="item" v-if="tabSwitch==0">
           {{item.businessName}}
           <i class="icon-right float-right" v-if="item.id==list.params.businessParentId"></i>
@@ -38,14 +37,16 @@
           {{item.cityName}}
           <i class="icon-right float-right" v-if="item.id==list.params.cityId"></i>
         </li>
-        <li :class="item.id==list.params.industryId?'active':''" @click="onSelectClick(item.id,item.industryName,'industryId')"
+        <li :class="item.id==list.params.industryId?'active':''"
+            @click="onSelectClick(item.id,item.industryName,'industryId')"
             v-for="item in selections.industryId" v-if="tabSwitch==2">
           {{item.industryName}}
           <i class="icon-right float-right" v-if="item.id==list.params.industryId"></i>
         </li>
       </ul>
     </popup>
-    <scroller height="-40"lock-x scrollbar-y use-pulldown :pulldown-config="{content:'下拉刷新',downContent:'下拉刷新',upContent:'释放刷新',loadingContent:'加载中'}" @on-pulldown-loading="onRefresh" ref="scroller">
+    <scroller height="-124" lock-x scrollbar-y use-pulldown use-pullup :pulldown-config="list.pullDownConfig"
+              :pullup-config="list.pullUpConfig" @on-pulldown-loading="onRefresh" @on-pullup-loading="onLoadMore" ref="scroller">
       <ul class="data-list expert-list">
         <li class="data-item expert-list-item" v-for="(data,index) in list.dataList">
           <div class="expert-top">
@@ -65,15 +66,16 @@
             <span class="fc-red float-right">日薪/{{data.dailyWage}}</span>
           </div>
           <div class="expert-bottom">
-            <span class="fc-red fs-xl"><i class="icon-talk"></i>查看Ta的联系方式</span><span class="fc-gray-l">（9元预约，会员免费）</span><br/>
+            <span class="fc-red fs-xl"><i class="icon-talk"></i>查看Ta的联系方式</span><span
+            class="fc-gray-l">（9元预约，会员免费）</span><br/>
             <div style="line-height: 30px;">服装展会、T台秀方案设计与执行<i class="icon-arrow-right float-right"></i></div>
           </div>
         </li>
       </ul>
     </scroller>
-    <infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">
-      <span slot="no-more">到底啦</span>
-    </infinite-loading>
+    <!--<infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">-->
+    <!--<span slot="no-more">到底啦</span>-->
+    <!--</infinite-loading>-->
   </div>
 </template>
 <script type="es6">

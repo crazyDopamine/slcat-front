@@ -5,7 +5,8 @@
       <tab-item @on-item-click="onTabClick">接受</tab-item>
     </tab>
     <div class="scroll-view list-container">
-      <vue-pull-refresh :on-refresh="onRefresh">
+      <scroller height="-80" lock-x scrollbar-y use-pulldown use-pullup :pulldown-config="list.pullDownConfig"
+                :pullup-config="list.pullUpConfig" @on-pulldown-loading="onRefresh" @on-pullup-loading="onLoadMore" ref="scroller">
         <ul class="data-list task-list">
           <li class="data-item" v-for="(data,index) in list.dataList">
             <router-link :to="'/taskDetail/'+data.id">
@@ -32,7 +33,7 @@
             </router-link>
           </li>
         </ul>
-      </vue-pull-refresh>
+      </scroller>
       <infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">
         <span slot="no-more">到底啦</span>
       </infinite-loading>

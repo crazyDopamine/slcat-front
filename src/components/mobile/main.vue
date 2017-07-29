@@ -1,7 +1,7 @@
 <template>
   <div class="page-container" style="padding-bottom:50px;">
     <div class="main-img-area" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
-         @touchend="touchEnd($event)">
+         @touchend="touchEnd($event)" style="touch-action: auto;user-select: none;-webkit-user-drag: none;">
       <template v-for="(img,index) in imgs">
         <transition name="main-img">
           <img v-if="index!=1" class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">

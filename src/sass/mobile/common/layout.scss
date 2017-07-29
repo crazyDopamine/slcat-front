@@ -26,10 +26,6 @@ $headerHeight: 40px;
   background-color: $bg;
   height: 40px;
   z-index: $zIndex-component;
-  position: absolute;
-  top:0;
-  left:0;
-  width:100%;
   .vux-tab-ink-bar {
     background-color: $themeColor;
   }

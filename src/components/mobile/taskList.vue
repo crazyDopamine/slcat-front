@@ -11,7 +11,8 @@
     <!--<button-tab-item v-for="item in selections.type" :key="item">{{item.businessName}}</button-tab-item>-->
     <!--</button-tab>-->
     <div class="scroll-view list-container">
-      <vue-pull-refresh :on-refresh="onRefresh">
+      <scroller height="-80" lock-x scrollbar-y use-pulldown use-pullup :pulldown-config="list.pullDownConfig"
+                :pullup-config="list.pullUpConfig" @on-pulldown-loading="onRefresh" @on-pullup-loading="onLoadMore" ref="scroller">
         <ul class="data-list task-list">
           <li class="data-item" v-for="(data,index) in list.dataList">
             <router-link :to="'/taskDetail/'+data.id">
@@ -38,10 +39,7 @@
             </router-link>
           </li>
         </ul>
-      </vue-pull-refresh>
-      <infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">
-        <span slot="no-more">到底啦</span>
-      </infinite-loading>
+      </scroller>
     </div>
   </div>
 </template>
@@ -86,7 +84,7 @@
       var self = this
       this.initList(this.list, {post: true})
       this.$on(consts.loadedEvent, function () {
-        // this.refreshList(1)
+         this.refreshList(1)
         getType(this).then(function (data) {
           self.typeLoaded = 1
           self.selections.type = data
