@@ -4,7 +4,9 @@
          @touchend="touchEnd($event)">
       <template v-for="(img,index) in imgs">
         <transition name="main-img">
-          <img class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">
+          <img v-if="index!=1" class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">
+          <router-link to="/services" v-if="index==1"><img class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">
+          </router-link>
         </transition>
       </template>
     </div>

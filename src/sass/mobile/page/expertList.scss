@@ -1,7 +1,7 @@
 .expert-list-search{
   height:auto;
-  position: fixed!important;
-  margin-top: -84px;
+  position: absolute!important;
+  top:0;
   z-index: $zIndex-page;
   .mint-searchbar{
     color:$grayD;

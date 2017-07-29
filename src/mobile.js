@@ -28,9 +28,10 @@ import 'vux/src/styles/reset.less';
 import 'vueg/css/transition-min.css'
 import './sass/mobile/style.scss'
 
-import {ToastPlugin, LoadingPlugin, XHeader, Icon} from 'vux'
+import {ToastPlugin, LoadingPlugin, XHeader, Icon, ConfirmPlugin} from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
+Vue.use(ConfirmPlugin)
 Vue.use(VueRouter)
 Vue.mixin(loadedMixins)
 Vue.mixin(common)
@@ -43,7 +44,6 @@ Vue.http.interceptors.push(httpInterceptor)
 
 const routes = [
   {path: '/', redirect: '/main'},
-  {path: '/expertDetail', component: expertDetail},
   {path: '/expertList', component: expertList},
   {path: '/main', component: main},
   {path: '/services', component: services},
@@ -53,7 +53,7 @@ const routes = [
   {path: '/taskDetail/:id', component: taskDetail},
   {path: '/taskList', component: taskList},
   {path: '/userInfo', component: userInfo},
-  {path: '/userInfo/:id', component: userInfo},
+  {path: '/expertDetail/:id', component: expertDetail},
   {path: '/userInfoEdit', component: userInfoEdit},
   {path: '/aboutMeEdit', component: aboutMeEdit},
   {path: '/productionAdd', component: productionAdd},

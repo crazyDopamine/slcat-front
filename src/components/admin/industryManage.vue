@@ -12,7 +12,7 @@
     </div>
     <Modal
       v-model="pop"
-      :title="popTitle"
+      :title="fieldSet.id?'修改':'新增'"
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div slot="footer">
-        <Button type="primary" :loading="modalLoading" @click="addSubmit()">添加</Button>
+        <Button type="primary" :loading="modalLoading" @click="submit()">{{fieldSet.id?'修改':'新增'}}</Button>
       </div>
     </Modal>
   </div>
@@ -36,7 +36,6 @@
       return {
         status: 0,
         pop: false,
-        popTitle: '新增',
         modalLoading: false,
         fieldSet: {
           industryName: ''
@@ -59,7 +58,18 @@
                         this.remove(params.row, e)
                       }
                     }
-                  }, '删除')
+                  },[h('Icon', {props: {type: 'trash-a'},class:{'margin-right-10':true}}), '删除']),
+                  h('Button', {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: (e) => {
+                        this.edit(params.row, e)
+                      }
+                    }
+                  }, [h('Icon', {props: {type: 'edit'},class:{'margin-right-10':true}}), '修改'])
                 ]);
               }
             }
@@ -73,7 +83,12 @@
         this.reset()
         this.pop = true
       },
-      addSubmit: function () {
+      edit:function(data){
+        this.reset()
+        this.setValues(data)
+        this.pop = true
+      },
+      submit: function () {
         if (this.validate(true)) {
           var params = this.getValues()
           this.modalLoading = true
@@ -81,6 +96,8 @@
             this.modalLoading = false
             this.pop=false
             this.refreshList(1)
+          }, () => {
+            this.modalLoading = false
           }))
         }
       },

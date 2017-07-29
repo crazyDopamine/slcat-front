@@ -4,37 +4,39 @@
       <tab-item selected @on-item-click="onTabClick">发出</tab-item>
       <tab-item @on-item-click="onTabClick">接受</tab-item>
     </tab>
-    <vue-pull-refresh :on-refresh="onRefresh" class="top-bar-fixed-bottom">
-      <ul class="data-list task-list">
-        <li class="data-item" v-for="(data,index) in list.dataList">
-          <router-link :to="'/taskDetail/'+data.id">
-            <label class="title col-16 fs-l">
-              {{data.projectName}}<span class="btn btn-theme-round margin-left-5"
-                                        style="line-height: 20px;">{{data.status}}</span>
-            </label>
-            <span class="col-8 text-right"><span class="fc-red fs-xl">{{data.projectBudget}}</span>元</span><br/>
-            <span class="margin-right-10">{{data.recruitBusiness ? data.recruitBusiness.parentBusiness.businessName : ''}}/{{data.recruitBusiness ? data.recruitBusiness.businessName : ''}}</span>
-            <span
-              v-for="(item,i) in data.baseSkills">{{item.skillName}}{{i != data.baseSkills.length - 1 ? ',' : ''}}</span><br/>
-            <ul class="flex col-16 fs-s" style="line-height: 14px;margin-top:8px;margin-bottom:8px;">
-              <li class="border-right">
-                <span>已推荐</span><span class="fc-theme padding-left-5 padding-right-5">{{data.recommendCount}}</span>
-              </li>
-              <li class="border-right padding-left-10">
-                <span>已申请</span><span class="fc-theme padding-left-5 padding-right-5">{{data.applyCount}}</span>
-              </li>
-              <li class="padding-left-10">
-                <span>已浏览</span><span class="fc-theme padding-left-5 padding-right-5">{{data.visitCount}}</span>
-              </li>
-            </ul>
-            <span class="float-right">{{data.createdAt | date}}</span>
-          </router-link>
-        </li>
-      </ul>
-    </vue-pull-refresh>
-    <infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">
-      <span slot="no-more">到底啦</span>
-    </infinite-loading>
+    <div class="scroll-view list-container">
+      <vue-pull-refresh :on-refresh="onRefresh">
+        <ul class="data-list task-list">
+          <li class="data-item" v-for="(data,index) in list.dataList">
+            <router-link :to="'/taskDetail/'+data.id">
+              <label class="title col-16 fs-l">
+                {{data.projectName}}<span class="btn btn-theme-round margin-left-5"
+                                          style="line-height: 20px;">{{data.status}}</span>
+              </label>
+              <span class="col-8 text-right"><span class="fc-red fs-xl">{{data.projectBudget}}</span>元</span><br/>
+              <span class="margin-right-10">{{data.recruitBusiness ? data.recruitBusiness.parentBusiness.businessName : ''}}/{{data.recruitBusiness ? data.recruitBusiness.businessName : ''}}</span>
+              <span
+                v-for="(item,i) in data.baseSkills">{{item.skillName}}{{i != data.baseSkills.length - 1 ? ',' : ''}}</span><br/>
+              <ul class="flex col-16 fs-s" style="line-height: 14px;margin-top:8px;margin-bottom:8px;">
+                <li class="border-right">
+                  <span>已推荐</span><span class="fc-theme padding-left-5 padding-right-5">{{data.recommendCount}}</span>
+                </li>
+                <li class="border-right padding-left-10">
+                  <span>已申请</span><span class="fc-theme padding-left-5 padding-right-5">{{data.applyCount}}</span>
+                </li>
+                <li class="padding-left-10">
+                  <span>已浏览</span><span class="fc-theme padding-left-5 padding-right-5">{{data.visitCount}}</span>
+                </li>
+              </ul>
+              <span class="float-right">{{data.createdAt | date}}</span>
+            </router-link>
+          </li>
+        </ul>
+      </vue-pull-refresh>
+      <infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">
+        <span slot="no-more">到底啦</span>
+      </infinite-loading>
+    </div>
   </div>
 </template>
 <script>

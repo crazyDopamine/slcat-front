@@ -17,7 +17,7 @@
         <!--<Button>{{tabSelect.cityId}}</Button>-->
         <!--<Button>{{tabSelect.industryId}}</Button>-->
       <!--</div>-->
-      <tab class="top-nav-bar border-bottom-0 no-selected">
+      <tab class="top-nav-bar border-bottom-0 no-selected" style="top:44px;">
         <tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}
           <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
         <tab-item @on-item-click="onTabClick">{{tabSelect.cityId}}

@@ -138,8 +138,6 @@
           this.detail = data
           this.pop = true
         }))
-//        this.detail = data
-//        this.pop = true
       },
       check: function (data, status) {
         this.$http.get(this.url('admin/checkEmp'), {

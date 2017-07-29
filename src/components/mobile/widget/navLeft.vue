@@ -29,7 +29,7 @@
           {name: '首页', path: '/main'},
           {name: '服务', path: '/services'},
           {name: '任务大厅', path: '/taskList'},
-          {name: '牛人短租', path: '/expertList'},
+          {name: '牛人大厅', path: '/expertList'},
           {name: '我的任务', path: '/myTask'},
           {name: '个人主页', path: '/userInfo'},
           {name: '免费发布任务', path: '/taskAdd'},

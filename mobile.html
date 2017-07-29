@@ -14,7 +14,8 @@
 <div id="app" v-show="true" style="display:none;">
   <x-header class="slc-header">
     <img src="/static/img/solomioLOGO.png">
-    <a slot="overwrite-left" class="icon-nav fs-l" @click="showMenu()"></a>
+    <a slot="overwrite-left" class="icon-nav fs-l" @click="showMenu()" style="position: relative;top:-5px;"></a>
+    <router-link v-if="path!='/userInfo'" slot="right" class="icon-user fs-l fc-theme" to="/userInfo" style="position: relative;top:-5px;"></router-link>
   </x-header>
   <nav-left ref="navLeft" :path="path"></nav-left>
   <div class="main-container">
