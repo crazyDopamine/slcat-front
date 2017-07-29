@@ -45,7 +45,7 @@
         </li>
       </ul>
     </popup>
-    <vue-pull-refresh :on-refresh="onRefresh" class="top-bar-fixed-bottom" style="margin-top:84px;">
+    <scroller height="-40"lock-x scrollbar-y use-pulldown :pulldown-config="{content:'下拉刷新',downContent:'下拉刷新',upContent:'释放刷新',loadingContent:'加载中'}" @on-pulldown-loading="onRefresh" ref="scroller">
       <ul class="data-list expert-list">
         <li class="data-item expert-list-item" v-for="(data,index) in list.dataList">
           <div class="expert-top">
@@ -70,7 +70,7 @@
           </div>
         </li>
       </ul>
-    </vue-pull-refresh>
+    </scroller>
     <infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">
       <span slot="no-more">到底啦</span>
     </infinite-loading>

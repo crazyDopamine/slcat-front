@@ -61,6 +61,9 @@ export default {
         } else {
           listNode.dataList = listNode.dataList.concat(dataList)
         }
+        if (self.$refs.scroller) {
+          self.$refs.scroller.donePulldown()
+        }
         // if (this.$vux) {
         //   this.$vux.loading.hide()
         // }
@@ -74,6 +77,10 @@ export default {
           }
         }
         if (successCallback)successCallback()
+      }, ()=> {
+        if (self.$refs.scroller) {
+          self.$refs.scroller.donePulldown()
+        }
       })
       if (options.isClear)listNode.dataList = []
       // if (this.$vux) {
@@ -85,6 +92,9 @@ export default {
       if (listNode.options.post) {
         this.$http.post(url(listNode.url), params).then(callback, ()=> {
           if (errorCallback)errorCallback()
+          if (self.$refs.scroller) {
+            self.$refs.scroller.donePulldown()
+          }
         })
       } else {
         this.$http.get(url(listNode.url), {params: params}).then(callback, ()=> {
@@ -93,12 +103,10 @@ export default {
       }
     },
     onRefresh: function () {
-      return new Promise((resolve, reject) => {
-        this.refreshList(1, null, null, resolve, reject)
-      });
+      this.refreshList(1)
     },
     onInfinite() {
-      this.refreshList(this.list.page+1, {isClear: false}, null)
+      this.refreshList(this.list.page + 1, {isClear: false}, null)
     }
   }
 }
