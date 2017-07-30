@@ -45,16 +45,33 @@
       </div>
       <a class="btn btn-large btn-theme-round margin-top-20" @click="apply()">发送申请意向</a>
     </div>
+    <div class="task-description">
+      <group title="推荐列表">
+        <cell title="推荐人1" :link="'/expertDetail/1/'+data.id"></cell>
+        <cell title="推荐人2" :link="'/expertDetail/1/'+data.id"></cell>
+      </group>
+    </div>
+    <div class="task-description">
+      <group title="申请列表">
+        <cell title="申请人1" :link="'/expertDetail/1/'+data.id"></cell>
+        <cell title="申请人2" :link="'/expertDetail/1/'+data.id"></cell>
+      </group>
+    </div>
   </div>
 </template>
 <script>
   import consts from '../../common/const'
   import {url, rspHandler, selections} from '../../common/utils'
+  import {Group, Cell} from 'vux'
   var config = {
+    components: {
+      Group,
+      Cell
+    },
     data: function () {
       return {
         data: {},
-        trendCompleteMap:{}
+        trendCompleteMap: {}
       }
     },
     methods: {
@@ -71,8 +88,8 @@
         this.$http.get(url('employer/queryDetail/' + this.$route.params.id)).then(rspHandler((data) => {
           this.data = data
         }))
-        selections('100').then((data,map) => {
-        	this.trendCompleteMap = window.dicMapMap['100']
+        selections('100').then((data, map) => {
+          this.trendCompleteMap = window.dicMapMap['100']
         })
       }
     },

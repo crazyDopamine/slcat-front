@@ -7,11 +7,12 @@
     <div class="container user-info">
       <div class="user-info-top">
         <img class="user-img" src="/static/img/user-img-default.png"><br/>
-        <label class="fs-xxl">{{data.nickName?data.nickName:'昵称'}}</label><br/>
+        <label class="fs-xxl">{{data.nickName ? data.nickName : '昵称'}}</label><br/>
         <!--<span class="btn btn-round-border btn-small">未提交审核</span><br/>-->
-        <span>{{data.dailyWage?data.dailyWage:'0'}}元/天</span><br/>
+        <span>{{data.dailyWage ? data.dailyWage : '0'}}元/天</span><br/>
         <template v-if="data.jobTitle">
-          <span class="btn btn-gray-round btn-small margin-right-5" v-for="item in data.jobTitle.split(',')">{{item}}</span>
+          <span class="btn btn-gray-round btn-small margin-right-5"
+                v-for="item in data.jobTitle.split(',')">{{item}}</span>
         </template>
       </div>
       <div class="user-info-detail">
@@ -40,14 +41,17 @@
         </div>
       </div>
     </div>
+    <div style="margin:0 15px;" v-if="task&&task.status=='已审核'">
+      <a class="btn btn-large btn-theme-round margin-top-20" @click="submit()">确认委托</a>
+    </div>
   </div>
 </template>
 <script>
   export default {
     data: function () {
       return {
-        data:{
-        }
+        data: {},
+        task:null
       }
     },
     methods: {
@@ -57,10 +61,26 @@
             this.data = data
           }))
         }
+        if(this.$route.params.taskId){
+          this.$http.get(this.url('employer/queryDetail/' + this.$route.params.taskId)).then(this.rspHandler((data) => {
+            this.task = data
+          }))
+        }
+      },
+      submit: function () {
+        if (this.$route.params.taskId) {
+          this.$vux.confirm.show({
+            title:'确认',
+            content:'是否确认当前牛人为项目委托人？',
+            onConfirm: () => {
+
+            }
+          })
+        }
       }
     },
     created: function () {
-      this.$on(this.consts.loadedEvent,function(){
+      this.$on(this.consts.loadedEvent, function () {
         this.refresh()
       })
     }

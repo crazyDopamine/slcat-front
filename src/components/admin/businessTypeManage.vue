@@ -6,7 +6,8 @@
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
-        <Page v-show="list.showPage" :current="list.page" :total="list.total" :page-size="list.pageSize" @on-change="refreshList($event)"
+        <Page v-show="list.showPage" :current="list.page" :total="list.total" :page-size="list.pageSize"
+              @on-change="refreshList($event)"
               show-elevator></Page>
       </div>
     </div>
@@ -21,14 +22,19 @@
         </div>
         <div class="form-row clearfix">
           <label class="col-8">业务分类：</label>
-          <Select class="col-16" v-model="fieldSet.parentId">
+          <Select class="col-16" v-model="fieldSet.parentId" clearable>
             <Option v-for="item in selections.parentId" :value="item.id" :key="item">{{ item.businessName }}</Option>
           </Select>
+        </div>
+        <div class="form-row clearfix">
+          <Upload multiple :action="uploadUrl" :on-success="onUploaded" :headers="uploadHeaders">
+            <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
+          </Upload>
         </div>
       </div>
 
       <div slot="footer">
-        <Button type="primary" :loading="modalLoading" @click="submit()">{{fieldSet.id?'修改':'新增'}}</Button>
+        <Button type="primary" :loading="modalLoading" @click="submit()">{{fieldSet.id ? '修改' : '新增'}}</Button>
       </div>
     </Modal>
   </div>
@@ -36,7 +42,7 @@
 <script type="es6">
   import formValidate from '../../common/formValidate'
   import moduleList from '../../common/moduleList'
-  import {dateFormat} from 'vux'
+  import {dateFormat, cookie} from 'vux'
   export default {
     mixins: [formValidate, moduleList],
     data: function () {
@@ -44,6 +50,8 @@
         status: 0,
         pop: false,
         modalLoading: false,
+        uploadUrl:'',
+        uploadHeaders:{},
         fieldSet: {
           businessName: '',
           parentId: ''
@@ -55,7 +63,7 @@
               title: '操作',
               key: 'action',
               render: (h, params) => {
-                return h('div',{},[
+                return h('div', {}, [
                   h('Button', {
                     props: {
                       type: 'text',
@@ -66,7 +74,7 @@
                         this.remove(params.row, e)
                       }
                     }
-                  }, [h('Icon', {props: {type: 'trash-a'},class:{'margin-right-10':true}}), '删除']),
+                  }, [h('Icon', {props: {type: 'trash-a'}, class: {'margin-right-10': true}}), '删除']),
                   h('Button', {
                     props: {
                       type: 'text',
@@ -77,7 +85,7 @@
                         this.edit(params.row, e)
                       }
                     }
-                  }, [h('Icon', {props: {type: 'edit'},class:{'margin-right-10':true}}), '修改'])
+                  }, [h('Icon', {props: {type: 'edit'}, class: {'margin-right-10': true}}), '修改'])
                 ]);
               }
             }
@@ -94,7 +102,7 @@
         this.reset()
         this.pop = true
       },
-      edit:function(data){
+      edit: function (data) {
         this.reset()
         this.setValues(data)
         this.pop = true
@@ -128,14 +136,20 @@
         });
       },
       refreshSelections: function () {
-        this.$http.get(this.url('admin/queryBusinessList')).then(this.rspHandler((data)=> {
+        this.$http.get(this.url('admin/queryBusinessList')).then(this.rspHandler((data) => {
           this.selections.parentId = data
         }))
+      },
+      onUploaded:function(rsp,file,fileList){
+      	console.log(rsp)
       }
     },
     created: function () {
       this.initList(this.list)
       this.$on(this.consts.loadedEvent, function () {
+        this.uploadUrl = this.url('admin/fileUpload')
+        this.uploadHeaders = {}
+        this.uploadHeaders[this.consts.ticketKey] = cookie.get(this.consts.ticketKey)
         this.refreshList(1)
         this.refreshSelections()
       })

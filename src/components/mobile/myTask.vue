@@ -34,9 +34,6 @@
           </li>
         </ul>
       </scroller>
-      <infinite-loading v-show="list.total>0" :on-infinite="onInfinite" ref="infiniteLoading">
-        <span slot="no-more">到底啦</span>
-      </infinite-loading>
     </div>
   </div>
 </template>

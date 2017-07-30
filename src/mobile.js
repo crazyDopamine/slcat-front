@@ -23,12 +23,13 @@ import serviceDetail from './components/mobile/serviceDetail.vue'
 import vueg from 'vueg'
 import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
+import {getQuery} from './common/utils'
 import navLeft from './components/mobile/widget/navLeft.vue'
 import 'vux/src/styles/reset.less';
 import 'vueg/css/transition-min.css'
 import './sass/mobile/style.scss'
 
-import {ToastPlugin, LoadingPlugin, XHeader, Icon, ConfirmPlugin} from 'vux'
+import {ToastPlugin, LoadingPlugin, XHeader, Icon, ConfirmPlugin, cookie} from 'vux'
 Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
@@ -54,6 +55,7 @@ const routes = [
   {path: '/taskList', component: taskList},
   {path: '/userInfo', component: userInfo},
   {path: '/expertDetail/:id', component: expertDetail},
+  {path: '/expertDetail/:id/:taskId', component: expertDetail},
   {path: '/userInfoEdit', component: userInfoEdit},
   {path: '/aboutMeEdit', component: aboutMeEdit},
   {path: '/productionAdd', component: productionAdd},
@@ -69,6 +71,7 @@ Vue.use(vueg, router, {
   forwardAnim: 'fadeInRight',
   backAnim: 'fadeInleft'
 })
+
 let config = {
   router,
   components: {Icon, XHeader, 'nav-left': navLeft},
@@ -84,9 +87,21 @@ let config = {
       this.$refs.navLeft.show = !this.$refs.navLeft.show
     },
     login: function () {
-      setTimeout(() => {
+      var code = getQuery(this.$route.query).code
+      if(code){
+        this.$http.get(this.url('user/login'),{params:{code:code}}).then(this.rspHandler((data)=>{
+          cookie.set(this.consts.ticketKey,data.openId)
+          this.userInfo = data
+          this.userInfoLoaded = 1
+          this.$emit(this.consts.loadedEvent, data, this.consts.loadedStatus)
+        },()=>{
+          this.getUserInfo()
+        }),()=>{
+          this.getUserInfo()
+        })
+      }else{
         this.getUserInfo()
-      }, 100)
+      }
     },
     getUserInfo: function () {
       this.$http.get(this.url('techMaster/queryMasterDetail')).then(this.rspHandler((data) => {

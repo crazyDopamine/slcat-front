@@ -1,28 +1,77 @@
 <template>
-  <div class="page-container" style="padding-bottom:50px;">
-    <div class="main-img-area" @touchstart="touchStart($event)" @touchmove="touchMove($event)"
-         @touchend="touchEnd($event)" style="touch-action: auto;user-select: none;-webkit-user-drag: none;">
-      <template v-for="(img,index) in imgs">
-        <transition name="main-img">
-          <img v-if="index!=1" class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">
-          <router-link to="/services" v-if="index==1"><img class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">
-          </router-link>
-        </transition>
-      </template>
+  <div class="page-container" style="height: 100%;">
+    <!--<div class="main-img-area" @touchstart="touchStart($event)" @touchmove="touchMove($event)"-->
+         <!--@touchend="touchEnd($event)" style="touch-action: auto;user-select: none;-webkit-user-drag: none;">-->
+      <!--<template v-for="(img,index) in imgs">-->
+        <!--<transition name="main-img">-->
+          <!--<img v-if="index!=1" class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">-->
+          <!--<router-link to="/services" v-if="index==1"><img class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">-->
+          <!--</router-link>-->
+        <!--</transition>-->
+      <!--</template>-->
+    <!--</div>-->
+    <div class="swiper-container" style="padding-bottom:50px;height:100%;">
+      <swiper class="main-img-area" :height="swiperHeight" direction="vertical" :show-dots="false" ref="swiper">
+        <swiper-item v-for="item in imgList" :key="item"><img class="main-img" :src="item.img"/></swiper-item>
+      </swiper>
     </div>
+    <!--<swiper auto height="30px" direction="vertical" :interval=2000 :show-dots="false">-->
+      <!--<swiper-item><p>义务爱了 完成传奇世界H5-王者归来任务 获得20金币</p></swiper-item>-->
+      <!--<swiper-item><p>基本世神 兑换《传奇世界H5》畅玩级礼包 消耗30金币</p></swiper-item>-->
+      <!--<swiper-item><p>零哥章魚 完成传奇世界H5-王者归来任务 获得30金币</p></swiper-item>-->
+      <!--<swiper-item><p>做迎而為 兑换【饿了么】畅享美食红包 消耗20金币</p></swiper-item>-->
+      <!--<swiper-item><p>只知道不知道 兑换【饿了么】畅享美食红包 消耗20金币</p></swiper-item>-->
+      <!--<swiper-item><p>基本世神 兑换《传奇世界H5》畅玩级礼包 消耗30金币</p></swiper-item>-->
+    <!--</swiper>-->
     <div class="main-bottom">
       <router-link class="btn" to="/taskAdd">发布项目</router-link>
     </div>
   </div>
 </template>
 <script>
+  import {Swiper, SwiperItem} from 'vux'
   export default {
+  	components:{
+      Swiper,
+      SwiperItem
+    },
     data: function () {
       return {
         current: 0,
-        imgs: ['/static/main/main-1.jpg', '/static/main/main-2.jpg', '/static/main/main-3.jpg',
-          '/static/main/main-4.jpg', '/static/main/main-5.jpg', '/static/main/main-6.jpg',
-          '/static/main/main-7.jpg', '/static/main/main-8.jpg'],
+        swiperHeight:'500px',
+        imgList:[{
+          url: 'javascript:',
+          img: '/static/main/main-1.jpg',
+          title: ''
+        }, {
+          url: '/services',
+          img: '/static/main/main-2.jpg',
+          title: ''
+        }, {
+          url: 'javascript:',
+          img: '/static/main/main-3.jpg',
+          title: ''
+        }, {
+          url: 'javascript:',
+          img: '/static/main/main-4.jpg',
+          title: ''
+        }, {
+          url: 'javascript:',
+          img: '/static/main/main-5.jpg',
+          title: ''
+        }, {
+          url: 'javascript:',
+          img: '/static/main/main-6.jpg',
+          title: ''
+        }, {
+          url: 'javascript:',
+          img: '/static/main/main-7.jpg',
+          title: ''
+        }, {
+          url: 'javascript:',
+          img: '/static/main/main-8.jpg',
+          title: ''
+        }],
         moveStart: 0,
         moveEnd: 0,
         changeY: 100,
@@ -70,9 +119,16 @@
           }
         }
       }
-    }
-    ,
+    },
+//    mounted: function () {
+//      this.$nextTick(function(){
+//      	debugger
+//        let swiperContainer = this.$el.querySelector('.swiper-container');
+//        this.$refs.swiper.xheight = swiperContainer.offsetHeight-50 + 'px'
+//      })
+//    },
     created: function () {
+        this.swiperHeight = window.screen.height-90 + 'px'
     }
   }
 </script>

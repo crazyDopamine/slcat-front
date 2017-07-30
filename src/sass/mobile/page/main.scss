@@ -13,15 +13,15 @@
 }
 
 .main-img-area{
-  position: absolute;
-  top:0;
-  bottom:50px;
+  position: relative;
   width:100%;
+  height:100%;
   overflow: hidden;
+  padding-bottom:50px;
   .main-img{
     width:100%;
     height:100%;
-    position: absolute;
+    //position: absolute;
     &.active{
       //top:0 !important;
     }
