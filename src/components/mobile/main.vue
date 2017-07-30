@@ -1,45 +1,53 @@
 <template>
   <div class="page-container" style="height: 100%;">
+    <!--<scroller lock-x bounce height="-90" ref="scroller">-->
+    <!--<div>-->
+    <!--<template v-for="(item,index) in imgList">-->
+    <!--<img v-if="index!=1" :style="{height:imgHeight}" style="width:100%;"-->
+    <!--:class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="item.img">-->
+    <!--<router-link to="/services" v-if="index==1">-->
+    <!--<img :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']"-->
+    <!--:style="{height:imgHeight}" style="width:100%;" :src="item.img">-->
+    <!--</router-link>-->
+    <!--</template>-->
+    <!--</div>-->
+    <!--</scroller>-->
     <!--<div class="main-img-area" @touchstart="touchStart($event)" @touchmove="touchMove($event)"-->
-         <!--@touchend="touchEnd($event)" style="touch-action: auto;user-select: none;-webkit-user-drag: none;">-->
-      <!--<template v-for="(img,index) in imgs">-->
-        <!--<transition name="main-img">-->
-          <!--<img v-if="index!=1" class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">-->
-          <!--<router-link to="/services" v-if="index==1"><img class="main-img" :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="img" v-show="current==index">-->
-          <!--</router-link>-->
-        <!--</transition>-->
-      <!--</template>-->
+    <!--@touchend="touchEnd($event)">-->
+
     <!--</div>-->
     <div class="swiper-container" style="padding-bottom:50px;height:100%;">
-      <swiper class="main-img-area" :height="swiperHeight" direction="vertical" :show-dots="false" ref="swiper">
-        <swiper-item v-for="item in imgList" :key="item"><img class="main-img" :src="item.img"/></swiper-item>
+      <swiper class="main-img-area" :height="swiperHeight" dots-position="center" ref="swiper">
+        <swiper-item v-for="(item,index) in imgList" :key="item">
+          <template v-if="index==1">
+            <router-link to="/services">
+              <img class="main-img" :src="item.img"/>
+            </router-link>
+          </template>
+          <template v-if="index!=1">
+            <img class="main-img" :src="item.img"/>
+          </template>
+        </swiper-item>
       </swiper>
     </div>
-    <!--<swiper auto height="30px" direction="vertical" :interval=2000 :show-dots="false">-->
-      <!--<swiper-item><p>义务爱了 完成传奇世界H5-王者归来任务 获得20金币</p></swiper-item>-->
-      <!--<swiper-item><p>基本世神 兑换《传奇世界H5》畅玩级礼包 消耗30金币</p></swiper-item>-->
-      <!--<swiper-item><p>零哥章魚 完成传奇世界H5-王者归来任务 获得30金币</p></swiper-item>-->
-      <!--<swiper-item><p>做迎而為 兑换【饿了么】畅享美食红包 消耗20金币</p></swiper-item>-->
-      <!--<swiper-item><p>只知道不知道 兑换【饿了么】畅享美食红包 消耗20金币</p></swiper-item>-->
-      <!--<swiper-item><p>基本世神 兑换《传奇世界H5》畅玩级礼包 消耗30金币</p></swiper-item>-->
-    <!--</swiper>-->
     <div class="main-bottom">
       <router-link class="btn" to="/taskAdd">发布项目</router-link>
     </div>
   </div>
 </template>
 <script>
-  import {Swiper, SwiperItem} from 'vux'
+  import {Swiper, SwiperItem, Scroller} from 'vux'
   export default {
-  	components:{
+    components: {
       Swiper,
-      SwiperItem
+      SwiperItem,
+      Scroller
     },
     data: function () {
       return {
         current: 0,
-        swiperHeight:'500px',
-        imgList:[{
+        swiperHeight: '500px',
+        imgList: [{
           url: 'javascript:',
           img: '/static/main/main-1.jpg',
           title: ''
@@ -72,6 +80,7 @@
           img: '/static/main/main-8.jpg',
           title: ''
         }],
+        moveStartTop: 0,
         moveStart: 0,
         moveEnd: 0,
         changeY: 100,
@@ -81,42 +90,44 @@
     methods: {
       touchStart: function (e) {
         this.moveStart = e.touches[0].clientY
+        var container = this.$el.querySelector('.main-img-area')
+        this.moveStartTop = container.scrollTop
       },
       touchMove: function (e) {
-        var clientY = e.touches[0].clientY
-        var height = this.$el.querySelector('.main-img-area').clientHeight
-        if (clientY - this.moveStart > 0) {
-          if (this.current > 0) {
-            var lastImg = this.$el.querySelector('.main-img.img-' + (this.current - 1))
-            lastImg.style.display = 'inline-block'
-            lastImg.style.top = '0px'
-            var img = this.$el.querySelector('.main-img.img-' + this.current)
-            img.style.top = (clientY - this.moveStart) + 'px'
-          }
-        } else {
-          if (this.current < this.imgs.length - 1) {
-            var nextImg = this.$el.querySelector('.main-img.img-' + (this.current + 1))
-            nextImg.style.display = 'inline-block'
-            nextImg.style.top = (height - (this.moveStart - clientY)) + 'px'
-            var img = this.$el.querySelector('.main-img.img-' + this.current)
-            this.noLeave = this.current
-          }
-        }
+//        var clientY = e.touches[0].clientY
+
+//        var height = this.$el.querySelector('.main-img-area').clientHeight
+//        if (clientY - this.moveStart > 0) {
+//          if (this.current > 0) {
+//            var lastImg = this.$el.querySelector('.main-img.img-' + (this.current - 1))
+//            lastImg.style.display = 'inline-block'
+//            lastImg.style.top = '0px'
+//            var img = this.$el.querySelector('.main-img.img-' + this.current)
+//            img.style.top = (clientY - this.moveStart) + 'px'
+//          }
+//        } else {
+//          if (this.current < this.imgs.length - 1) {
+//            var nextImg = this.$el.querySelector('.main-img.img-' + (this.current + 1))
+//            nextImg.style.display = 'inline-block'
+//            nextImg.style.top = (height - (this.moveStart - clientY)) + 'px'
+//            var img = this.$el.querySelector('.main-img.img-' + this.current)
+//            this.noLeave = this.current
+//          }
+//        }
       },
       touchEnd: function (e) {
         var clientY = e.changedTouches[0].clientY
+        if (this.intervalIndex != 0)return
         if (clientY - this.moveStart > 0) {
-          if (this.current > 0) {
-            var img = this.$el.querySelector('.main-img.img-' + (this.current - 1))
-            img.style.top = '0px'
-            this.current--
-          }
-        } else if (this.moveStart - clientY > 0){
-          if (this.current < this.imgs.length - 1) {
-            var img = this.$el.querySelector('.main-img.img-' + (this.current + 1))
-            img.style.top = '0px'
-            this.current++
-          }
+          var container = this.$el.querySelector('.main-img-area')
+          var nextImg = this.$el.querySelector('.main-img.img-' + (this.imgIndex - 1))
+          if (nextImg) container.scrollToElement(nextImg, 0)
+          this.imgIndex--
+        } else {
+          var container = this.$el.querySelector('.main-img-area')
+          var nextImg = this.$el.querySelector('.main-img.img-' + (this.imgIndex + 1))
+          if (nextImg) container.scrollToElement(nextImg, 0)
+          this.imgIndex++
         }
       }
     },
@@ -128,7 +139,7 @@
 //      })
 //    },
     created: function () {
-        this.swiperHeight = window.screen.height-90 + 'px'
+      this.swiperHeight = document.documentElement.clientHeight - 90 + 'px'
     }
   }
 </script>
