@@ -84,7 +84,7 @@
       var self = this
       this.initList(this.list, {post: true})
       this.$on(consts.loadedEvent, function () {
-         this.refreshList(1)
+        this.refreshList(1)
         getType(this).then(function (data) {
           self.typeLoaded = 1
           self.selections.type = data

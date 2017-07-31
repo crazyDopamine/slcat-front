@@ -56,18 +56,21 @@
         </div>
         <div class="detail-row">
           <label class="col-6">项目描述：</label>
-          <p>{{detail.projectDesc}}</p>
+          <div class="col-18">
+            <p v-html="toContent(detail.projectDesc)"></p>
+          </div>
         </div>
       </div>
       <div slot="footer">
         <template v-if="detail.status=='待审核'">
           <label class="float-left margin-right-10" style="line-height:30px;">理由:</label>
-          <Input type="text" class="col-12" v-model="fieldSet.msg"></Input>
+          <Input type="text" class="col-12" v-model="fieldSet.reason"></Input>
           <Button type="error" :loading="modalLoading" @click="check(detail,'不通过')">不通过</Button>
-          <Button type="primary" :loading="modalLoading" @click="check(detail,'通过')">通过</Button>
+          <Button type="primary" :loading="modalLoading" @click="check(detail,'审核通过')">通过</Button>
         </template>
         <template v-if="detail.status!='待审核'">
           <Button type="primary" @click="pop=false">关闭</Button>
+          <Button type="primary" @click="check(detail,'待审核')">重置</Button>
         </template>
       </div>
     </Modal>
@@ -89,6 +92,9 @@
         modalLoading:false,
         selectionsMap:{
           trendCompleteMap:{}
+        },
+        fieldSet:{
+        	reason:''
         },
         list: {
           columns: [
@@ -140,10 +146,15 @@
         }))
       },
       check: function (data, status) {
+        if(status=='不通过'&&!this.fieldSet.reason){
+          window.vm.$Message.error('原因不能为空');
+          return
+        }
         this.$http.get(this.url('admin/checkEmp'), {
           params: {
             id: data.id,
-            status: status
+            status: status,
+            reason: this.fieldSet.reason
           }
         }).then(this.rspHandler((data)=> {
           this.pop = false

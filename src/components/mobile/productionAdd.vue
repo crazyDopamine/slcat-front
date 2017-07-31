@@ -58,6 +58,23 @@
           worksLink: '',
           worksDesc: ''
         },
+        rule:{
+        	workName:{
+        		label:'作品名称',
+            required:true,
+            maxLength:20
+          },
+          responsibilities:{
+            label:'职责',
+            required:true,
+            maxLength:20
+          },
+          worksDesc:{
+            label:'作品描述',
+            required:true,
+            maxLength:500
+          }
+        }
       }
     },
     methods: {
@@ -67,7 +84,8 @@
           this.$vux.loading.show({
             text: '正在提交'
           })
-          this.$http.post(this.url('techMaster/update'), params).then(this.rspHandler((data) => {
+          this.$http.post(this.url('techMasterWorksCase/update'), params).then(this.rspHandler((data) => {
+            window.vm.getUserInfo()
             this.$vux.loading.hide()
             this.$vux.toast.text('提交成功', 'bottom');
             this.$router.push('/userInfo')

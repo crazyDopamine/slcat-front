@@ -26,13 +26,12 @@
             <Option v-for="item in selections.parentId" :value="item.id" :key="item">{{ item.businessName }}</Option>
           </Select>
         </div>
-        <div class="form-row clearfix">
-          <Upload multiple :action="uploadUrl" :on-success="onUploaded" :headers="uploadHeaders">
-            <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
-          </Upload>
-        </div>
+        <!--<div class="form-row clearfix">-->
+          <!--<Upload multiple :action="uploadUrl" :on-success="onUploaded" :headers="uploadHeaders">-->
+            <!--<Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>-->
+          <!--</Upload>-->
+        <!--</div>-->
       </div>
-
       <div slot="footer">
         <Button type="primary" :loading="modalLoading" @click="submit()">{{fieldSet.id ? '修改' : '新增'}}</Button>
       </div>

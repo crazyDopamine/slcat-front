@@ -2,15 +2,19 @@
   <div class="page-container no-bar-container">
     <div class="container">
       <div class="text-center">
-        <img class="user-img" src="/static/img/user-img-default.png">
+        <div class="file-input-area">
+          <img class="user-img" :src="fieldSet.headImgUrl | img">
+          <input class="file-input" type="file" @change="upload($event)">
+        </div>
+        <!--<img class="user-img" :src="userInfo.headImgUrl?userInfo.headImgUrl:'/static/img/user-img-default.png'">-->
       </div>
       <div class="form-area padding-left-0 padding-right-0">
         <div class="form-row">
           <label>选择入驻类型<span class="fc-red">*</span></label><br/>
           <div class="form-field">
-            <checker v-model="fieldSet.type" default-item-class="checker-item-radio-default"
+            <checker v-model="fieldSet.recruitType" default-item-class="checker-item-radio-default"
                      selected-item-class="checker-item-radio-selected" type="radio">
-              <checker-item :value="item.value" v-for="item in selections.type" :key="item">{{item.desc}}</checker-item>
+              <checker-item :value="item.value" v-for="item in selections.recruitType" :key="item">{{item.desc}}</checker-item>
             </checker>
           </div>
         </div>
@@ -102,7 +106,8 @@
     data: function () {
       return {
         fieldSet: {
-          type: '',
+          headImgUrl:'',
+          recruitType: '',
           nickName: '',
           phone: '',
           jobTitle: '',
@@ -113,7 +118,7 @@
           sex: ''
         },
         rule: {
-          type: {
+          recruitType: {
             required: true,
             label: '入驻类型'
           },
@@ -154,7 +159,7 @@
           }
         },
         selections: {
-          type: [],
+          recruitType: [],
           cityId: [],
           sex: [],
           dailyWage: [],
@@ -169,17 +174,17 @@
           this.selections.cityId = this.toKV(data, 'id', 'cityName')
         })
         selections(100, this).then((data) => {
-          this.selections.type = data
-          this.selections.workExperience = this.toKV(data, 'value', 'desc')
+          this.selections.recruitType = data
         })
         selections(200, this).then((data) => {
           this.selections.sex = data
         })
+        selections(400, this).then((data) => {
+          this.selections.workExperience = this.toKV(data, 'value', 'desc')
+        })
         this.$http.get(this.url('industry/getAllIndustry')).then(this.rspHandler((data) => {
           this.selections.industryId = this.toKV(data,'id','industryName')
         }))
-//        selections(100,this).then((data) => {
-//        })
       },
       submit: function () {
         if (this.validate(true)) {
@@ -188,16 +193,28 @@
             text: '正在提交'
           })
           this.$http.post(this.url('techMaster/update'), params).then(this.rspHandler((data) => {
+          	window.vm.getUserInfo()
             this.$vux.loading.hide()
             this.$vux.toast.text('提交成功', 'bottom');
             this.$router.push('/userInfo')
           }))
         }
+      },
+      upload:function(e){
+      	var target = e.target
+//      	target.value = ''
+        var file = target.files[0]
+        var formData = new FormData()
+        formData.append('file', file)
+        this.$http.post(this.url('admin/fileUpload'),formData).then(this.rspHandler((data)=>{
+        	this.fieldSet.headImgUrl = data
+        }))
       }
     },
     created: function () {
       this.validateInit();
       this.$on(this.consts.loadedEvent, function () {
+      	this.setValues(this.userInfo)
         this.refreshSelections();
       })
     }

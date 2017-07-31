@@ -6,7 +6,7 @@
     <!--</div>-->
     <div class="container user-info">
       <div class="user-info-top">
-        <img class="user-img" src="/static/img/user-img-default.png"><br/>
+        <img class="user-img" :src="data.headImgUrl | img"><br/>
         <label class="fs-xxl">{{data.nickName ? data.nickName : '昵称'}}</label><br/>
         <!--<span class="btn btn-round-border btn-small">未提交审核</span><br/>-->
         <span>{{data.dailyWage ? data.dailyWage : '0'}}元/天</span><br/>
@@ -17,14 +17,14 @@
       </div>
       <div class="user-info-detail">
         <label class="fs-xxl">关于我</label><br/>
-        <p class="text-left margin-top-10" v-if="!data.selfIntroduction">完善全面的介绍可以让客户更完整立体的了解你</p>
-        <p class="text-left margin-top-10" v-if="data.selfIntroduction">{{data.selfIntroduction}}</p>
+        <!--<p class="text-left margin-top-10" v-if="!data.selfIntroduction">完善全面的介绍可以让客户更完整立体的了解你</p>-->
+        <p class="text-left margin-top-10" v-if="data.selfIntroduction" v-html="toContent(data.selfIntroduction)"></p>
       </div>
     </div>
     <div class="container user-info">
       <div class="user-info-detail">
         <label class="fs-xxl">擅长技能</label><br/>
-        <p class="text-left margin-top-10" v-if="!data.baseSkillList">添加你的技能，可以为你更准确的推荐匹配项目</p>
+        <!--<p class="text-left margin-top-10" v-if="!data.baseSkillList">添加你的技能，可以为你更准确的推荐匹配项目</p>-->
         <template v-if="data.baseSkillList">
           <div class="text-left">
             <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.baseSkillList">{{item.skillName}}</span>
@@ -35,13 +35,17 @@
     <div class="container user-info">
       <div class="user-info-detail">
         <label class="fs-xxl">作品案例</label><br/>
-        <p class="text-left margin-top-10" v-if="!data.worksCases||data.worksCases.length<2">至少添加2个以上的作品案例才可以提交审核</p>
+        <!--<p class="text-left margin-top-10" v-if="!data.worksCases||data.worksCases.length<2">至少添加2个以上的作品案例才可以提交审核</p>-->
         <div class="text-left margin-top-10" v-if="data.worksCases">
-          <div v-for="item in data.worksCases">{{item.workName}}</div>
+          <div class="margin-bottom-10 clearfix" v-for="item in data.worksCases">
+            {{item.workName}}<br/>
+            <span class="col-6">职责:</span><div class="col-18">{{item.responsibilities}}</div>
+            <span class="col-6">描述:</span><div class="col-18" v-html="toContent(item.worksDesc)"></div>
+          </div>
         </div>
       </div>
     </div>
-    <div style="margin:0 15px;" v-if="task&&task.status=='已审核'">
+    <div style="margin:0 15px;" v-if="task&&task.status=='审核通过'">
       <a class="btn btn-large btn-theme-round margin-top-20" @click="submit()">确认委托</a>
     </div>
   </div>
@@ -73,7 +77,12 @@
             title:'确认',
             content:'是否确认当前牛人为项目委托人？',
             onConfirm: () => {
-
+              this.$http.get(this.url('employer/confirm'),{params:{
+                taskId:this.$route.params.taskId,
+                masterId:this.$route.params.id
+              }}).then(this.rspHandler(()=>{
+              	this.$router.go(-1)
+              }))
             }
           })
         }

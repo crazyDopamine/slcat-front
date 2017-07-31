@@ -4,7 +4,7 @@
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">1</span>选择你的项目类型<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <checker v-model="data.businessParentId" default-item-class="checker-item-default"
+          <checker v-model="fieldSet.businessParentId" default-item-class="checker-item-default"
                    selected-item-class="checker-item-selected" type="radio">
             <checker-item :value="item.id" v-for="item in selections.businessParentId" :key="item"
                           @on-item-click="onTypeChange(item)">{{item.businessName}}
@@ -15,7 +15,7 @@
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">2</span>选择项目的二级类型<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <popup-radio class="field-select" :options="selections.businessId" v-model="data.businessId"
+          <popup-radio class="field-select" :options="selections.businessId" v-model="fieldSet.businessId"
                        placeholder="请选择"></popup-radio>
         </div>
       </div>
@@ -25,7 +25,7 @@
         <div class="form-field">
           <!--<popup-radio class="field-select" :options="selections.skillList" @on-change="onSkillChange"-->
           <!--placeholder="请选择"></popup-radio>-->
-          <checker v-model="data.skillList" default-item-class="checker-item-default"
+          <checker v-model="fieldSet.skillList" default-item-class="checker-item-default"
                    selected-item-class="checker-item-selected" type="checkbox">
             <checker-item :value="item.id" v-for="item in selections.skillList" :key="item">{{item.skillName}}
             </checker-item>
@@ -35,38 +35,38 @@
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">4</span>项目名称<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <input type="text" v-model="data.projectName"/>
+          <input type="text" v-model="fieldSet.projectName"/>
         </div>
       </div>
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">5</span>项目描述<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <textarea rows="4" v-model="data.projectDesc"></textarea>
+          <textarea rows="4" v-model="fieldSet.projectDesc"></textarea>
         </div>
       </div>
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">6</span>价格预算(元)<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <input type="number" v-model="data.projectBudget"/>
+          <input type="number" v-model="fieldSet.projectBudget"/>
         </div>
       </div>
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">7</span>项目周期<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <popup-radio class="field-select" :options="selections.projectCycle" v-model="data.projectCycle"
+          <popup-radio class="field-select" :options="selections.projectCycle" v-model="fieldSet.projectCycle"
                        placeholder="请选择"></popup-radio>
         </div>
       </div>
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">8</span>公司名称<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <input type="text" v-model="data.companyName"/>
+          <input type="text" v-model="fieldSet.companyName"/>
         </div>
       </div>
       <div class="form-row">
         <label><span class="btn-black-round margin-right-5">9</span>倾向让谁完成项目<span class="fc-red">*</span></label><br/>
         <div class="form-field">
-          <checker v-model="data.trendComplete" default-item-class="checker-item-radio-default"
+          <checker v-model="fieldSet.trendComplete" default-item-class="checker-item-radio-default"
                    selected-item-class="checker-item-radio-selected" type="radio">
             <checker-item :value="item.value" v-for="item in selections.trendComplete" :key="item">{{item.desc}}
             </checker-item>
@@ -83,7 +83,9 @@
   import {toKV, getType, getSkill, selections, url, rspHandler} from '../../common/utils'
   import consts from '../../common/const'
   import {Checker, CheckerItem, PopupPicker, PopupRadio} from 'vux'
+  import formValidate from '../../common/formValidate'
   export default{
+    mixins: [formValidate],
     components: {
       Checker,
       CheckerItem,
@@ -92,7 +94,7 @@
     },
     data: function () {
       return {
-        data: {
+        fieldSet: {
           businessParentId: '',
           businessId: '',
           projectName: '',
@@ -103,6 +105,44 @@
           trendComplete: '',
           skillList: [],
           status: '招募中'
+        },
+        rule:{
+          businessParentId:{
+          	label:'项目类型',
+            required:true
+          },
+          businessId:{
+            label:'项目二级类型',
+            required:true
+          },
+          skillList:{
+            label:'项目所需技能',
+            required:true
+          },
+          projectName:{
+            label:'项目名称',
+            required:true
+          },
+          projectDesc:{
+            label:'项目描述',
+            required:true
+          },
+          projectBudget:{
+            label:'项目预算',
+            required:true
+          },
+          projectCycle:{
+            label:'项目周期',
+            required:true
+          },
+          companyName:{
+            label:'公司名称',
+            required:true
+          },
+          trendComplete:{
+            label:'倾向于谁做',
+            required:true
+          }
         },
         businessParentIdMap: {},
         selections: {
@@ -132,22 +172,24 @@
       },
       onTypeChange: function (data) {
         this.selections.businessId = toKV(data.children, 'id', 'businessName')
-        this.data.businessId = ''
+        this.fieldSet.businessId = ''
       },
       submit: function () {
-        var self = this
-        this.$vux.loading.show({
-          text: '提交中'
-        })
-        this.$http.post(url('employer/add'), this.data).then(rspHandler(function (data) {
-          self.$vux.loading.show({
-            text: data
+      	if(this.validate(true)){
+          var self = this
+          this.$vux.loading.show({
+            text: '提交中'
           })
-          setTimeout(function () {
-            self.$vux.loading.hide()
-            self.$router.push('/taskList')
-          }, 1000)
-        }))
+          this.$http.post(url('employer/add'), this.getValues()).then(rspHandler(function (data) {
+            self.$vux.loading.show({
+              text: data
+            })
+            setTimeout(function () {
+              self.$vux.loading.hide()
+              self.$router.push('/taskList')
+            }, 1000)
+          }))
+        }
       }
     },
     created: function () {

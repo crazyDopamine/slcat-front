@@ -90,14 +90,14 @@ let config = {
       var code = getQuery(this.$route.query).code
       if(code){
         this.$http.get(this.url('user/login'),{params:{code:code}}).then(this.rspHandler((data)=>{
-          cookie.set(this.consts.ticketKey,data.openId)
-          this.userInfo = data
-          this.userInfoLoaded = 1
-          this.$emit(this.consts.loadedEvent, data, this.consts.loadedStatus)
+          if(data){
+            cookie.set(this.consts.ticketKey,data)
+          }
+          this.getUserInfo()
         },()=>{
-          this.getUserInfo()
+          window.vm.$vux.toast.text('登陆失败！', 'bottom',2000)
         }),()=>{
-          this.getUserInfo()
+          window.vm.$vux.toast.text('登陆失败！', 'bottom',2000)
         })
       }else{
         this.getUserInfo()

@@ -6,7 +6,7 @@
       :autoFixed="false"
       ref="search"
       @on-submit="refreshList(1)"
-      placeholder="搜索专长或其他关键字"></search>
+      placeholder="搜索技能"></search>
     <!--<Button-group>-->
     <!--<Button>取消</Button>-->
     <!--<Button type="primary">确定</Button>-->
@@ -17,29 +17,31 @@
     <!--<Button>{{tabSelect.industryId}}</Button>-->
     <!--</div>-->
     <tab class="top-nav-bar border-bottom-0 no-selected">
-      <tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}
-        <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+      <!--<tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}-->
+        <!--<i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>-->
       <tab-item @on-item-click="onTabClick">{{tabSelect.cityId}}
-        <i class="margin-left-5" :class="tabSwitch==1?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+        <i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i>
+      </tab-item>
       <tab-item @on-item-click="onTabClick">{{tabSelect.industryId}}
-        <i class="margin-left-5" :class="tabSwitch==2?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>
+        <i class="margin-left-5" :class="tabSwitch==1?'icon-arrow-up':'icon-arrow-down'"></i>
+      </tab-item>
     </tab>
     <popup v-model="selectionsShow" class="tab-selections" position="bottom" @on-hide="tabSwitch=-1">
       <ul class="selections-list">
-        <li :class="item.id==list.params.businessParentId?'active':''"
-            @click="onSelectClick(item.id,item.businessName,'businessParentId')"
-            v-for="item in selections.businessParentId" :key="item" v-if="tabSwitch==0">
-          {{item.businessName}}
-          <i class="icon-right float-right" v-if="item.id==list.params.businessParentId"></i>
-        </li>
+        <!--<li :class="item.id==list.params.businessParentId?'active':''"-->
+            <!--@click="onSelectClick(item.id,item.businessName,'businessParentId')"-->
+            <!--v-for="item in selections.businessParentId" :key="item" v-if="tabSwitch==0">-->
+          <!--{{item.businessName}}-->
+          <!--<i class="icon-right float-right" v-if="item.id==list.params.businessParentId"></i>-->
+        <!--</li>-->
         <li :class="item.id==list.params.cityId?'active':''" @click="onSelectClick(item.id,item.cityName,'cityId')"
-            v-for="item in selections.cityId" v-if="tabSwitch==1">
+            v-for="item in selections.cityId" v-if="tabSwitch==0">
           {{item.cityName}}
           <i class="icon-right float-right" v-if="item.id==list.params.cityId"></i>
         </li>
         <li :class="item.id==list.params.industryId?'active':''"
             @click="onSelectClick(item.id,item.industryName,'industryId')"
-            v-for="item in selections.industryId" v-if="tabSwitch==2">
+            v-for="item in selections.industryId" v-if="tabSwitch==1">
           {{item.industryName}}
           <i class="icon-right float-right" v-if="item.id==list.params.industryId"></i>
         </li>
@@ -51,7 +53,7 @@
         <li class="data-item expert-list-item" v-for="(data,index) in list.dataList">
           <router-link :to="'/expertDetail/'+data.id">
             <div class="expert-top">
-              <img class="user-img" src="/static/img/user-default.png">
+              <img class="user-img" :src="data.headImgUrl | img">
               <div class="user-info">
                 <h1>{{data.nickName}}</h1>
                 <i class="icon-location"></i><span>{{data.cityName}}</span>
@@ -60,7 +62,7 @@
               </div>
             </div>
             <div class="expert-middle">
-              <p>{{data.selfIntroduction}} </p>
+              <p v-html="toContent(data.selfIntroduction)"></p>
               <ul class="gray-border-icons margin-top-10 margin-bottom-10">
                 <li v-for="item in data.jobTitle.split(',')" v-if="data.jobTitle">{{item}}</li>
               </ul>

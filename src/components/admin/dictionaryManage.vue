@@ -48,12 +48,13 @@
           code: ''
         },
         selections: {
-          code: [{code: 100, name: '倾向于谁做'}, {code: 200, name: '性别'}, {code: 300, name: '项目周期'}]
+          code: [{code: 100, name: '倾向于谁做'}, {code: 200, name: '性别'}, {code: 300, name: '项目周期'},{code:400,name:'工作经验'}]
         },
         codeMap:{
         	100:'倾向于谁做',
           200:'性别',
-          300:'项目周期'
+          300:'项目周期',
+          400:'工作经验'
         },
         list: {
           columns: [

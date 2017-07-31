@@ -54,6 +54,7 @@
             text: '正在提交'
           })
           this.$http.post(this.url('techMaster/update'), params).then(this.rspHandler((data) => {
+            window.vm.getUserInfo()
             this.$vux.loading.hide()
             this.$vux.toast.text('提交成功', 'bottom');
             this.$router.push('/userInfo')
@@ -63,6 +64,9 @@
     },
     created: function () {
       this.validateInit()
+      this.$on(this.consts.loadedEvent, function () {
+        this.setValues(this.userInfo)
+      })
     }
   }
 </script>

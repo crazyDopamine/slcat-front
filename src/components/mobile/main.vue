@@ -1,21 +1,5 @@
 <template>
   <div class="page-container" style="height: 100%;">
-    <!--<scroller lock-x bounce height="-90" ref="scroller">-->
-    <!--<div>-->
-    <!--<template v-for="(item,index) in imgList">-->
-    <!--<img v-if="index!=1" :style="{height:imgHeight}" style="width:100%;"-->
-    <!--:class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']" :src="item.img">-->
-    <!--<router-link to="/services" v-if="index==1">-->
-    <!--<img :class="['img-'+index,current==index?'active':'',index==noLeave?'no-leave':'']"-->
-    <!--:style="{height:imgHeight}" style="width:100%;" :src="item.img">-->
-    <!--</router-link>-->
-    <!--</template>-->
-    <!--</div>-->
-    <!--</scroller>-->
-    <!--<div class="main-img-area" @touchstart="touchStart($event)" @touchmove="touchMove($event)"-->
-    <!--@touchend="touchEnd($event)">-->
-
-    <!--</div>-->
     <div class="swiper-container" style="padding-bottom:50px;height:100%;">
       <swiper class="main-img-area" :height="swiperHeight" dots-position="center" ref="swiper">
         <swiper-item v-for="(item,index) in imgList" :key="item">

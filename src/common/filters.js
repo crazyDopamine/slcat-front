@@ -40,5 +40,16 @@ export default {
       }
     })
     Vue.filter('selections', selectionsFilter)
+    Vue.filter('img', function(src,defaultImg){
+      if(!defaultImg){
+        defaultImg = '/static/img/user-img-default.png'
+      }
+      if(!src)return defaultImg
+      if(src.indexOf('http')>=0){
+        return src
+      }else{
+        return window.baseUrl+src
+      }
+    })
   }
 }
