@@ -1,9 +1,9 @@
 import {dateFormat, numberComma, numberPad, numberRandom} from 'vux'
 
 var selectionsFilter = function (value, selectionsMap) {
-  if(selectionsMap&&selectionsMap[value]){
+  if (selectionsMap && selectionsMap[value]) {
     return selectionsMap[value].desc
-  }else{
+  } else {
     return value
   }
   // if (window.dicLoaded[code] === 2 && window.dicMapMap[code][value]) {
@@ -41,15 +41,17 @@ export default {
     })
     Vue.filter('selections', selectionsFilter)
 
-    Vue.filter('img', function(src,type){
+    Vue.filter('img', function (src, type) {
       var defaultImg = '/static/img/user-img-default.png'
-      var smallImgDic = 'upload/'
-      var bigImgDic = 'upload/'
-      if(!src)return defaultImg
-      if(src.indexOf('http')>=0){
+      var zipImgDic = window.baseUrl + 'breviary/'
+      var bigImgDic = window.baseUrl + 'upload/'
+      if (!src)return defaultImg
+      if (src.indexOf('http') >= 0) {
         return src
-      }else{
-        return window.baseUrl+src
+      } else if (type == 1) {
+        return bigImgDic + src
+      } else {
+        return zipImgDic + src
       }
     })
   }

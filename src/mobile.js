@@ -20,6 +20,7 @@ import taskList from './components/mobile/taskList.vue'
 import userInfo from './components/mobile/userInfo.vue'
 import userInfoEdit from './components/mobile/userInfoEdit.vue'
 import serviceDetail from './components/mobile/serviceDetail.vue'
+import myTaskDetail from './components/mobile/myTaskDetail.vue'
 import vueg from 'vueg'
 import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
@@ -52,6 +53,7 @@ const routes = [
   {path: '/myTask', component: myTask},
   {path: '/taskAdd', component: taskAdd},
   {path: '/taskDetail/:id', component: taskDetail},
+  {path: '/myTaskDetail/:id', component: myTaskDetail},
   {path: '/taskList', component: taskList},
   {path: '/userInfo', component: userInfo},
   {path: '/expertDetail/:id', component: expertDetail},
@@ -59,6 +61,7 @@ const routes = [
   {path: '/userInfoEdit', component: userInfoEdit},
   {path: '/aboutMeEdit', component: aboutMeEdit},
   {path: '/productionAdd', component: productionAdd},
+  {path: '/productionAdd/:id', component: productionAdd},
   {path: '/skillEdit', component: skillEdit},
   {path: '/serviceDetail/:code', component: serviceDetail}
 ]

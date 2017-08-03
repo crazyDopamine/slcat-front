@@ -57,7 +57,7 @@
               <div class="user-info">
                 <h1>{{data.nickName}}</h1>
                 <i class="icon-location"></i><span>{{data.cityName}}</span>
-                <i class="icon-time margin-left-5"></i><span>{{data.workExperience}}</span>
+                <i class="icon-time margin-left-5"></i><span>{{data.workExperience | selections(workExperienceMap)}}</span>
                 <img src="static/img/icon-job.png" class="img-icon margin-left-5"></img><span>{{data.industryName}}</span>
               </div>
             </div>
@@ -87,6 +87,7 @@
   import {getAddress, getType, each} from '../../common/utils'
   import consts from '../../common/const'
   import listMixns from '../../common/moduleList'
+  import {selections} from '../../common/utils'
   export default {
     mixins: [listMixns],
     components: {
@@ -115,6 +116,7 @@
           cityId: '全国',
           industryId: '所有行业'
         },
+        workExperienceMap:{},
         selections: {
           businessParentId: [],
           cityId: [],
@@ -135,6 +137,9 @@
         this.selectionsShow = false
       },
       refreshSelctions: function () {
+        selections('400').then((data, map) => {
+          this.workExperienceMap = window.dicMapMap['400']
+        })
         getType(this).then((data) => {
           this.selections.businessParentId = []
           this.selections.businessParentId.push({id: '', businessName: "全部"})

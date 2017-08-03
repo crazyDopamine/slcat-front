@@ -186,7 +186,7 @@
             })
             setTimeout(function () {
               self.$vux.loading.hide()
-              self.$router.push('/taskList')
+              self.$router.push('/myTask')
             }, 1000)
           }))
         }

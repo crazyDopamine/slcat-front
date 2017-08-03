@@ -9,7 +9,7 @@
                 :pullup-config="list.pullUpConfig" @on-pulldown-loading="onRefresh" @on-pullup-loading="onLoadMore" ref="scroller">
         <ul class="data-list task-list">
           <li class="data-item" v-for="(data,index) in list.dataList">
-            <router-link :to="'/taskDetail/'+data.id">
+            <router-link :to="'/myTaskDetail/'+data.id">
               <label class="title col-16 fs-l">
                 {{data.projectName}}<span class="btn btn-theme-round margin-left-5"
                                           style="line-height: 20px;">{{data.status}}</span>
