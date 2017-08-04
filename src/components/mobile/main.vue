@@ -2,7 +2,7 @@
   <div class="page-container" style="height: 100%;">
     <div class="swiper-container" style="padding-bottom:50px;height:100%;">
       <swiper class="main-img-area" :height="swiperHeight" dots-position="center" ref="swiper">
-        <swiper-item v-for="(item,index) in imgList" :key="item">
+        <swiper-item v-for="(item,index) in imgList" :key="index">
           <template v-if="index==1">
             <router-link to="/services">
               <img class="main-img" :src="item.img"/>

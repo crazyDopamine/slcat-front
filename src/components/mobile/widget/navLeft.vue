@@ -4,7 +4,7 @@
     <nav class="nav-left" :class="show?'show':'hidden'">
       <div class="text-center">
         <img class="user-avatar margin-bottom-10" src="/static/img/solomiologo2.png"><br/>
-        <span>昵称</span>
+        <span>{{userInfo.nickName}}</span>
       </div>
       <ul class="menu">
         <li v-for="data in menu" :class="path==data.path?'active':''">

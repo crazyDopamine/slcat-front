@@ -50,7 +50,7 @@
     </div>
   </div>
 </template>
-<script>
+<script type="es6">
   export default {
     data: function () {
       return {
