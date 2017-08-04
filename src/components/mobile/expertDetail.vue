@@ -10,6 +10,7 @@
         <label class="fs-xxl">{{data.nickName ? data.nickName : '昵称'}}</label><br/>
         <!--<span class="btn btn-round-border btn-small">未提交审核</span><br/>-->
         <span>{{data.dailyWage ? data.dailyWage : '0'}}元/天</span><br/>
+        <span>{{data.workExperience | selections(workExperienceMap)}}</span><br/>
         <template v-if="data.jobTitle">
           <span class="btn btn-gray-round btn-small margin-right-5"
                 v-for="item in data.jobTitle.split(',')">{{item}}</span>
@@ -51,10 +52,12 @@
   </div>
 </template>
 <script type="es6">
+  import {selections} from '../../common/utils'
   export default {
     data: function () {
       return {
         data: {},
+        workExperienceMap:{},
         task:null
       }
     },
@@ -70,6 +73,9 @@
             this.task = data
           }))
         }
+        selections('400').then((data, map) => {
+          this.workExperienceMap = window.dicMapMap['400']
+        })
       },
       submit: function () {
         if (this.$route.params.taskId) {

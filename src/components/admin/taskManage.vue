@@ -32,7 +32,7 @@
         </div>
         <div class="detail-row">
           <label class="col-6">时间周期：</label>
-          <span>{{detail.projectCycle}}</span>
+          <span>{{detail.projectCycle | selections(this.selectionsMap.projectCycleMap)}}</span>
         </div>
         <div class="detail-row">
           <label class="col-6">项目类型：</label>
@@ -91,7 +91,8 @@
         detail:{},
         modalLoading:false,
         selectionsMap:{
-          trendCompleteMap:{}
+          trendCompleteMap:{},
+          projectCycleMap:{}
         },
         fieldSet:{
         	reason:''
@@ -133,6 +134,9 @@
     	refreshSelections:function(){
         selections('100').then((data,map) => {
           this.selectionsMap.trendCompleteMap = window.dicMapMap['100']
+        })
+        selections('300').then((data, map) => {
+          this.selectionsMap.projectCycleMap = window.dicMapMap['300']
         })
       },
       showDetail: function (data) {

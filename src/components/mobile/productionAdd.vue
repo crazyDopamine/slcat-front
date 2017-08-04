@@ -91,10 +91,19 @@
             this.$router.push('/userInfo')
           }))
         }
+      },
+      refresh:function(){
+      	if(this.$route.params.id){
+          this.$http.get(this.url('techMaster/queryWorkCase'),{params:{id:this.$route.params.id}}).then(this.rspHandler((data)=>{
+          	this.setValues(data)
+          }))
+        }
       }
     },
     created: function () {
-
+      this.$on(this.consts.loadedEvent, function () {
+        this.refresh()
+      })
     }
   }
 </script>
