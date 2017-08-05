@@ -91,7 +91,7 @@
     </div>
   </div>
 </template>
-<script>
+<script type="es6">
   import {Checker, CheckerItem, PopupRadio, ChinaAddressV3Data, XAddress} from 'vux'
   import {getAddress, selections} from '../../common/utils'
   import formValidate from '../../common/formValidate'

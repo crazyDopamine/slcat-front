@@ -40,12 +40,13 @@
         <label class="fs-xxl">作品案例</label><br/>
         <div class="text-left margin-top-10" v-if="detail.worksCases">
           <Collapse>
-            <Panel v-for="item in detail.worksCases" :key="item">
+            <Panel v-for="(item,index) in detail.worksCases" :key="index">
               {{item.workName}}
               <a :href="item.worksLink" class="float-right margin-right-20" target="_blank">{{item.worksLink}}</a>
               <p slot="content">
                 作品职责：{{item.responsibilities}}<br/>
                 作品描述：{{item.worksDesc}}
+                <img-input v-model="item.imgUrls" readOnly></img-input>
               </p>
             </Panel>
           </Collapse>
@@ -79,6 +80,7 @@
         pop: false,
         popTitle: '详情',
         detail: {},
+        imgs:'1501942661927.jpeg,1501942661927.jpeg,1501942661927.jpeg,1501953448609.mp4',
         modalLoading: false,
         fieldSet: {
           reason: ''
@@ -115,7 +117,9 @@
           ],
           url: 'admin/queryMasterList',
           params: {
-            status: '待审核'
+            // status: '待审核'
+            status: ''
+
           }
         }
       }

@@ -89,13 +89,17 @@
             <div class="col-18">{{item.responsibilities}}</div>
             <span class="col-6">描述:</span>
             <div class="col-18" v-html="toContent(item.worksDesc)"></div>
+            <div class="col-24 margin-top-5">
+              <img-input v-model="item.imgUrls" readOnly></img-input>
+              <!--<img-input v-model="imgs" readOnly></img-input>-->
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script>
+<script type="es6">
   import {selections} from '../../common/utils'
   import {XSwitch, Group, Cell} from 'vux'
   export default {
@@ -108,7 +112,8 @@
       return {
         data: {},
         workExperienceMap:{},
-        agreeProtocol: false
+        agreeProtocol: false,
+        imgs:'1501942661927.jpeg,1501942661927.jpeg,1501942661927.jpeg,1501953448609.mp4'
       }
     },
     methods: {

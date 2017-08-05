@@ -40,8 +40,7 @@ export default {
       }
     })
     Vue.filter('selections', selectionsFilter)
-
-    Vue.filter('img', function (src, type) {
+    var imgFilter = function(src, type){
       var defaultImg = '/static/img/user-img-default.png'
       var zipImgDic = window.baseUrl + 'breviary/'
       var bigImgDic = window.baseUrl + 'upload/'
@@ -53,6 +52,10 @@ export default {
       } else {
         return zipImgDic + src
       }
+    }
+    Vue.filter('img', imgFilter)
+    Vue.filter('movie', function (src, type) {
+      return imgFilter(src,1)
     })
   }
 }

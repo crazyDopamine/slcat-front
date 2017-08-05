@@ -26,6 +26,7 @@ import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
 import {getQuery} from './common/utils'
 import navLeft from './components/mobile/widget/navLeft.vue'
+import imgInput from './components/mobile/widget/imgInput.vue'
 import 'vux/src/styles/reset.less';
 import 'vueg/css/transition-min.css'
 import './sass/mobile/style.scss'
@@ -35,6 +36,7 @@ Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(VueRouter)
+Vue.component('img-input',imgInput)
 Vue.mixin(loadedMixins)
 Vue.mixin(common)
 Vue.use(filters)

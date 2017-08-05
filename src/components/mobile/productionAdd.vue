@@ -28,6 +28,12 @@
           </div>
         </div>
         <div class="form-row">
+          <label>作品文件(图片或MP4格式视频)</label>
+          <div class="form-field">
+            <img-input type="text" v-model="fieldSet.imgUrls"></img-input>
+          </div>
+        </div>
+        <div class="form-row">
           <label>作品描述（500字以内）<span class="fc-red">*</span></label><br/>
           <div class="form-field">
             <textarea rows="10" v-model="fieldSet.worksDesc"></textarea>
@@ -56,7 +62,8 @@
           workName: '',
           responsibilities: '',
           worksLink: '',
-          worksDesc: ''
+          worksDesc: '',
+          imgUrls:''
         },
         rule:{
         	workName:{

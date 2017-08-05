@@ -8,12 +8,14 @@ import app from './components/admin/main.vue'
 import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
 import iView from 'iview'
+import imgInput from './components/admin/widget/imgInput.vue'
 import 'iview/dist/styles/iview.css'
 import 'vueg/css/transition-min.css'
 import './sass/admin/style.scss'
 
 Vue.use(VueRouter)
 Vue.use(iView)
+Vue.component('img-input',imgInput)
 Vue.mixin(loadedMixins)
 Vue.mixin(common)
 Vue.use(filters)

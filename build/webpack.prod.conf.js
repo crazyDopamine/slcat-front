@@ -79,6 +79,12 @@ var webpackConfig = merge(baseWebpackConfig, {
       inject: true,
       chunks:['manifest','vendor','admin']
     }),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'index.html',
+      inject: true,
+      chunks:[]
+    }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
