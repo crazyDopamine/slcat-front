@@ -16,7 +16,7 @@ ul,li{
     list-style:none;
     padding:0;
 }
-input[type=text],input[type=password],textarea{
+input[type=text],input[type=password],input[type=number],textarea{
     -webkit-box-shadow:0 0 0 0;
     border:1px solid $borderColor;
     padding:0 10px 0 10px;

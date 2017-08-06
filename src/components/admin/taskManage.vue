@@ -117,7 +117,7 @@
                         this.showDetail(params.row, e)
                       }
                     }
-                  }, '查看')
+                  },[h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])
                 ]);
               }
             }

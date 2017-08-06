@@ -9,7 +9,7 @@
         <Icon type="ios-close-outline" size="20"></Icon>
       </a>
     </div>
-    <div class="img-input-add" v-if="imgs.length<=maxLength&&!readOnly">
+    <div class="img-input-add" v-if="imgs.length<maxLength&&!readOnly">
       <Icon type="plus-circled" size="30" class="icon-add"></Icon>
       <input type="file" @change="upload"/>
     </div>
@@ -68,6 +68,8 @@
       return {
         imgs: [],
         current: '',
+        accept: 'jpg,jpeg,png,mp4',
+        maxSize: '20MB',
         bigImgPop: false
       }
     },
@@ -78,7 +80,7 @@
         var msg = ''
         var error = false
         var suffix = /\.(\w+)$/.exec(file.name);
-        if (suffix && accept.indexOf(suffix[1]) < 0) {
+        if (suffix && this.accept.indexOf(suffix[1]) < 0) {
           error = true
           msg += '文件类型不为' + this.accept
         }
@@ -122,6 +124,7 @@
       }
     },
     created: function () {
+    	console.log(this)
       if (this.value && typeof this.value == 'string') {
         this.imgs = this.value.split(',')
       }

@@ -7,15 +7,6 @@
       ref="search"
       @on-submit="refreshList(1)"
       placeholder="搜索技能"></search>
-    <!--<Button-group>-->
-    <!--<Button>取消</Button>-->
-    <!--<Button type="primary">确定</Button>-->
-    <!--</Button-group>-->
-    <!--<div>-->
-    <!--<Button>{{tabSelect.businessParentId}}</Button>-->
-    <!--<Button>{{tabSelect.cityId}}</Button>-->
-    <!--<Button>{{tabSelect.industryId}}</Button>-->
-    <!--</div>-->
     <tab class="top-nav-bar border-bottom-0 no-selected">
       <!--<tab-item selected @on-item-click="onTabClick">{{tabSelect.businessParentId}}-->
         <!--<i class="margin-left-5" :class="tabSwitch==0?'icon-arrow-up':'icon-arrow-down'"></i></tab-item>-->

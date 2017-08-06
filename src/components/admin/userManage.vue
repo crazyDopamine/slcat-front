@@ -21,6 +21,7 @@
       <div class="user-detail">
         <img :src="detail.headImgUrl | img" style="width:120px;"><br/>
         <span>{{detail.nickName}}</span><br/>
+        <span>{{detail.phone}}</span><br/>
         <span>{{detail.dailyWage ? detail.dailyWage : '0'}}元/天</span><br/>
         <template v-if="detail.jobTitle">
           <span class="btn btn-gray-round btn-small margin-right-5"
@@ -110,7 +111,7 @@
                         this.showDetail(params.row, e)
                       }
                     }
-                  }, '查看')
+                  },[h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])
                 ]);
               }
             }

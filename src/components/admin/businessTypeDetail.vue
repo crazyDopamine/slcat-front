@@ -17,20 +17,24 @@
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
-          <label class="col-8">业务类型名称：</label>
-          <Input class="col-16" v-model="fieldSet.businessName"></Input>
+          <label class="col-6">序列号</label>
+          <div class="col-18">
+            <Input v-model="fieldSet.index"></Input>
+          </div>
         </div>
         <div class="form-row clearfix">
-          <label class="col-8">业务分类：</label>
-          <Select class="col-16" v-model="fieldSet.parentId" clearable>
-            <Option v-for="item in selections.parentId" :value="item.id" :key="item">{{ item.businessName }}</Option>
-          </Select>
+          <Radio-group v-model="fieldSet.type" type="button">
+            <Radio label="1">固定显示</Radio>
+            <Radio label="2">更多内容</Radio>
+          </Radio-group>
         </div>
-        <!--<div class="form-row clearfix">-->
-        <!--<Upload multiple :action="uploadUrl" :on-success="onUploaded" :headers="uploadHeaders">-->
-        <!--<Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>-->
-        <!--</Upload>-->
-        <!--</div>-->
+        <div class="form-row clearfix">
+          <img-input v-model="fieldSet.businessName" :maxLength="1"></img-input>
+        </div>
+        <div class="form-row clearfix">
+          <label class="col-8">描述文本：</label>
+          <Input v-model="fieldSet.desc" type="textarea" :rows="4" ></Input>
+        </div>
       </div>
       <div slot="footer">
         <Button type="primary" :loading="modalLoading" @click="submit()">{{fieldSet.id ? '修改' : '新增'}}</Button>
@@ -49,31 +53,40 @@
         status: 0,
         pop: false,
         modalLoading: false,
-        uploadUrl: '',
-        uploadHeaders: {},
         fieldSet: {
-          businessName: '',
-          parentId: ''
+          index: 1,
+          type: '1',
+          file: '',
+          desc: ''
+        },
+        rule:{
+          index:{
+          	label:'序列',
+            required:true,
+            number:true,
+            digits:true
+          }
         },
         list: {
           columns: [
+            {title: '序列', key: 'id'},
             {title: '业务类型名称', key: 'businessName'},
             {
               title: '操作',
               key: 'action',
               render: (h, params) => {
                 return h('div', {}, [
-//                  h('Button', {
-//                    props: {
-//                      type: 'text',
-//                      size: 'small'
-//                    },
-//                    on: {
-//                      click: (e) => {
-//                        this.remove(params.row, e)
-//                      }
-//                    }
-//                  }, [h('Icon', {props: {type: 'trash-a'}, class: {'margin-right-10': true}}), '删除']),
+                  h('Button', {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: (e) => {
+                        this.remove(params.row, e)
+                      }
+                    }
+                  }, [h('Icon', {props: {type: 'trash-a'}, class: {'margin-right-10': true}}), '删除']),
                   h('Button', {
                     props: {
                       type: 'text',
@@ -84,26 +97,15 @@
                         this.edit(params.row, e)
                       }
                     }
-                  }, [h('Icon', {props: {type: 'edit'}, class: {'margin-right-10': true}}), '修改']),
-                  h('Button', {
-                    props: {
-                      type: 'text',
-                      size: 'small'
-                    },
-                    on: {
-                      click: (e) => {
-                        this.showDetail(params.row, e)
-                      }
-                    }
-                  }, [h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看详情'])
+                  }, [h('Icon', {props: {type: 'edit'}, class: {'margin-right-10': true}}), '修改'])
                 ]);
               }
             }
           ],
           url: 'admin/queryBusinessType',
-        },
-        selections: {
-          parentId: []
+          params:{
+          	id:''
+          }
         }
       }
     },
@@ -132,8 +134,10 @@
       },
       reset: function () {
         this.fieldSet = {
-          businessName: '',
-          parentId: ''
+          index: 1,
+          type: '1',
+          file: '',
+          desc: ''
         }
       },
       remove: function (data) {
@@ -145,27 +149,14 @@
           }
         });
       },
-      showDetail: function (data) {
-        this.$router.push('/businessTypeDetail/'+data.id)
-      },
-      refreshSelections: function () {
-        this.$http.get(this.url('admin/queryBusinessList')).then(this.rspHandler((data) => {
-          this.selections.parentId = data
-        }))
-      },
-      onUploaded: function (rsp, file, fileList) {
-        console.log(rsp)
-      }
     },
     created: function () {
       this.initList(this.list)
-
+      if(this.$route.params.id){
+        this.list.params.id = this.$route.params.id
+      }
       this.$on(this.consts.loadedEvent, function () {
-        this.uploadUrl = this.url('admin/fileUpload')
-        this.uploadHeaders = {}
-        this.uploadHeaders[this.consts.ticketKey] = cookie.get(this.consts.ticketKey)
         this.refreshList(1)
-        this.refreshSelections()
       })
     }
   }

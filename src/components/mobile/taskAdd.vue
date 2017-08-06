@@ -64,7 +64,13 @@
         </div>
       </div>
       <div class="form-row">
-        <label><span class="btn-black-round margin-right-5">9</span>倾向让谁完成项目<span class="fc-red">*</span></label><br/>
+        <label><span class="btn-black-round margin-right-5">9</span>联系方式<span class="fc-red">*</span></label><br/>
+        <div class="form-field">
+          <input type="text" v-model="fieldSet.mobile"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <label><span class="btn-black-round margin-right-5">10</span>倾向让谁完成项目<span class="fc-red">*</span></label><br/>
         <div class="form-field">
           <checker v-model="fieldSet.trendComplete" default-item-class="checker-item-radio-default"
                    selected-item-class="checker-item-radio-selected" type="radio">
@@ -104,6 +110,7 @@
           companyName: '',
           trendComplete: '',
           skillList: [],
+          mobile:'',
           status: '招募中'
         },
         rule:{
@@ -138,6 +145,11 @@
           companyName:{
             label:'公司名称',
             required:true
+          },
+          mobile:{
+            label:'联系方式',
+            required:true,
+            phoneNumber:true
           },
           trendComplete:{
             label:'倾向于谁做',
