@@ -13,8 +13,8 @@
       <Icon type="plus-circled" size="30" class="icon-add"></Icon>
       <input type="file" @change="upload"/>
     </div>
-    <Modal v-model="bigImgPop" class="img-pop" :closable="false">
-      <video autoplay controls width="100%" :src="current | movie" v-if="isMovie(current)&&bigImgPop"></video>
+    <Modal v-model="bigImgPop" class="img-pop" :closable="false" width="1200">
+      <video autoplay controls width="100%" :src="current | movie" v-if="isMovie(current)&&bigImgPop" style="max-height:600px;"></video>
       <img :src="current | img(1)" style="width:100%" v-if="!isMovie(current)">
     </Modal>
     <!--<div v-transfer-dom>-->

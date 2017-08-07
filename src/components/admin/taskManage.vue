@@ -47,6 +47,14 @@
           <span>{{detail.updatedAt | date}}</span>
         </div>
         <div class="detail-row">
+          <label class="col-6">申请人：</label>
+          <span>{{detail.publisher}}</span>
+        </div>
+        <div class="detail-row">
+          <label class="col-6">联系方式：</label>
+          <span>{{detail.phone}}</span>
+        </div>
+        <div class="detail-row">
           <label class="col-6">倾向让谁完成：</label>
           <span>{{detail.trendComplete | selections(this.selectionsMap.trendCompleteMap)}}</span>
         </div>

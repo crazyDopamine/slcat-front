@@ -37,6 +37,12 @@
                   v-for="item in detail.baseSkillList">{{item.skillName}}</span>
           </div>
         </template>
+        <template v-if="detail.ownerSkills">
+          <label class="fs-xxl">其他技能</label><br/>
+          <div class="text-center">
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in detail.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
+          </div>
+        </template>
         <br/>
         <label class="fs-xxl">作品案例</label><br/>
         <div class="text-left margin-top-10" v-if="detail.worksCases">

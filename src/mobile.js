@@ -55,6 +55,7 @@ const routes = [
   {path: '/set', component: setView},
   {path: '/myTask', component: myTask},
   {path: '/taskAdd', component: taskAdd},
+  {path: '/taskAdd/:id', component: taskAdd},
   {path: '/taskDetail/:id', component: taskDetail},
   {path: '/myTaskDetail/:id', component: myTaskDetail},
   {path: '/taskList', component: taskList},

@@ -37,7 +37,7 @@
         <span>{{data.dailyWage ? data.dailyWage : '0'}}元/天</span><br/>
         <template v-if="data.jobTitle">
           <span class="btn btn-gray-round btn-small margin-right-5"
-                v-for="item in data.jobTitle.split(',')">{{item}}</span>
+                v-for="item in data.jobTitle.split(/[,，]/g)">{{item}}</span>
         </template>
       </div>
       <div class="user-info-detail">
@@ -59,19 +59,19 @@
         <label class="fs-xxl">擅长技能</label><br/>
         <p class="text-left margin-top-10" v-if="!data.baseSkillList">添加你的技能，可以为你更准确的推荐匹配项目</p>
         <template v-if="data.baseSkillList">
-          <div class="text-left">
+          <div class="text-center">
             <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.baseSkillList">{{item.skillName}}</span>
           </div>
         </template>
         <template v-if="!data.baseSkillList||!data.baseSkillList.length">
           <div class="margin-top-10">还未添加技能</div>
         </template>
-        <!--<label class="fs-xxl">其他技能</label><br/>-->
-        <!--<template v-if="data.baseSkillList">-->
-          <!--<div class="text-left">-->
-            <!--<span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.baseSkillList">{{item.skillName}}</span>-->
-          <!--</div>-->
-        <!--</template>-->
+        <template v-if="data.ownerSkills">
+          <label class="fs-xxl">其他技能</label><br/>
+          <div class="text-center">
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
+          </div>
+        </template>
       </div>
     </div>
     <div class="container user-info">
@@ -153,6 +153,9 @@
           this.workExperienceMap = window.dicMapMap['400']
         })
         this.data = this.userInfo
+//        if(this.data.ownerSkills&&typeof this.data.ownerSkills == 'string'){
+//          this.data.ownerSkills = this.data.ownerSkills.toString().split(/(,，)/g)
+//        }
       })
     }
   }
