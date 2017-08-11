@@ -145,6 +145,7 @@
       }
     },
     created: function () {
+      window.vm = this
       this.getUserInfo()
       this.path = this.$route.path
       this.$router.afterEach((to, from) => {

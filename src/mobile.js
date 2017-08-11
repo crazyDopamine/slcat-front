@@ -21,6 +21,7 @@ import userInfo from './components/mobile/userInfo.vue'
 import userInfoEdit from './components/mobile/userInfoEdit.vue'
 import serviceDetail from './components/mobile/serviceDetail.vue'
 import myTaskDetail from './components/mobile/myTaskDetail.vue'
+import myInterest from './components/mobile/myInterest.vue'
 import vueg from 'vueg'
 import filters from './common/filters'
 import {httpInterceptor} from './common/interceptors'
@@ -54,6 +55,7 @@ const routes = [
   {path: '/set', component: setView},
   {path: '/myTask', component: myTask},
   {path: '/taskAdd', component: taskAdd},
+  {path: '/taskAdd/:id', component: taskAdd},
   {path: '/taskDetail/:id', component: taskDetail},
   {path: '/myTaskDetail/:id', component: myTaskDetail},
   {path: '/taskList', component: taskList},
@@ -65,7 +67,8 @@ const routes = [
   {path: '/productionAdd', component: productionAdd},
   {path: '/productionAdd/:id', component: productionAdd},
   {path: '/skillEdit', component: skillEdit},
-  {path: '/serviceDetail/:code', component: serviceDetail}
+  {path: '/serviceDetail/:code', component: serviceDetail},
+  {path: '/myInterest', component: myInterest}
 ]
 
 const router = new VueRouter({

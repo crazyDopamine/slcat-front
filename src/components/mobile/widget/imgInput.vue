@@ -9,7 +9,7 @@
         <x-icon type="ios-close-outline" size="20"></x-icon>
       </a>
     </div>
-    <div class="img-input-add" v-if="imgs.length<=maxLength&&!readOnly">
+    <div class="img-input-add" v-if="imgs.length<maxLength&&!readOnly">
       <x-icon class="icon-add" type="ios-plus-outline" size="30"></x-icon>
       <input type="file" @change="upload"/>
     </div>

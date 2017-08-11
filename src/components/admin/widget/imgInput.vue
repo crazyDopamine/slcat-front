@@ -9,12 +9,12 @@
         <Icon type="ios-close-outline" size="20"></Icon>
       </a>
     </div>
-    <div class="img-input-add" v-if="imgs.length<=maxLength&&!readOnly">
+    <div class="img-input-add" v-if="imgs.length<maxLength&&!readOnly">
       <Icon type="plus-circled" size="30" class="icon-add"></Icon>
       <input type="file" @change="upload"/>
     </div>
-    <Modal v-model="bigImgPop" class="img-pop" :closable="false">
-      <video autoplay controls width="100%" :src="current | movie" v-if="isMovie(current)&&bigImgPop"></video>
+    <Modal v-model="bigImgPop" class="img-pop" :closable="false" width="1200">
+      <video autoplay controls width="100%" :src="current | movie" v-if="isMovie(current)&&bigImgPop" style="max-height:600px;"></video>
       <img :src="current | img(1)" style="width:100%" v-if="!isMovie(current)">
     </Modal>
     <!--<div v-transfer-dom>-->
@@ -68,6 +68,8 @@
       return {
         imgs: [],
         current: '',
+        accept: 'jpg,jpeg,png,mp4',
+        maxSize: '20MB',
         bigImgPop: false
       }
     },
@@ -78,7 +80,7 @@
         var msg = ''
         var error = false
         var suffix = /\.(\w+)$/.exec(file.name);
-        if (suffix && accept.indexOf(suffix[1]) < 0) {
+        if (suffix && this.accept.indexOf(suffix[1]) < 0) {
           error = true
           msg += '文件类型不为' + this.accept
         }
@@ -122,6 +124,7 @@
       }
     },
     created: function () {
+    	console.log(this)
       if (this.value && typeof this.value == 'string') {
         this.imgs = this.value.split(',')
       }

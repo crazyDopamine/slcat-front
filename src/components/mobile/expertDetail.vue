@@ -6,6 +6,10 @@
     <!--</div>-->
     <div class="container user-info">
       <div class="user-info-top">
+        <!--<a class="float-right" @click="interest()">-->
+          <!--<x-icon class="btn-interest" type="ios-heart" size="30"></x-icon>-->
+          <!--<x-icon class="btn-interest" type="ios-heart-outline" size="30"></x-icon>-->
+        <!--</a>-->
         <img class="user-img" :src="data.headImgUrl | img"><br/>
         <label class="fs-xxl">{{data.nickName ? data.nickName : '昵称'}}</label><br/>
         <!--<span class="btn btn-round-border btn-small">未提交审核</span><br/>-->
@@ -13,7 +17,7 @@
         <span>{{data.workExperience | selections(workExperienceMap)}}</span><br/>
         <template v-if="data.jobTitle">
           <span class="btn btn-gray-round btn-small margin-right-5"
-                v-for="item in data.jobTitle.split(',')">{{item}}</span>
+                v-for="item in data.jobTitle.split(/[,，]/g)">{{item}}</span>
         </template>
       </div>
       <div class="user-info-detail">
@@ -27,8 +31,14 @@
         <label class="fs-xxl">擅长技能</label><br/>
         <!--<p class="text-left margin-top-10" v-if="!data.baseSkillList">添加你的技能，可以为你更准确的推荐匹配项目</p>-->
         <template v-if="data.baseSkillList">
-          <div class="text-left">
+          <div class="text-center">
             <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.baseSkillList">{{item.skillName}}</span>
+          </div>
+        </template>
+        <template v-if="data.ownerSkills">
+          <label class="fs-xxl">其他技能</label><br/>
+          <div class="text-center">
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
           </div>
         </template>
       </div>
@@ -37,11 +47,16 @@
       <div class="user-info-detail">
         <label class="fs-xxl">作品案例</label><br/>
         <!--<p class="text-left margin-top-10" v-if="!data.worksCases||data.worksCases.length<2">至少添加2个以上的作品案例才可以提交审核</p>-->
-        <div class="text-left margin-top-10" v-if="data.worksCases">
+        <div class="text-left margin-top-20" v-if="data.worksCases">
           <div class="margin-bottom-10 clearfix" v-for="item in data.worksCases">
             {{item.workName}}<br/>
-            <span class="col-6">职责:</span><div class="col-18">{{item.responsibilities}}</div>
-            <span class="col-6">描述:</span><div class="col-18" v-html="toContent(item.worksDesc)"></div>
+            <span>职责:</span><br/>
+            <div class="padding-left-20">{{item.responsibilities}}</div>
+            <span >描述:</span><br/>
+            <div class="padding-left-20" v-html="toContent(item.worksDesc)"></div>
+            <div class="col-24 margin-top-5">
+              <img-input v-model="item.imgUrls" readOnly></img-input>
+            </div>
           </div>
         </div>
       </div>
@@ -76,6 +91,9 @@
         selections('400').then((data, map) => {
           this.workExperienceMap = window.dicMapMap['400']
         })
+      },
+      interest:function(){
+
       },
       submit: function () {
         if (this.$route.params.taskId) {

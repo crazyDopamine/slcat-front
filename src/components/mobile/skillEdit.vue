@@ -11,6 +11,14 @@
           </li>
         </ul>
       </div>
+      <div class="form-area" style="padding:0;">
+        <div class="form-row">
+          <label>其他技能（多个技能请用","隔开）</label><br/>
+          <div class="form-field">
+            <input type="text" v-model="ownerSkills"/>
+          </div>
+        </div>
+      </div>
       <div class="btn-area margin-top-20">
         <a class="btn btn-theme-round btn-harf" @click="submit()">保存</a>
         <a class="btn btn-gray-d-round btn-harf" @click="$router.go(-1)">取消</a>
@@ -25,7 +33,8 @@
       return {
         skillList: [],
         skillMap: {},
-        selected: {}
+        selected: {},
+        ownerSkills:''
       }
     },
     methods: {
@@ -48,7 +57,7 @@
         this.$set(this.selected, id, !this.selected[id])
       },
       submit: function () {
-        var params = {skills: []}
+        var params = {skills: [],ownerSkills:this.ownerSkills}
         each(this.selected, (value, key) => {
           if (value) {
             params.skills.push(key)

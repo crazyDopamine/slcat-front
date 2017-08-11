@@ -64,7 +64,13 @@
         </div>
       </div>
       <div class="form-row">
-        <label><span class="btn-black-round margin-right-5">9</span>倾向让谁完成项目<span class="fc-red">*</span></label><br/>
+        <label><span class="btn-black-round margin-right-5">9</span>联系方式<span class="fc-red">*</span></label><br/>
+        <div class="form-field">
+          <input type="text" v-model="fieldSet.phone"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <label><span class="btn-black-round margin-right-5">10</span>倾向让谁完成项目<span class="fc-red">*</span></label><br/>
         <div class="form-field">
           <checker v-model="fieldSet.trendComplete" default-item-class="checker-item-radio-default"
                    selected-item-class="checker-item-radio-selected" type="radio">
@@ -104,44 +110,50 @@
           companyName: '',
           trendComplete: '',
           skillList: [],
+          phone: '',
           status: '招募中'
         },
-        rule:{
-          businessParentId:{
-          	label:'项目类型',
-            required:true
+        rule: {
+          businessParentId: {
+            label: '项目类型',
+            required: true
           },
-          businessId:{
-            label:'项目二级类型',
-            required:true
+          businessId: {
+            label: '项目二级类型',
+            required: true
           },
-          skillList:{
-            label:'项目所需技能',
-            required:true
+          skillList: {
+            label: '项目所需技能',
+            required: true
           },
-          projectName:{
-            label:'项目名称',
-            required:true
+          projectName: {
+            label: '项目名称',
+            required: true
           },
-          projectDesc:{
-            label:'项目描述',
-            required:true
+          projectDesc: {
+            label: '项目描述',
+            required: true
           },
-          projectBudget:{
-            label:'项目预算',
-            required:true
+          projectBudget: {
+            label: '项目预算',
+            required: true
           },
-          projectCycle:{
-            label:'项目周期',
-            required:true
+          projectCycle: {
+            label: '项目周期',
+            required: true
           },
-          companyName:{
-            label:'公司名称',
-            required:true
+          companyName: {
+            label: '公司名称',
+            required: true
           },
-          trendComplete:{
-            label:'倾向于谁做',
-            required:true
+          phone: {
+            label: '联系方式',
+            required: true,
+            phoneNumber: true
+          },
+          trendComplete: {
+            label: '倾向于谁做',
+            required: true
           }
         },
         businessParentIdMap: {},
@@ -175,7 +187,7 @@
         this.fieldSet.businessId = ''
       },
       submit: function () {
-      	if(this.validate(true)){
+        if (this.validate(true)) {
           var self = this
           this.$vux.loading.show({
             text: '提交中'
@@ -195,6 +207,26 @@
     created: function () {
       this.$on(consts.loadedEvent, function () {
         this.refreshSelections()
+        this.fieldSet.phone = this.userInfo.phone
+        if (this.$route.params.id) {
+          this.$http.get(this.url('userInfo/queryDetailEmp/' + this.$route.params.id)).then(rspHandler((data) => {
+            var skillList = []
+            data.baseSkills.each((item, index) => {
+              skillList.push(item.id)
+            })
+            data.skillList = skillList
+            this.setValues(data)
+            getType(this).then((types) => {
+              this.selections.businessParentId = types
+              types.each((type,index)=>{
+              	if(data.businessParentId == type.id){
+              		this.onTypeChange(type)
+                  this.fieldSet.businessId = data.businessId
+                }
+              })
+            })
+          }))
+        }
       })
     }
   }

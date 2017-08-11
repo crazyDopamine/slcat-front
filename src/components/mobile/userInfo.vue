@@ -37,7 +37,7 @@
         <span>{{data.dailyWage ? data.dailyWage : '0'}}元/天</span><br/>
         <template v-if="data.jobTitle">
           <span class="btn btn-gray-round btn-small margin-right-5"
-                v-for="item in data.jobTitle.split(',')">{{item}}</span>
+                v-for="item in data.jobTitle.split(/[,，]/g)">{{item}}</span>
         </template>
       </div>
       <div class="user-info-detail">
@@ -59,12 +59,18 @@
         <label class="fs-xxl">擅长技能</label><br/>
         <p class="text-left margin-top-10" v-if="!data.baseSkillList">添加你的技能，可以为你更准确的推荐匹配项目</p>
         <template v-if="data.baseSkillList">
-          <div class="text-left">
+          <div class="text-center">
             <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.baseSkillList">{{item.skillName}}</span>
           </div>
         </template>
         <template v-if="!data.baseSkillList||!data.baseSkillList.length">
           <div class="margin-top-10">还未添加技能</div>
+        </template>
+        <template v-if="data.ownerSkills">
+          <label class="fs-xxl">其他技能</label><br/>
+          <div class="text-center">
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
+          </div>
         </template>
       </div>
     </div>
@@ -77,7 +83,7 @@
         <label class="fs-xxl">作品案例</label><br/>
         <p class="text-left margin-top-10" v-if="!data.worksCases||data.worksCases.length<2">至少添加2个以上的作品案例才可以提交审核</p>
         <div class="text-left margin-top-10" v-if="data.worksCases">
-          <div class="margin-bottom-10 clearfix" v-for="item in data.worksCases">
+          <div class="margin-bottom-20 clearfix" v-for="item in data.worksCases">
             {{item.workName}}
             <a class="float-right" @click="removeWorksCase(item.id)"
                v-if="data.status!='待审核'">删除</a>
@@ -85,13 +91,12 @@
                          v-if="data.status!='待审核'">修改
             </router-link>
             <br/>
-            <span class="col-6">职责:</span>
-            <div class="col-18">{{item.responsibilities}}</div>
-            <span class="col-6">描述:</span>
-            <div class="col-18" v-html="toContent(item.worksDesc)"></div>
+            <span>职责:</span><br/>
+            <div class="padding-left-20">{{item.responsibilities}}</div>
+            <span >描述:</span><br/>
+            <div class="padding-left-20" v-html="toContent(item.worksDesc)"></div>
             <div class="col-24 margin-top-5">
               <img-input v-model="item.imgUrls" readOnly></img-input>
-              <!--<img-input v-model="imgs" readOnly></img-input>-->
             </div>
           </div>
         </div>
@@ -148,6 +153,9 @@
           this.workExperienceMap = window.dicMapMap['400']
         })
         this.data = this.userInfo
+//        if(this.data.ownerSkills&&typeof this.data.ownerSkills == 'string'){
+//          this.data.ownerSkills = this.data.ownerSkills.toString().split(/(,，)/g)
+//        }
       })
     }
   }

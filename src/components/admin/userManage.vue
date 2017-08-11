@@ -21,6 +21,7 @@
       <div class="user-detail">
         <img :src="detail.headImgUrl | img" style="width:120px;"><br/>
         <span>{{detail.nickName}}</span><br/>
+        <span>{{detail.phone}}</span><br/>
         <span>{{detail.dailyWage ? detail.dailyWage : '0'}}元/天</span><br/>
         <template v-if="detail.jobTitle">
           <span class="btn btn-gray-round btn-small margin-right-5"
@@ -34,6 +35,12 @@
           <div>
             <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10"
                   v-for="item in detail.baseSkillList">{{item.skillName}}</span>
+          </div>
+        </template>
+        <template v-if="detail.ownerSkills">
+          <label class="fs-xxl">其他技能</label><br/>
+          <div class="text-center">
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in detail.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
           </div>
         </template>
         <br/>
@@ -110,7 +117,7 @@
                         this.showDetail(params.row, e)
                       }
                     }
-                  }, '查看')
+                  },[h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])
                 ]);
               }
             }
