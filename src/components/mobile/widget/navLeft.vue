@@ -31,7 +31,7 @@
           {name: '任务大厅', path: '/taskList'},
           {name: '牛人大厅', path: '/expertList'},
           {name: '我的任务', path: '/myTask'},
-//          {name: '我的关注', path: '/myInterest'},
+          {name: '我的关注', path: '/myInterest'},
           {name: '个人主页', path: '/userInfo'},
           {name: '免费发布任务', path: '/taskAdd'},
           {name: '设置', path: '/set'}

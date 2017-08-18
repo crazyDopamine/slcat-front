@@ -6,16 +6,17 @@
         <router-link to="/myTask" class="fc-theme fs-xl">我的任务</router-link>
         <span class="fc-white">&gt;任务详情</span>
         <!--<a class="float-right fc-theme" @click="cancel()"-->
-           <!--v-if="data.status!='已完成'"><i class="icon-edit"></i>取消任务-->
+        <!--v-if="data.status!='已完成'"><i class="icon-edit"></i>取消任务-->
         <!--</a>-->
         <router-link class="float-right fc-theme" :to="'/taskAdd/'+data.id"
-                     v-if="data.status=='待审核'||data.status=='不通过'||data.status=='审核通过'"><i class="icon-edit"></i>编辑
+                     v-if="data.masterId == userInfo.id&&(data.status=='待审核'||data.status=='不通过'||data.status=='审核通过')">
+          <i class="icon-edit"></i>编辑
         </router-link>
       </div>
     </div>
     <div class="detail-area">
-      <label class="fs-xxl">{{data.companyName}}</label><span
-      class="btn btn-theme-border-round margin-left-20">{{data.status}}</span>
+      <label class="fs-xxl">{{data.projectName}}</label>
+      <span class="btn btn-theme-border-round margin-left-20">{{data.status}}</span>
       <span class="float-right"><span class="fc-red fs-xxl">{{data.projectBudget}}</span></span>
       <div class="content">
         <template v-if="data.status=='不通过'">
@@ -195,7 +196,7 @@
           }
         })
       },
-      cancel:function(){
+      cancel: function () {
         this.$vux.confirm.show({
           title: '取消',
           content: '是否确认取消任务？',

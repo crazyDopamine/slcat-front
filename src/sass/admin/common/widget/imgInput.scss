@@ -66,4 +66,10 @@ $imgHeight:70px;
   .ivu-modal-footer{
     display:none;
   }
+  .ivu-modal-wrap{
+    z-index: $zIndex-max+1;
+  }
+  //.ivu-modal-content{
+  //  background: transparent;
+  //}
 }

@@ -11,7 +11,8 @@
       </div>
       <Table :columns="list.columns" :data="list.dataList" border></Table>
       <div class="table-bottom-bar">
-        <Page :total="list.total" :current="list.page" :page-size="list.pageSize" @on-change="refreshList($event)" show-elevator></Page>
+        <Page :total="list.total" :current="list.page" :page-size="list.pageSize" @on-change="refreshList($event)"
+              show-elevator></Page>
       </div>
     </div>
     <Modal
@@ -96,18 +97,26 @@
         status: 0,
         pop: false,
         popTitle: '详情',
-        detail:{},
-        modalLoading:false,
-        selectionsMap:{
-          trendCompleteMap:{},
-          projectCycleMap:{}
+        detail: {},
+        modalLoading: false,
+        selectionsMap: {
+          trendCompleteMap: {},
+          projectCycleMap: {}
         },
-        fieldSet:{
-        	reason:''
+        fieldSet: {
+          reason: ''
         },
         list: {
           columns: [
             {title: '项目名称', key: 'projectName'},
+            {
+              key: 'recruitBusiness.businessName',
+              title: '项目类型',
+              key: 'action',
+              render: (h, params) => {
+                return h('span', params.row.recruitBusiness.businessName)
+              }
+            },
             {title: '项目预算', key: 'projectBudget'},
             {title: '状态', key: 'status'},
             {
@@ -125,7 +134,7 @@
                         this.showDetail(params.row, e)
                       }
                     }
-                  },[h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])
+                  }, [h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])
                 ]);
               }
             }
@@ -139,8 +148,8 @@
       }
     },
     methods: {
-    	refreshSelections:function(){
-        selections('100').then((data,map) => {
+      refreshSelections: function () {
+        selections('100').then((data, map) => {
           this.selectionsMap.trendCompleteMap = window.dicMapMap['100']
         })
         selections('300').then((data, map) => {
@@ -158,7 +167,7 @@
         }))
       },
       check: function (data, status) {
-        if(status=='不通过'&&!this.fieldSet.reason){
+        if (status == '不通过' && !this.fieldSet.reason) {
           window.vm.$Message.error('原因不能为空');
           return
         }
@@ -168,7 +177,7 @@
             status: status,
             reason: this.fieldSet.reason
           }
-        }).then(this.rspHandler((data)=> {
+        }).then(this.rspHandler((data) => {
           this.pop = false
           this.refreshList(1)
         }))
@@ -177,7 +186,7 @@
     created: function () {
       this.initList(this.list)
       this.$on(this.consts.loadedEvent, function () {
-      	this.refreshSelections()
+        this.refreshSelections()
         this.refreshList(1)
       })
     }

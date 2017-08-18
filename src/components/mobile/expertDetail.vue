@@ -6,10 +6,10 @@
     <!--</div>-->
     <div class="container user-info">
       <div class="user-info-top">
-        <!--<a class="float-right" @click="interest()">-->
-          <!--<x-icon class="btn-interest" type="ios-heart" size="30"></x-icon>-->
-          <!--<x-icon class="btn-interest" type="ios-heart-outline" size="30"></x-icon>-->
-        <!--</a>-->
+        <a class="float-right" @click="interest()">
+          <x-icon class="btn-interest" type="ios-heart" size="30" v-if="data.isWatched"></x-icon>
+          <x-icon class="btn-interest" type="ios-heart-outline" size="30" v-if="!data.isWatched"></x-icon>
+        </a>
         <img class="user-img" :src="data.headImgUrl | img"><br/>
         <label class="fs-xxl">{{data.nickName ? data.nickName : '昵称'}}</label><br/>
         <!--<span class="btn btn-round-border btn-small">未提交审核</span><br/>-->
@@ -38,7 +38,8 @@
         <template v-if="data.ownerSkills">
           <label class="fs-xxl">其他技能</label><br/>
           <div class="text-center">
-            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in data.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10"
+                  v-for="item in data.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
           </div>
         </template>
       </div>
@@ -52,7 +53,7 @@
             {{item.workName}}<br/>
             <span>职责:</span><br/>
             <div class="padding-left-20">{{item.responsibilities}}</div>
-            <span >描述:</span><br/>
+            <span>描述:</span><br/>
             <div class="padding-left-20" v-html="toContent(item.worksDesc)"></div>
             <div class="col-24 margin-top-5">
               <img-input v-model="item.imgUrls" readOnly></img-input>
@@ -72,40 +73,50 @@
     data: function () {
       return {
         data: {},
-        workExperienceMap:{},
-        task:null
+        workExperienceMap: {},
+        task: null
       }
     },
     methods: {
       refresh: function () {
-        if (this.$route.params.id) {
-          this.$http.get(this.url('techMaster/queryMasterDetail'), {params: {id: this.$route.params.id}}).then(this.rspHandler((data) => {
-            this.data = data
-          }))
-        }
-        if(this.$route.params.taskId){
-          this.$http.get(this.url('employer/queryDetail/' + this.$route.params.taskId)).then(this.rspHandler((data) => {
-            this.task = data
-          }))
-        }
         selections('400').then((data, map) => {
           this.workExperienceMap = window.dicMapMap['400']
+          if (this.$route.params.id) {
+            this.$http.get(this.url('techMaster/queryMasterDetail'), {params: {id: this.$route.params.id}}).then(this.rspHandler((data) => {
+              this.data = data
+            }))
+          }
+          if (this.$route.params.taskId) {
+            this.$http.get(this.url('employer/queryDetail/' + this.$route.params.taskId)).then(this.rspHandler((data) => {
+              this.task = data
+            }))
+          }
         })
       },
-      interest:function(){
-
+      interest: function () {
+      	let params = {masterId:this.data.id}
+      	if(this.data.isWatched){
+      		params.operateType = 'cancle'
+        }else{
+          params.operateType = 'watch'
+        }
+        this.$http.get(this.url('employer/watchMaster'), {params: params}).then(this.rspHandler(() => {
+          this.refresh();
+        }))
       },
       submit: function () {
         if (this.$route.params.taskId) {
           this.$vux.confirm.show({
-            title:'确认',
-            content:'是否确认当前牛人为项目委托人？',
+            title: '确认',
+            content: '是否确认当前牛人为项目委托人？',
             onConfirm: () => {
-              this.$http.get(this.url('employer/confirm'),{params:{
-                taskId:this.$route.params.taskId,
-                masterId:this.$route.params.id
-              }}).then(this.rspHandler(()=>{
-              	this.$router.go(-1)
+              this.$http.get(this.url('employer/confirm'), {
+                params: {
+                  taskId: this.$route.params.taskId,
+                  masterId: this.$route.params.id
+                }
+              }).then(this.rspHandler(() => {
+                this.$router.go(-1)
               }))
             }
           })
