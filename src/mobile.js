@@ -67,7 +67,7 @@ const routes = [
   {path: '/productionAdd', component: productionAdd},
   {path: '/productionAdd/:id', component: productionAdd},
   {path: '/skillEdit', component: skillEdit},
-  {path: '/serviceDetail/:code', component: serviceDetail},
+  {path: '/serviceDetail/:id', component: serviceDetail},
   {path: '/myInterest', component: myInterest}
 ]
 

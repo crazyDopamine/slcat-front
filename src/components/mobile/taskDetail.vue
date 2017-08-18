@@ -8,7 +8,7 @@
             </span>
     </div>
     <div class="detail-area">
-      <label class="fs-xxl">{{data.companyName}}</label><span
+      <label class="fs-xxl">{{data.projectName}}</label><span
       class="btn btn-theme-border-round margin-left-20">{{data.status}}</span>
       <span class="float-right"><span class="fc-red fs-xxl">{{data.projectBudget}}</span></span>
       <div class="content">
@@ -47,19 +47,22 @@
         <!--最好有类似风格案例，并愿意沟通需求。-->
         <!--</p>-->
       </div>
-      <a class="btn btn-large btn-theme-round margin-top-20" @click="apply()" v-if="data.status=='审核通过'&&userInfo.status=='审核通过'&&data.masterId != userInfo.id">发送申请意向</a>
+      <a class="btn btn-large btn-theme-round margin-top-20" @click="apply()"
+         v-if="data.status=='审核通过'&&userInfo.status=='审核通过'&&data.masterId != userInfo.id">发送申请意向</a>
     </div>
     <!--<div class="task-description">-->
-      <!--<group title="推荐列表">-->
-        <!--<cell title="推荐人1" :link="'/expertDetail/1/'+data.id"></cell>-->
-        <!--<cell title="推荐人2" :link="'/expertDetail/1/'+data.id"></cell>-->
-      <!--</group>-->
+    <!--<group title="推荐列表">-->
+    <!--<cell title="推荐人1" :link="'/expertDetail/1/'+data.id"></cell>-->
+    <!--<cell title="推荐人2" :link="'/expertDetail/1/'+data.id"></cell>-->
+    <!--</group>-->
     <!--</div>-->
     <group title="申请列表" v-if="data.status=='审核通过'&&data.applyList.length">
-      <cell :title="item.nickName" :link="'/expertDetail/'+item.id+'/'+data.id" v-for="item in data.applyList" :key="item"></cell>
+      <cell :title="item.nickName" :link="'/expertDetail/'+item.id+'/'+data.id" v-for="item in data.applyList"
+            :key="item"></cell>
     </group>
     <group title="委托人" v-if="(data.status=='进行中'||data.status=='已完成')&&data.applyList.length">
-      <cell :title="item.nickName" :link="'/expertDetail/'+item.id" v-for="item in data.applyList" :key="item" v-if="item.status == '已绑定'"></cell>
+      <cell :title="item.nickName" :link="'/expertDetail/'+item.id" v-for="item in data.applyList" :key="item"
+            v-if="item.status == '已绑定'"></cell>
     </group>
     <div class="detail-area" v-if="data.status=='进行中'&&data.masterId == userInfo.id">
       <a class="btn btn-large btn-theme-round margin-top-20" @click="finish()">确认已完成</a>
@@ -111,18 +114,18 @@
       return {
         data: {},
         trendCompleteMap: {},
-        projectCycleMap:{},
-        scoreMaster:{
-          attitudeScore:5,
-          qualityScore:5,
-          effectScore:5,
-          comment:''
+        projectCycleMap: {},
+        scoreMaster: {
+          attitudeScore: 5,
+          qualityScore: 5,
+          effectScore: 5,
+          comment: ''
         },
-        scoreEmp:{
-          attitudeScore:5,
-          payTimeScore:5,
-          coordinationScore:5,
-          comment:''
+        scoreEmp: {
+          attitudeScore: 5,
+          payTimeScore: 5,
+          coordinationScore: 5,
+          comment: ''
         }
       }
     },
@@ -138,8 +141,8 @@
       },
       refresh: function () {
         this.$http.get(url('employer/queryDetail/' + this.$route.params.id)).then(rspHandler((data) => {
-          data.applyList.each((item,index)=>{
-            if(item.status === '已绑定'){
+          data.applyList.each((item, index) => {
+            if (item.status === '已绑定') {
               data.executor = item
             }
           })
@@ -152,36 +155,38 @@
           this.projectCycleMap = window.dicMapMap['300']
         })
       },
-      finish:function(){
+      finish: function () {
         this.$vux.confirm.show({
-          title:'确认',
-          content:'是否确认完成任务？',
+          title: '确认',
+          content: '是否确认完成任务？',
           onConfirm: () => {
-            this.$http.get(this.url('employer/completed'),{params:{
-              id:this.data.id,
-              status:'已完成'
-            }}).then(this.rspHandler(()=>{
+            this.$http.get(this.url('employer/completed'), {
+              params: {
+                id: this.data.id,
+                status: '已完成'
+              }
+            }).then(this.rspHandler(() => {
               this.refresh()
             }))
           }
         })
       },
-      empScore:function(){
-      	var params = this.scoreEmp
+      empScore: function () {
+        var params = this.scoreEmp
         params.taskId = this.data.id
         params.beRatedId = this.data.masterId
-        this.$http.post(this.url('score/employer'),params).then(this.rspHandler(()=>{
-        	this.refresh()
+        this.$http.post(this.url('score/employer'), params).then(this.rspHandler(() => {
+          this.refresh()
         }))
       },
-      masterScore:function(){
+      masterScore: function () {
         var params = this.scoreMaster
         params.taskId = this.data.id
-        if(this.data.executor){
-        	return
+        if (this.data.executor) {
+          return
         }
         params.beRatedId = this.data.executor.id
-        this.$http.post(this.url('score/master'),params).then(this.rspHandler(()=>{
+        this.$http.post(this.url('score/master'), params).then(this.rspHandler(() => {
           this.refresh()
         }))
       }

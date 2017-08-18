@@ -17,23 +17,31 @@
       :mask-closable="false">
       <div class="form-area">
         <div class="form-row clearfix">
-          <label class="col-6">序列号</label>
+          <label class="col-6">序列号:</label>
           <div class="col-18">
-            <Input v-model="fieldSet.index"></Input>
+            <input type="number" v-model="fieldSet.caseIndex"/>
           </div>
         </div>
         <div class="form-row clearfix">
-          <Radio-group v-model="fieldSet.type" type="button">
-            <Radio label="1">固定显示</Radio>
-            <Radio label="2">更多内容</Radio>
-          </Radio-group>
+          <label class="col-6">显示方式:</label>
+          <div class="col-18">
+            <Radio-group v-model="fieldSet.caseShow" type="button">
+              <Radio label="1">固定显示</Radio>
+              <Radio label="0">更多内容</Radio>
+            </Radio-group>
+          </div>
         </div>
         <div class="form-row clearfix">
-          <img-input v-model="fieldSet.businessName" :maxLength="1"></img-input>
+          <label class="col-6">图片:<br/>(建议宽度300-600像素)</label>
+          <div class="col-18">
+            <img-input v-model="fieldSet.caseUrl" :maxLength="1" stype="margin-left:25%;"></img-input>
+          </div>
         </div>
         <div class="form-row clearfix">
-          <label class="col-8">描述文本：</label>
-          <Input v-model="fieldSet.desc" type="textarea" :rows="4" ></Input>
+          <label class="col-6">描述文本：</label>
+          <div class="col-18">
+            <Input v-model="fieldSet.caseText" type="textarea" :rows="4" ></Input>
+          </div>
         </div>
       </div>
       <div slot="footer">
@@ -54,13 +62,14 @@
         pop: false,
         modalLoading: false,
         fieldSet: {
-          index: 1,
-          type: '1',
-          file: '',
-          desc: ''
+          caseIndex: 1,
+          caseShow: '1',
+          caseUrl: '',
+          caseText: '',
+          businessId: ''
         },
         rule:{
-          index:{
+          caseIndex:{
           	label:'序列',
             required:true,
             number:true,
@@ -69,8 +78,7 @@
         },
         list: {
           columns: [
-            {title: '序列', key: 'id'},
-            {title: '业务类型名称', key: 'businessName'},
+            {title: '序列', key: 'caseIndex'},
             {
               title: '操作',
               key: 'action',
@@ -102,10 +110,11 @@
               }
             }
           ],
-          url: 'admin/queryBusinessType',
+          url: 'business/queryCaseBases',
           params:{
           	id:''
-          }
+          },
+          page:0
         }
       }
     },
@@ -123,10 +132,10 @@
         if (this.validate(true)) {
           var params = this.getValues()
           this.modalLoading = true
-          this.$http.post(this.url('admin/addBusiness'), params).then(this.rspHandler(() => {
+          this.$http.post(this.url('admin/addCaseBases'), params).then(this.rspHandler(() => {
             this.modalLoading = false
             this.pop = false
-            this.refreshList(1)
+            this.refreshList()
           }, () => {
             this.modalLoading = false
           }))
@@ -134,10 +143,14 @@
       },
       reset: function () {
         this.fieldSet = {
-          index: 1,
-          type: '1',
-          file: '',
-          desc: ''
+          caseIndex: 1,
+          caseShow: 1,
+          caseUrl: '',
+          caseText: '',
+          businessId: ''
+        }
+        if(this.$route.params.id){
+          this.fieldSet.businessId = this.$route.params.id
         }
       },
       remove: function (data) {
@@ -145,7 +158,9 @@
           title: '删除',
           content: '<p>确认是否删除！</p>',
           onOk: () => {
-            this.$Message.info('点击了确定');
+            this.$http.get(this.url('admin/deleteCaseBase'),{params:{id:data.id}}).then(this.rspHandler((data)=>{
+              this.refreshList()
+            }))
           }
         });
       },
@@ -155,8 +170,9 @@
       if(this.$route.params.id){
         this.list.params.id = this.$route.params.id
       }
+      this.reset()
       this.$on(this.consts.loadedEvent, function () {
-        this.refreshList(1)
+        this.refreshList()
       })
     }
   }

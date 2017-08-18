@@ -47,7 +47,7 @@
         selections: {},
         selectionsShow: false,
         list: {
-          url: 'techMaster/queryMasterList',
+          url: 'userInfo/watchList',
           params: {
             queryParam: '',
             businessParentId: '',

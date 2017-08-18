@@ -95,16 +95,16 @@
           msg += '文件大小不可超过' + this.maxSize
         }
         if (error) {
-          if(window.vm.$vux){
-            window.vm.$vux.toast.text(msg, 'bottom',2000)
-          }else if(window.vm.$Message){
+          if (window.vm.$vux) {
+            window.vm.$vux.toast.text(msg, 'bottom', 2000)
+          } else if (window.vm.$Message) {
             window.vm.$Message.error(msg);
           }
           return
         }
         var formData = new FormData()
         formData.append('file', file)
-        this.$http.post(this.url('admin/fileUpload'), formData).then(this.rspHandler((data)=> {
+        this.$http.post(this.url('admin/fileUpload'), formData).then(this.rspHandler((data) => {
           this.imgs.push(data)
           this.$emit('input', this.imgs.toString())
         }))
@@ -128,10 +128,14 @@
     created: function () {
       if (this.value && typeof this.value == 'string') {
         this.imgs = this.value.split(',')
+      } else {
+        this.imgs = []
       }
       this.$watch('value', function (v) {
         if (v && typeof v == 'string') {
           this.imgs = v.split(',')
+        } else {
+          this.imgs = []
         }
       })
     }

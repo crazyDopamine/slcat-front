@@ -6,12 +6,12 @@
     </tab>
     <div class="data-list service-list list-container" style="position: absolute;top:40px;width:100%;left:0;bottom:0;overflow: auto">
       <div class="data-item margin-bottom-20" v-for="(data,index) in dataList" :key="index">
-        <router-link :to="'/serviceDetail/'+data.businessCode">
-          <img class="item-img" :src="'/static/img/'+data.businessCode+'.jpg'">
+        <router-link :to="'/serviceDetail/'+data.id">
+          <img class="item-img" :src="data.imageUrl | img(1)">
         </router-link>
         <div class="content">
           <label>{{data.businessName}}</label><br/>
-          <router-link :to="'/serviceDetail/'+data.businessCode" class="fc-red">了解详情</router-link>
+          <router-link :to="'/serviceDetail/'+data.id" class="fc-red">了解详情</router-link>
         </div>
       </div>
     </div>

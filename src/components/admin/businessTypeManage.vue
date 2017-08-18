@@ -26,6 +26,12 @@
             <Option v-for="item in selections.parentId" :value="item.id" :key="item">{{ item.businessName }}</Option>
           </Select>
         </div>
+        <div class="form-row clearfix">
+          <label class="col-8">图片：<br/>(建议宽度300-600像素)</label>
+          <div class="col-16">
+            <img-input v-model="fieldSet.imageUrl" :maxLength="1"></img-input>
+          </div>
+        </div>
         <!--<div class="form-row clearfix">-->
         <!--<Upload multiple :action="uploadUrl" :on-success="onUploaded" :headers="uploadHeaders">-->
         <!--<Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>-->
@@ -53,7 +59,8 @@
         uploadHeaders: {},
         fieldSet: {
           businessName: '',
-          parentId: ''
+          parentId: '',
+          imageUrl: ''
         },
         list: {
           columns: [
@@ -63,17 +70,17 @@
               key: 'action',
               render: (h, params) => {
                 return h('div', {}, [
-//                  h('Button', {
-//                    props: {
-//                      type: 'text',
-//                      size: 'small'
-//                    },
-//                    on: {
-//                      click: (e) => {
-//                        this.remove(params.row, e)
-//                      }
-//                    }
-//                  }, [h('Icon', {props: {type: 'trash-a'}, class: {'margin-right-10': true}}), '删除']),
+                  h('Button', {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: (e) => {
+                        this.showDetail(params.row, e)
+                      }
+                    }
+                  }, [h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看详情']),
                   h('Button', {
                     props: {
                       type: 'text',
@@ -92,10 +99,10 @@
                     },
                     on: {
                       click: (e) => {
-                        this.showDetail(params.row, e)
+                        this.remove(params.row, e)
                       }
                     }
-                  }, [h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看详情'])
+                  }, [h('Icon', {props: {type: 'trash-a'}, class: {'margin-right-10': true}}), '删除'])
                 ]);
               }
             }
@@ -133,7 +140,8 @@
       reset: function () {
         this.fieldSet = {
           businessName: '',
-          parentId: ''
+          parentId: '',
+          imageUrl: ''
         }
       },
       remove: function (data) {
@@ -141,7 +149,9 @@
           title: '删除',
           content: '<p>确认是否删除！</p>',
           onOk: () => {
-            this.$Message.info('点击了确定');
+            this.$http.get(this.url('admin/deleteBusiness'),{params:{id:data.id}}).then(this.rspHandler((data)=>{
+              this.refreshList()
+            }))
           }
         });
       },
@@ -152,9 +162,6 @@
         this.$http.get(this.url('admin/queryBusinessList')).then(this.rspHandler((data) => {
           this.selections.parentId = data
         }))
-      },
-      onUploaded: function (rsp, file, fileList) {
-        console.log(rsp)
       }
     },
     created: function () {
