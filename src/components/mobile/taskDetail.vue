@@ -56,47 +56,47 @@
     <!--<cell title="推荐人2" :link="'/expertDetail/1/'+data.id"></cell>-->
     <!--</group>-->
     <!--</div>-->
-    <group title="申请列表" v-if="data.status=='审核通过'&&data.applyList.length">
-      <cell :title="item.nickName" :link="'/expertDetail/'+item.id+'/'+data.id" v-for="item in data.applyList"
-            :key="item"></cell>
-    </group>
-    <group title="委托人" v-if="(data.status=='进行中'||data.status=='已完成')&&data.applyList.length">
-      <cell :title="item.nickName" :link="'/expertDetail/'+item.id" v-for="item in data.applyList" :key="item"
-            v-if="item.status == '已绑定'"></cell>
-    </group>
-    <div class="detail-area" v-if="data.status=='进行中'&&data.masterId == userInfo.id">
-      <a class="btn btn-large btn-theme-round margin-top-20" @click="finish()">确认已完成</a>
-    </div>
-    <group title="评价" v-if="data.status=='已完成'&&data.executor&& userInfo.id == data.executor.id">
-      <cell title="态度">
-        <rater v-model="scoreEmp.attitudeScore" active-color="#04BE02" slot="value"></rater>
-      </cell>
-      <cell title="及时支付">
-        <rater v-model="scoreEmp.payTimeScore" active-color="#04BE02" slot="value"></rater>
-      </cell>
-      <cell title="配合度">
-        <rater v-model="scoreEmp.coordinationScore" active-color="#04BE02" slot="value"></rater>
-      </cell>
-      <x-textarea :max="200" v-model="scoreEmp.comment"></x-textarea>
-    </group>
-    <group title="评价" v-if="data.status=='已完成'&&data.masterId == userInfo.id">
-      <cell title="态度">
-        <rater v-model="scoreMaster.attitudeScore" active-color="#04BE02" slot="value"></rater>
-      </cell>
-      <cell title="质量">
-        <rater v-model="scoreMaster.qualityScore" active-color="#04BE02" slot="value"></rater>
-      </cell>
-      <cell title="效率">
-        <rater v-model="scoreMaster.effectScore" active-color="#04BE02" slot="value"></rater>
-      </cell>
-      <x-textarea :max="200" v-model="scoreMaster.comment"></x-textarea>
-    </group>
-    <div class="detail-area" v-if="data.status=='已完成'&&data.executor&& userInfo.id == data.executor.id">
-      <a class="btn btn-large btn-theme-round margin-top-20" @click="empScore()">发送评价</a>
-    </div>
-    <div class="detail-area" v-if="data.status=='已完成'&&data.masterId == userInfo.id">
-      <a class="btn btn-large btn-theme-round margin-top-20" @click="masterScore()">发送评价</a>
-    </div>
+    <!--<group title="申请列表" v-if="data.status=='审核通过'&&data.applyList.length">-->
+      <!--<cell :title="item.nickName" :link="'/expertDetail/'+item.id+'/'+data.id" v-for="item in data.applyList"-->
+            <!--:key="item"></cell>-->
+    <!--</group>-->
+    <!--<group title="委托人" v-if="(data.status=='进行中'||data.status=='已完成')&&data.applyList.length">-->
+      <!--<cell :title="item.nickName" :link="'/expertDetail/'+item.id" v-for="item in data.applyList" :key="item"-->
+            <!--v-if="item.status == '已绑定'"></cell>-->
+    <!--</group>-->
+    <!--<div class="detail-area" v-if="data.status=='进行中'&&data.masterId == userInfo.id">-->
+      <!--<a class="btn btn-large btn-theme-round margin-top-20" @click="finish()">确认已完成</a>-->
+    <!--</div>-->
+    <!--<group title="评价" v-if="data.status=='已完成'&&data.executor&& userInfo.id == data.executor.id">-->
+      <!--<cell title="态度">-->
+        <!--<rater v-model="scoreEmp.attitudeScore" active-color="#04BE02" slot="value"></rater>-->
+      <!--</cell>-->
+      <!--<cell title="及时支付">-->
+        <!--<rater v-model="scoreEmp.payTimeScore" active-color="#04BE02" slot="value"></rater>-->
+      <!--</cell>-->
+      <!--<cell title="配合度">-->
+        <!--<rater v-model="scoreEmp.coordinationScore" active-color="#04BE02" slot="value"></rater>-->
+      <!--</cell>-->
+      <!--<x-textarea :max="200" v-model="scoreEmp.comment"></x-textarea>-->
+    <!--</group>-->
+    <!--<group title="评价" v-if="data.status=='已完成'&&data.masterId == userInfo.id">-->
+      <!--<cell title="态度">-->
+        <!--<rater v-model="scoreMaster.attitudeScore" active-color="#04BE02" slot="value"></rater>-->
+      <!--</cell>-->
+      <!--<cell title="质量">-->
+        <!--<rater v-model="scoreMaster.qualityScore" active-color="#04BE02" slot="value"></rater>-->
+      <!--</cell>-->
+      <!--<cell title="效率">-->
+        <!--<rater v-model="scoreMaster.effectScore" active-color="#04BE02" slot="value"></rater>-->
+      <!--</cell>-->
+      <!--<x-textarea :max="200" v-model="scoreMaster.comment"></x-textarea>-->
+    <!--</group>-->
+    <!--<div class="detail-area" v-if="data.status=='已完成'&&data.executor&& userInfo.id == data.executor.id">-->
+      <!--<a class="btn btn-large btn-theme-round margin-top-20" @click="empScore()">发送评价</a>-->
+    <!--</div>-->
+    <!--<div class="detail-area" v-if="data.status=='已完成'&&data.masterId == userInfo.id">-->
+      <!--<a class="btn btn-large btn-theme-round margin-top-20" @click="masterScore()">发送评价</a>-->
+    <!--</div>-->
   </div>
 </template>
 <script>

@@ -1,7 +1,8 @@
 <template>
   <div class="page-container">
     <template v-for="(data,index) in datas" v-if="showAll||data.caseShow">
-      <img class="service-detail-img" :src="data.caseUrl | img(1)" v-if="data.caseUrl">
+      <img class="service-detail-img" :src="data.caseUrl | img(1)" v-if="data.caseUrl&&!isMovie(data.caseUrl)">
+      <video controls width="100%" :src="data.caseUrl | movie" v-if="data.caseUrl&&isMovie(data.caseUrl)"></video>
       <div class="service-detail-text" v-html="toContent(data.caseText)" v-if="data.caseText"></div>
       <div class="clearfix" v-if="!showAll&&data.caseShow&&datas[index+1]&&!datas[index+1].caseShow">
         <a class="float-right margin-right-20 fs-l fc-theme" @click="showAll=true" style="line-height: 40px;">显示更多</a>

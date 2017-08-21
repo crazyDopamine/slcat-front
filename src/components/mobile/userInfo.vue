@@ -25,6 +25,10 @@
     </template>
     <div class="container user-info">
       <div class="user-info-top">
+        <router-link to="/userInfoEdit" class="btn btn-text fc-theme" style="position: absolute;left:0;top:0;"
+                     v-if="data.status!='待审核'">
+          <i class="icon-edit"></i>编辑
+        </router-link>
         <router-link to="/userInfoEdit" class="btn btn-text fc-theme" style="position: absolute;right:0;top:0;"
                      v-if="data.status!='待审核'">
           <i class="icon-edit"></i>编辑

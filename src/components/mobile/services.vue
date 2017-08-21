@@ -44,10 +44,10 @@
         }else{
         	this.dataList = item.children
         }
-         let listContainer = this.$el.querySelector('.list-container')
-         if (listContainer) {
-           listContainer.scrollTop = 0;
-         }
+        let listContainer = this.$el.querySelector('.list-container')
+        if (listContainer) {
+          listContainer.scrollTop = 0;
+        }
       },
       refreshSelections:function(){
         getType(this).then((data) => {
