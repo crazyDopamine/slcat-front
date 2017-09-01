@@ -5,6 +5,7 @@
         <Radio-group v-model="list.params.status" type="button" @on-change="refreshList(1)">
           <Radio label="">全部</Radio>
           <Radio label="待审核">待审核</Radio>
+          <Radio label="待平台跟进">待平台跟进</Radio>
           <!--<Radio label="已审核">已审核</Radio>-->
         </Radio-group>
         <!--<Button type="primary" class="float-right">添加</Button>-->
@@ -123,19 +124,31 @@
               title: '操作',
               key: 'action',
               render: (h, params) => {
-                return h('div', [
-                  h('Button', {
+                let btns = [h('Button', {
+                  props: {
+                    type: 'text',
+                    size: 'small'
+                  },
+                  on: {
+                    click: (e) => {
+                      this.showDetail(params.row, e)
+                    }
+                  }
+                }, [h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])]
+                if (params.row.status == '待平台跟进') {
+                  btns.push(h('Button', {
                     props: {
                       type: 'text',
                       size: 'small'
                     },
                     on: {
                       click: (e) => {
-                        this.showDetail(params.row, e)
+                        this.follow(params.row, e)
                       }
                     }
-                  }, [h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])
-                ]);
+                  }, [h('Icon', {props: {type: 'play'}, class: {'margin-right-10': true}}), '跟进']))
+                }
+                return h('div', btns);
               }
             }
           ],
@@ -181,6 +194,21 @@
           this.pop = false
           this.refreshList(1)
         }))
+      },
+      follow: function (data) {
+        this.$Modal.confirm({
+          title: '跟进',
+          content: '确认是否跟进！',
+          onOk: () => {
+            this.$http.get(this.url('admin/runningEmp'), {
+              params: {
+                id: data.id
+              }
+            }).then(this.rspHandler((data) => {
+              this.refreshList(1)
+            }))
+          }
+        });
       }
     },
     created: function () {

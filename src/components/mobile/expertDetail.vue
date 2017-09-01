@@ -62,19 +62,43 @@
         </div>
       </div>
     </div>
+    <div style="margin:0 15px;">
+      <a class="btn btn-large btn-theme-round margin-top-20" @click="pay9()" v-if="!data.phone">查看联系方式（9元）</a>
+      <a class="btn btn-large btn-theme margin-top-20" :href="'tel:'+ data.phone"
+         v-if="data.phone">联系方式：{{data.phone}}</a>
+    </div>
     <div style="margin:0 15px;" v-if="task&&task.status=='审核通过'">
       <a class="btn btn-large btn-theme-round margin-top-20" @click="submit()">确认委托</a>
     </div>
+    <Confirm v-model="payPop" title="订单详情" confirm-text="确认支付" @on-confirm="onPayConfirm()">
+      <div class="model-detail">
+        <div class="clearfix">
+          <label class="col-10 text-right">订单金额:</label>
+          <span class="col-14 text-left padding-left-10">9元</span>
+        </div>
+        <div class="clearfix">
+          <label class="col-10 text-right">支付方式:</label>
+          <span class="col-14 text-left padding-left-10">微信支付</span>
+        </div>
+      </div>
+    </Confirm>
   </div>
 </template>
 <script type="es6">
   import {selections} from '../../common/utils'
+  import {Confirm} from 'vux'
   export default {
+    components: {
+      Confirm
+    },
     data: function () {
       return {
         data: {},
         workExperienceMap: {},
-        task: null
+        task: null,
+        payPop: false,
+        payForm: {},
+        wxConfig: {}
       }
     },
     methods: {
@@ -94,10 +118,10 @@
         })
       },
       interest: function () {
-      	let params = {masterId:this.data.id}
-      	if(this.data.isWatched){
-      		params.operateType = 'cancle'
-        }else{
+        let params = {masterId: this.data.id}
+        if (this.data.isWatched) {
+          params.operateType = 'cancle'
+        } else {
           params.operateType = 'watch'
         }
         this.$http.get(this.url('employer/watchMaster'), {params: params}).then(this.rspHandler(() => {
@@ -121,11 +145,50 @@
             }
           })
         }
+      },
+      pay9: function () {
+        this.$http.post(this.url('masterOrder'), {
+          free: 0.01,
+          unActiveMasterId: this.data.id,
+          body: '查看联系方式'
+        }).then(this.rspHandler((data) => {
+          this.payForm = data
+          this.payPop = true
+        }))
+      },
+      onPayConfirm: function () {
+        var self = this
+        wx.chooseWXPay({
+          timestamp: this.payForm.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+          nonceStr: this.payForm.nonceStr, // 支付签名随机串，不长于 32 位
+          package: this.payForm.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=***）
+          signType: this.payForm.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+          paySign: this.payForm.paySign, // 支付签名
+          success: function (res) {
+            self.$vux.toast.text('支付成功', 'bottom')
+            self.refresh()
+          }
+        });
+      },
+      wxInit: function () {
+        var url = "http://" + window.location.host + "/mobile.html";
+        this.$http.get(this.url('getJsSign'), {params: {url: url}}).then(this.rspHandler((data) => {
+          this.wxConfig = data
+          wx.config({
+            debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: data.appId, // 必填，公众号的唯一标识
+            timestamp: data.timestamp, // 必填，生成签名的时间戳
+            nonceStr: data.nonceStr, // 必填，生成签名的随机串
+            signature: data.sign,// 必填，签名，见附录1
+            jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          });
+        }))
       }
     },
     created: function () {
       this.$on(this.consts.loadedEvent, function () {
         this.refresh()
+        this.wxInit();
       })
     }
   }

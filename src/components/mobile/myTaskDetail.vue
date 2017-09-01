@@ -6,7 +6,7 @@
         <router-link to="/myTask" class="fc-theme fs-xl">我的任务</router-link>
         <span class="fc-white">&gt;任务详情</span>
         <!--<a class="float-right fc-theme" @click="cancel()"-->
-        <!--v-if="data.status!='已完成'"><i class="icon-edit"></i>取消任务-->
+        <!--v-if="data.status!='合作完成'"><i class="icon-edit"></i>取消任务-->
         <!--</a>-->
         <router-link class="float-right fc-theme" :to="'/taskAdd/'+data.id"
                      v-if="data.masterId == userInfo.id&&(data.status=='待审核'||data.status=='不通过'||data.status=='审核通过')">
@@ -67,21 +67,21 @@
       <cell :title="item.nickName" :link="'/expertDetail/'+item.id+'/'+data.id" v-for="item in data.applyList"
             :key="item"></cell>
     </group>
-    <group title="委托人" v-if="(data.status=='进行中'||data.status=='已完成')&&data.applyList.length">
+    <group title="委托人" v-if="(data.status=='合作中'||data.status=='合作完成')&&data.applyList.length">
       <cell :title="item.nickName" :link="'/expertDetail/'+item.id" v-for="item in data.applyList" :key="item"
             v-if="item.status == '已绑定'"></cell>
     </group>
-    <div class="detail-area" v-if="data.status=='进行中'&&data.masterId == userInfo.id">
-      <a class="btn btn-large btn-theme-round margin-top-20" @click="finish()">确认已完成</a>
+    <div class="detail-area" v-if="data.status=='合作中'&&data.masterId == userInfo.id">
+      <a class="btn btn-large btn-theme-round margin-top-20" @click="finish()">确认合作完成</a>
     </div>
-    <group title="评价发包方" v-if="data.status=='已完成'&&data.executor&& userInfo.id == data.executor.id">
+    <group title="评价发包方" v-if="(data.status=='合作完成'&&data.executor&& userInfo.id == data.executor.id)||(data.status=='合作完成'&&data.scoreMap&&data.scoreMap.emp)">
       <cell title="态度">
         <rater v-model="scoreEmp.attitudeScore" active-color="#04BE02" slot="value"
                :disabled="data.scoreMap&&data.scoreMap.emp?true:false"></rater>
       </cell>
       <cell title="及时支付">
         <rater v-model="scoreEmp.payTimeScore" active-color="#04BE02" slot="value"
-               :disabled="data.scoreMap&&data.scoreMap.em?true:false"></rater>
+               :disabled="data.scoreMap&&data.scoreMap.emp?true:false"></rater>
       </cell>
       <cell title="配合度">
         <rater v-model="scoreEmp.coordinationScore" active-color="#04BE02" slot="value"
@@ -90,7 +90,7 @@
       <x-textarea :max="200" v-model="scoreEmp.comment"
                   :readonly="data.scoreMap&&data.scoreMap.emp?true:false"></x-textarea>
     </group>
-    <group title="评价牛人" v-if="data.status=='已完成'&&data.masterId == userInfo.id">
+    <group title="评价牛人" v-if="(data.status=='合作完成'&&data.masterId == userInfo.id)||(data.status=='合作完成'&&data.scoreMap&&data.scoreMap.master)">
       <cell title="态度">
         <rater v-model="scoreMaster.attitudeScore" active-color="#04BE02" slot="value"
                :disabled="data.scoreMap&&data.scoreMap.master?true:false"></rater>
@@ -107,11 +107,11 @@
                   :readonly="data.scoreMap&&data.scoreMap.master?true:false"></x-textarea>
     </group>
     <div class="detail-area"
-         v-if="data.status=='已完成'&&data.executor&& userInfo.id == data.executor.id&&(!data.scoreMap||!data.scoreMap.emp)">
+         v-if="data.status=='合作完成'&&data.executor&& userInfo.id == data.executor.id&&(!data.scoreMap||!data.scoreMap.emp)">
       <a class="btn btn-large btn-theme-round margin-top-20" @click="empScore()">发送评价</a>
     </div>
     <div class="detail-area"
-         v-if="data.status=='已完成'&&data.masterId == userInfo.id&&(!data.scoreMap||!data.scoreMap.master)">
+         v-if="data.status=='合作完成'&&data.masterId == userInfo.id&&(!data.scoreMap||!data.scoreMap.master)">
       <a class="btn btn-large btn-theme-round margin-top-20" @click="masterScore()">发送评价</a>
     </div>
   </div>
@@ -188,7 +188,7 @@
             this.$http.get(this.url('employer/completed'), {
               params: {
                 id: this.data.id,
-                status: '已完成'
+                status: '合作完成'
               }
             }).then(this.rspHandler(() => {
               this.refresh()
@@ -204,7 +204,7 @@
 //            this.$http.get(this.url('employer/completed'), {
 //              params: {
 //                id: this.data.id,
-//                status: '已完成'
+//                status: '合作完成'
 //              }
 //            }).then(this.rspHandler(() => {
 //              this.refresh()

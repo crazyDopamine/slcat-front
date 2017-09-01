@@ -92,18 +92,18 @@ var url = function (url) {
   }
 }
 
-var rspHandler = function (callback,errorCallback) {
+var rspHandler = function (callback, errorCallback) {
   return function (rsp) {
     var data = rsp.data
     if (data.code === consts.CODE_SUCC) {
       callback(data.data)
     } else {
-      if(window.vm.$vux){
+      if (window.vm.$vux) {
         window.vm.$vux.toast.text(data.message, 'bottom')
-      }else if(window.vm.$Message){
+      } else if (window.vm.$Message) {
         window.vm.$Message.error(data.message);
       }
-      if(errorCallback)errorCallback(data)
+      if (errorCallback) errorCallback(data)
     }
   }
 }
@@ -218,7 +218,7 @@ Array.prototype.each = function (callback) {
  * @returns {{}}
  */
 var getHashObj = function () {
-  var qs = location.hash.length > 0 && location.hash.indexOf("?")>0 ? location.hash.substr(location.hash.indexOf("?")+1, location.hash.length): '',
+  var qs = location.hash.length > 0 && location.hash.indexOf("?") > 0 ? location.hash.substr(location.hash.indexOf("?") + 1, location.hash.length) : '',
     args = {},
     items = qs.length > 0 ? qs.split('&') : [],
     item = null, name = null, value = null, i = 0, len = items.length;
@@ -234,33 +234,37 @@ var getHashObj = function () {
 }
 
 var getSearchObj = function () {
-  var  qs = location.search.length>0 ? location.search.substr(1):'',
+  var qs = location.search.length > 0 ? location.search.substr(1) : '',
     args = {},
-    items = qs.length>0 ? qs.split('&'):[],
-    item = null,name = null,value = null,i = 0,len = items.length;
-  for(i = 0;i < len; i++){
+    items = qs.length > 0 ? qs.split('&') : [],
+    item = null, name = null, value = null, i = 0, len = items.length;
+  for (i = 0; i < len; i++) {
     item = items[i].split('=');
     name = decodeURIComponent(item[0]);
     value = decodeURIComponent(item[1]);
 
-    if(name.length){
+    if (name.length) {
       args[name] = value;
     }
   }
   return args;
 }
 
-var getQuery = function(obj){
-  return mix({},getHashObj(),getSearchObj(),obj)
+var getQuery = function (obj) {
+  return mix({}, getHashObj(), getSearchObj(), obj)
 }
 
-var toContent = function(content){
-  if(!content||!content.replace)return ''
-  content = content.replace(/\n\r/g,'<br/>')
-  content = content.replace(/\r\n/g,'<br/>')
-  content = content.replace(/\n/g,'<br/>')
-  content = content.replace(/\r/g,'<br/>')
+var toContent = function (content) {
+  if (!content || !content.replace)return ''
+  content = content.replace(/\n\r/g, '<br/>')
+  content = content.replace(/\r\n/g, '<br/>')
+  content = content.replace(/\n/g, '<br/>')
+  content = content.replace(/\r/g, '<br/>')
   return content
+}
+
+var wxTicket = function () {
+
 }
 
 
@@ -278,5 +282,6 @@ export {
   getSkill,
   filteNullParams,
   getQuery,
-  toContent
+  toContent,
+  wxTicket
 }

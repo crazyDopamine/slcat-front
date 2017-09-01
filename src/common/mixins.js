@@ -57,7 +57,14 @@ var common = {
     toKV: toKV,
     toMap: toMap,
     toContent : toContent,
-    mix:mix
+    mix:mix,
+    isMovie: function (fileName) {
+      if (fileName && typeof fileName == 'string' && (fileName.lastIndexOf('.mp4') === fileName.length - 4)) {
+        return true
+      } else {
+        return false
+      }
+    }
   }
 }
 

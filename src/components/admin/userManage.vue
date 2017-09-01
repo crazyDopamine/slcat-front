@@ -40,7 +40,8 @@
         <template v-if="detail.ownerSkills">
           <label class="fs-xxl">其他技能</label><br/>
           <div class="text-center">
-            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10" v-for="item in detail.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
+            <span class="btn btn-gray-round btn-small margin-right-5 margin-top-10"
+                  v-for="item in detail.ownerSkills.split(/[,，]/g)" :key="item">{{item}}</span>
           </div>
         </template>
         <br/>
@@ -68,9 +69,21 @@
         </template>
         <template v-if="detail.status!='待审核'">
           <label class="float-left margin-right-10" style="line-height:30px;">状态:{{detail.status}}</label>
-          <label class="float-left margin-right-10" style="line-height:30px;" v-if="detail.status=='不通过'">原因:{{detail.reason}}</label>
+          <label class="float-left margin-right-10" style="line-height:30px;"
+                 v-if="detail.status=='不通过'">原因:{{detail.reason}}</label>
           <Button type="primary" @click="pop=false">关闭</Button>
         </template>
+      </div>
+    </Modal>
+    <Modal
+      v-model="indexPop"
+      :title="popTitle">
+      <div class="clearfix">
+        <span class="col-6">置顶序列：</span>
+        <Input type="text" class="col-18" v-model="index"></Input>
+      </div>
+      <div slot="footer">
+        <Button type="primary" :loading="modalLoading" @click="toTop()">置顶</Button>
       </div>
     </Modal>
   </div>
@@ -86,17 +99,20 @@
         status: 0,
         pop: false,
         popTitle: '详情',
+        indexPop: false,
         detail: {},
-        imgs:'1501942661927.jpeg,1501942661927.jpeg,1501942661927.jpeg,1501953448609.mp4',
         modalLoading: false,
         fieldSet: {
           reason: ''
         },
+        index: 0,
+        indexId: 0,
         list: {
           columns: [
             {title: '昵称', key: 'nickName'},
             {title: '手机号', key: 'phone'},
             {title: '状态', key: 'status'},
+            {title: '置顶序列', key: 'index'},
             {
               title: '更新时间', key: 'updatedAt', render: (h, params) => {
               return h('span', {}, dateFormat(params.row.updatedAt, 'YYYY-MM-DD'));
@@ -117,7 +133,19 @@
                         this.showDetail(params.row, e)
                       }
                     }
-                  },[h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看'])
+                  }, [h('Icon', {props: {type: 'ios-paper-outline'}, class: {'margin-right-10': true}}), '查看']),
+                  h('Button', {
+                    props: {
+                      type: 'text',
+                      size: 'small'
+                    },
+                    on: {
+                      click: (e) => {
+                        this.indexPop = true
+                        this.indexId = params.row.id
+                      }
+                    }
+                  }, [h('Icon', {props: {type: 'arrow-up-a'}, class: {'margin-right-10': true}}), '置顶'])
                 ]);
               }
             }
@@ -126,7 +154,6 @@
           params: {
             // status: '待审核'
             status: ''
-
           }
         }
       }
@@ -143,7 +170,7 @@
         }))
       },
       check: function (data, status) {
-        if(status=='不通过'&&!this.fieldSet.reason){
+        if (status == '不通过' && !this.fieldSet.reason) {
           window.vm.$Message.error('原因不能为空');
           return
         }
@@ -159,6 +186,16 @@
           this.pop = false
           this.refreshList(1)
         }))
+      },
+      toTop: function () {
+        if (!isNaN(Number(this.index))&&this.indexId) {
+        	this.modalLoading = true
+          this.$http.get(this.url('admin/masterSort'), {params: {id: this.indexId, index: this.index}}).then(this.rspHandler(()=>{
+            this.modalLoading = false
+            this.indexPop = false
+          	this.refreshList()
+          }))
+        }
       }
     },
     created: function () {

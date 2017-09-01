@@ -32,7 +32,7 @@ a{
 
 .btn-theme{
   background-color: $themeColor;
-  color:$white;
+  color:$white !important;
   border-radius: 4px;
 }
 
@@ -111,6 +111,7 @@ a{
 }
 .btn-large{
   width:100%;
+  line-height: 40px;
   font-size: $fontSize-xl;
 }
 .btn-harf{
