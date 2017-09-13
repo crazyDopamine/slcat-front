@@ -19,12 +19,6 @@
     </tab>
     <popup v-model="selectionsShow" class="tab-selections" position="bottom" @on-hide="tabSwitch=-1">
       <ul class="selections-list">
-        <!--<li :class="item.id==list.params.businessParentId?'active':''"-->
-            <!--@click="onSelectClick(item.id,item.businessName,'businessParentId')"-->
-            <!--v-for="item in selections.businessParentId" :key="item" v-if="tabSwitch==0">-->
-          <!--{{item.businessName}}-->
-          <!--<i class="icon-right float-right" v-if="item.id==list.params.businessParentId"></i>-->
-        <!--</li>-->
         <li :class="item.id==list.params.cityId?'active':''" @click="onSelectClick(item.id,item.cityName,'cityId')"
             v-for="item in selections.cityId" v-if="tabSwitch==0">
           {{item.cityName}}

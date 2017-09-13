@@ -82,7 +82,7 @@
         var file = target.files[0]
         var msg = ''
         var error = false
-        var suffix = /\.(\w+)$/.exec(file.name);
+        var suffix = /\.(\w+)$/.exec(file.name.toLowerCase());
         if (suffix && this.accept.indexOf(suffix[1]) < 0) {
           error = true
           msg += '文件类型不为' + this.accept

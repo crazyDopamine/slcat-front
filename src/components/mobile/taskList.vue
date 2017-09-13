@@ -6,10 +6,6 @@
         {{item.businessName}}
       </tab-item>
     </tab>
-    <!--<button-tab v-model="type" class="top-nav-bar">-->
-    <!--<button-tab-item>全部</button-tab-item>-->
-    <!--<button-tab-item v-for="item in selections.type" :key="item">{{item.businessName}}</button-tab-item>-->
-    <!--</button-tab>-->
     <div class="scroll-view list-container">
       <scroller height="-80" lock-x scrollbar-y use-pulldown use-pullup :pulldown-config="list.pullDownConfig"
                 :pullup-config="list.pullUpConfig" @on-pulldown-loading="onRefresh" @on-pullup-loading="onLoadMore" ref="scroller">

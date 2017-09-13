@@ -6,7 +6,7 @@
         <div class="form-field">
           <checker v-model="fieldSet.businessParentId" default-item-class="checker-item-default"
                    selected-item-class="checker-item-selected" type="radio">
-            <checker-item :value="item.id" v-for="item in selections.businessParentId" :key="item"
+            <checker-item :value="item.id" v-for="(item,index) in selections.businessParentId" :key="index"
                           @on-item-click="onTypeChange(item)">{{item.businessName}}
             </checker-item>
           </checker>
@@ -27,7 +27,7 @@
           <!--placeholder="请选择"></popup-radio>-->
           <checker v-model="fieldSet.skillList" default-item-class="checker-item-default"
                    selected-item-class="checker-item-selected" type="checkbox">
-            <checker-item :value="item.id" v-for="item in selections.skillList" :key="item">{{item.skillName}}
+            <checker-item :value="item.id" v-for="(item,index) in selections.skillList" :key="index">{{item.skillName}}
             </checker-item>
           </checker>
         </div>
@@ -74,7 +74,7 @@
         <div class="form-field">
           <checker v-model="fieldSet.trendComplete" default-item-class="checker-item-radio-default"
                    selected-item-class="checker-item-radio-selected" type="radio">
-            <checker-item :value="item.value" v-for="item in selections.trendComplete" :key="item">{{item.desc}}
+            <checker-item :value="item.value" v-for="(item,index) in selections.trendComplete" :key="index">{{item.desc}}
             </checker-item>
           </checker>
         </div>
