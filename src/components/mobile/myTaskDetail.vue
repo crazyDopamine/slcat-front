@@ -17,7 +17,7 @@
     <div class="detail-area">
       <label class="fs-xxl">{{data.projectName}}</label>
       <span class="btn btn-theme-border-round margin-left-20">{{data.status}}</span>
-      <span class="float-right"><span class="fc-red fs-xxl">{{data.projectBudget}}</span></span>
+      <span class="float-right"><span class="fc-red fs-xxl">{{data.projectBudget?data.projectBudget:'价格面议'}}</span></span>
       <div class="content">
         <template v-if="data.status=='不通过'">
           <span class="fc-red">不通过原因：{{data.reason}}</span><br/>

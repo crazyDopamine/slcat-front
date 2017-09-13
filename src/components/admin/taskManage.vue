@@ -30,7 +30,7 @@
         </div>
         <div class="detail-row">
           <label class="col-6">项目预算：</label>
-          <span>{{detail.projectBudget}}</span>
+          <span>{{detail.projectBudget?detail.projectBudget:'价格面议'}}</span>
         </div>
         <div class="detail-row">
           <label class="col-6">时间周期：</label>
@@ -117,6 +117,11 @@
               render: (h, params) => {
                 return h('span', params.row.recruitBusiness.businessName)
               }
+            },
+            {
+              title: '项目预算', key: 'projectBudget', render: (h, params) => {
+              return h('span', {}, (params.row.projectBudget?params.row.projectBudget:'价格面议'));
+            }
             },
             {title: '项目预算', key: 'projectBudget'},
             {title: '状态', key: 'status'},

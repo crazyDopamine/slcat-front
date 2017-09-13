@@ -112,7 +112,7 @@
             {title: '昵称', key: 'nickName'},
             {title: '手机号', key: 'phone'},
             {title: '状态', key: 'status'},
-            {title: '置顶序列', key: 'index'},
+            {title: '置顶序列', key: 'masterIndex'},
             {
               title: '更新时间', key: 'updatedAt', render: (h, params) => {
               return h('span', {}, dateFormat(params.row.updatedAt, 'YYYY-MM-DD'));
@@ -143,6 +143,7 @@
                       click: (e) => {
                         this.indexPop = true
                         this.indexId = params.row.id
+                        this.index = params.row.masterIndex
                       }
                     }
                   }, [h('Icon', {props: {type: 'arrow-up-a'}, class: {'margin-right-10': true}}), '置顶'])

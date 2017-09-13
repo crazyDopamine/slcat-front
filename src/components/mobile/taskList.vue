@@ -20,7 +20,8 @@
                 {{data.projectName}}
                 <span class="btn btn-theme-round margin-left-5" style="line-height: 20px;">{{data.status}}</span>
               </label>
-              <span class="col-8 text-right"><span class="fc-red fs-xl">{{data.projectBudget}}</span>元</span><br/>
+              <span class="col-8 text-right" v-show="data.projectBudget"><span class="fc-red fs-xl">{{data.projectBudget}}</span>元</span>
+              <span class="col-8 text-right" v-show="!data.projectBudget"><span class="fc-red fs-xl">价格面议</span></span><br/>
               <span class="margin-right-10">{{data.recruitBusiness ? data.recruitBusiness.parentBusiness.businessName : ''}}/{{data.recruitBusiness ? data.recruitBusiness.businessName : ''}}</span>
               <span
                 v-for="(item,i) in data.baseSkills">{{item.skillName}}{{i != data.baseSkills.length - 1 ? ',' : ''}}</span><br/>

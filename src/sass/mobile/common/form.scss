@@ -2,6 +2,7 @@
   padding:$paddingY $paddingX;
   background-color: $bg;
   .form-row{
+    position: relative;
     line-height: 30px;
     &:not(:last-child){
       margin-bottom:30px;

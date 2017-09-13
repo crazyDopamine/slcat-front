@@ -45,7 +45,7 @@
         </div>
       </div>
       <div class="form-row">
-        <label><span class="btn-black-round margin-right-5">6</span>价格预算(元)<span class="fc-red">*</span></label><br/>
+        <label><span class="btn-black-round margin-right-5">6</span>价格预算(元)，若价格面议则无需填写</label>
         <div class="form-field">
           <input type="number" v-model="fieldSet.projectBudget"/>
         </div>
@@ -88,7 +88,7 @@
 <script>
   import {toKV, getType, getSkill, selections, url, rspHandler} from '../../common/utils'
   import consts from '../../common/const'
-  import {Checker, CheckerItem, PopupPicker, PopupRadio} from 'vux'
+  import {Checker, CheckerItem, PopupPicker, PopupRadio, XSwitch ,Group} from 'vux'
   import formValidate from '../../common/formValidate'
   export default{
     mixins: [formValidate],
@@ -96,7 +96,9 @@
       Checker,
       CheckerItem,
       PopupPicker,
-      PopupRadio
+      PopupRadio,
+      XSwitch,
+      Group
     },
     data: function () {
       return {
@@ -134,10 +136,10 @@
             label: '项目描述',
             required: true
           },
-          projectBudget: {
-            label: '项目预算',
-            required: true
-          },
+//          projectBudget: {
+//            label: '项目预算',
+//            required: true
+//          },
           projectCycle: {
             label: '项目周期',
             required: true
