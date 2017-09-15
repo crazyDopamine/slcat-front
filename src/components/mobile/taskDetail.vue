@@ -48,7 +48,9 @@
         <!--</p>-->
       </div>
       <a class="btn btn-large btn-theme-round margin-top-20" @click="apply()"
-         v-if="data.status=='审核通过'&&userInfo.status=='审核通过'&&data.masterId != userInfo.id">发送申请意向</a>
+         v-if="data.status=='审核通过'&&userInfo.status=='审核通过'&&data.masterId != userInfo.id&&!data.hasApplied">发送申请意向</a>
+      <a class="btn btn-large btn-gray-d-round margin-top-20"
+         v-if="data.status=='审核通过'&&userInfo.status=='审核通过'&&data.masterId != userInfo.id&&data.hasApplied">已申请</a>
     </div>
     <!--<div class="task-description">-->
     <!--<group title="推荐列表">-->
@@ -99,7 +101,7 @@
     <!--</div>-->
   </div>
 </template>
-<script>
+<script type="es6">
   import consts from '../../common/const'
   import {url, rspHandler, selections} from '../../common/utils'
   import {Group, Cell, Rater, XTextarea} from 'vux'
@@ -137,6 +139,7 @@
         this.$http.get(this.url('techMaster/applyEmployer/' + this.$route.params.id)).then(this.rspHandler((data) => {
           this.$vux.loading.hide()
           this.$vux.toast.text('提交成功', 'bottom');
+          this.refresh()
         }))
       },
       refresh: function () {

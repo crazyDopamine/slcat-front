@@ -96,8 +96,8 @@
         modalLoading: false,
         loginForm: {
           fieldSet: {
-            userName: 'admin',
-            passWord: 'admin'
+            userName: '',
+            passWord: ''
           },
           rule: {
             userName: {

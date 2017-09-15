@@ -70,6 +70,24 @@
             <p v-html="toContent(detail.projectDesc)"></p>
           </div>
         </div>
+        <div class="detail-row">
+          <div class="text-left margin-top-10" v-if="detail.applyList">
+            <label class="col-6">申请人：</label>
+            <Collapse class="col-18">
+              <Panel v-for="(item,index) in detail.applyList" :key="index">
+                {{item.nickName}}
+                <span class="float-right margin-right-20">{{item.status}}</span>
+                <p slot="content">
+                  手机：{{item.phone}}<br/>
+                  综合评分：{{item.score}}<br/>
+                  日薪：{{item.dailyWage}}元/天<br/>
+                  简介：{{item.selfIntroduction}}
+                  <img-input v-model="item.imgUrls" readOnly></img-input>
+                </p>
+              </Panel>
+            </Collapse>
+          </div>
+        </div>
       </div>
       <div slot="footer">
         <template v-if="detail.status=='待审核'">
