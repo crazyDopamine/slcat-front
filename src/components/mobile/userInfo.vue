@@ -100,7 +100,11 @@
             <span >描述:</span><br/>
             <div class="padding-left-20" v-html="toContent(item.worksDesc)"></div>
             <div class="col-24 margin-top-5">
-              <img-input v-model="item.imgUrls" readOnly></img-input>
+              <!--<img-input v-model="item.imgUrls" readOnly></img-input>-->
+              <template v-for="file in item.imgUrls.split(',')" v-if="item.imgUrls">
+                <img class="margin-top-10" style="width:100%;" :src="file | img" v-if="!isMovie(file)">
+                <video class="margin-top-10" autoplay controls width="100%" :src="file | movie" v-if="isMovie(file)"></video>
+              </template>
             </div>
           </div>
         </div>
