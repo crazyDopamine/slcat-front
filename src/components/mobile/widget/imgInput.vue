@@ -71,7 +71,7 @@
         imgs: [],
         current: '',
         accept: 'jpg,jpeg,png,mp4',
-        maxSize: '20MB',
+        maxSize: '50MB',
         bigImgPop: false
       }
     },
