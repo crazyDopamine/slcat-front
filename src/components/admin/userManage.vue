@@ -50,11 +50,11 @@
           <Collapse>
             <Panel v-for="(item,index) in detail.worksCases" :key="index">
               {{item.workName}}
-              <a :href="item.worksLink" class="float-right margin-right-20" target="_blank">{{item.worksLink}}</a>
               <p slot="content">
                 作品职责：{{item.responsibilities}}<br/>
                 作品描述：{{item.worksDesc}}
                 <img-input v-model="item.imgUrls" readOnly></img-input>
+                <a :href="item.worksLink" target="_blank">{{item.worksLink}}</a>
               </p>
             </Panel>
           </Collapse>
