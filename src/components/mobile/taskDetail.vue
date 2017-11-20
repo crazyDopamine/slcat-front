@@ -51,6 +51,8 @@
          v-if="data.status=='审核通过'&&userInfo.status=='审核通过'&&data.masterId != userInfo.id&&!data.hasApplied">发送申请意向</a>
       <a class="btn btn-large btn-gray-d-round margin-top-20"
          v-if="data.status=='审核通过'&&userInfo.status=='审核通过'&&data.masterId != userInfo.id&&data.hasApplied">已申请</a>
+      <router-link class="btn btn-large btn-theme-round margin-top-20" to="/userInfo"
+         v-if="userInfo.status!='审核通过'&&data.masterId != userInfo.id&&!data.hasApplied">入驻后可申请项目</router-link>
     </div>
     <!--<div class="task-description">-->
     <!--<group title="推荐列表">-->
