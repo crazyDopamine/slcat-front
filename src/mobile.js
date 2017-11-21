@@ -37,7 +37,7 @@ Vue.use(LoadingPlugin)
 Vue.use(ToastPlugin)
 Vue.use(ConfirmPlugin)
 Vue.use(VueRouter)
-Vue.component('img-input',imgInput)
+Vue.component('img-input', imgInput)
 Vue.mixin(loadedMixins)
 Vue.mixin(common)
 Vue.use(filters)
@@ -96,18 +96,26 @@ let config = {
     },
     login: function () {
       var code = getQuery(this.$route.query).code
-      if(code){
-        this.$http.get(this.url('user/login'),{params:{code:code}}).then(this.rspHandler((data)=>{
-          if(data){
-            cookie.set(this.consts.ticketKey,data)
+      if (code) {
+        this.$http.get(this.url('user/login'), {params: {code: code}}).then(this.rspHandler((data)=> {
+          if (data) {
+            cookie.set(this.consts.ticketKey, data)
           }
           this.getUserInfo()
-        },()=>{
-          window.vm.$vux.toast.text('登陆失败！', 'bottom',2000)
-        }),()=>{
-          window.vm.$vux.toast.text('登陆失败！', 'bottom',2000)
+        }, ()=> {
+          window.vm.$vux.toast.text('登陆失败！', 'bottom', 2000)
+          var url = window.location.origin + window.location.pathname + window.location.hash
+          var href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1d4def9e6f2fc0b5&redirect_uri='
+            + window.encodeURIComponent(url) + '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          window.location.href = href
+        }), ()=> {
+          window.vm.$vux.toast.text('登陆失败！', 'bottom', 2000)
+          var url = window.location.origin + window.location.pathname + window.location.hash
+          var href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx1d4def9e6f2fc0b5&redirect_uri='
+            + window.encodeURIComponent(url) + '&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
+          window.location.href = href
         })
-      }else{
+      } else {
         this.getUserInfo()
       }
     },
