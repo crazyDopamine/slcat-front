@@ -129,7 +129,6 @@
           columns: [
             {title: '项目名称', key: 'projectName'},
             {
-              key: 'recruitBusiness.businessName',
               title: '项目类型',
               key: 'action',
               render: (h, params) => {
@@ -138,10 +137,9 @@
             },
             {
               title: '项目预算', key: 'projectBudget', render: (h, params) => {
-              return h('span', {}, (params.row.projectBudget?params.row.projectBudget:'价格面议'));
-            }
+                return h('span', {}, (params.row.projectBudget?params.row.projectBudget:'价格面议'));
+              }
             },
-            {title: '项目预算', key: 'projectBudget'},
             {title: '状态', key: 'status'},
             {
               title: '操作',
